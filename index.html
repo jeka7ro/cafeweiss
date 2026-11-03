@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Café Weiss | Französisches Restaurant &amp; Kaffeehaus in Hinterbrühl &amp; Mödling</title>
+  <meta name="description" content="Café Weiss – Ein Hauch von Frankreich in Hinterbrühl (Hauptstraße 16, nahe der Seegrotte) und Mödling (Herzoggasse 6). 100% Bio-Kaffee, Frühstück, Mittagsmenü, französische Küche, Patisserie &amp; Events." />
+  <meta name="theme-color" content="#1A1512" />
+  <link rel="icon" type="image/png" href="assets/images/brand/favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cafeweiss.eu/" />
+  <meta property="og:title" content="Café Weiss | Französisches Restaurant &amp; Kaffeehaus in Hinterbrühl &amp; Mödling" />
+  <meta property="og:description" content="Französischer Charme, mit Herz gekocht. Besuchen Sie unser Restaurant &amp; Café in Hinterbrühl oder unser historisches Kaffeehaus in Mödling." />
+  <meta property="og:image" content="assets/images/brand/hero-hinterbruehl.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Restaurant",
+        "name": "Café Weiss Hinterbrühl – Restaurant & Café",
+        "image": "https://cafeweiss.eu/assets/images/brand/hero-hinterbruehl.jpg",
+        "url": "https://cafeweiss.eu/",
+        "telephone": "+436609840707",
+        "email": "cafeweiss.info@gmail.com",
+        "servesCuisine": ["French", "Austrian", "Mediterranean", "Breakfast", "Coffeehouse"],
+        "priceRange": "€€",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Hauptstraße 16",
+          "addressLocality": "Hinterbrühl",
+          "postalCode": "2371",
+          "addressCountry": "AT"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "08:00",
+          "closes": "20:00"
+        }
+      },
+      {
+        "@type": "CafeOrCoffeeShop",
+        "name": "Café Weiss Mödling – Französisches Kaffeehaus",
+        "image": "https://cafeweiss.eu/assets/images/brand/hero-moedling.jpg",
+        "url": "https://cafeweiss.eu/",
+        "telephone": "+436609840707",
+        "email": "cafeweiss.info@gmail.com",
+        "servesCuisine": ["French Coffeehouse", "Breakfast", "Patisserie", "Organic Coffee"],
+        "priceRange": "€€",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Herzoggasse 6",
+          "addressLocality": "Mödling",
+          "postalCode": "2340",
+          "addressCountry": "AT"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "08:00",
+          "closes": "21:00"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Ambient Cursor Spotlight -->
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- ================= TOP BAR ================= -->
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <div class="topbar__locations">
+        <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria" target="_blank" rel="noopener" class="topbar__link">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span><strong>Hinterbrühl:</strong> Hauptstraße 16, 2371</span>
+        </a>
+        <span class="topbar__sep">•</span>
+        <a href="https://share.google/LVHGprsLfb5v46MXj" target="_blank" rel="noopener" class="topbar__link">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span><strong>Mödling:</strong> Herzoggasse 6, 2340</span>
+        </a>
+      </div>
+
+      <div class="topbar__right">
+        <div class="live-status" id="headerLiveStatus">
+          <span class="live-status__dot"></span>
+          <span class="live-status__text" data-i18n="hero.status.open">Jetzt geöffnet</span>
+          <span class="live-status__hours">· 08:00 – 20:00</span>
+        </div>
+        <span class="topbar__sep">•</span>
+        <a href="tel:+436609840707" class="topbar__link topbar__phone">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+43 660 9840707</span>
+        </a>
+        <a href="https://www.instagram.com/cafeweis/" target="_blank" rel="noopener" class="topbar__social" aria-label="Instagram @cafeweis">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <span>@cafeweis</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN HEADER ================= -->
+  <header class="header" id="siteHeader">
+    <div class="container header__inner">
+      <a href="#top" class="header__logo" aria-label="Café Weiss Startseite">
+        <img src="assets/images/brand/logo-light.png" alt="Café Weiss Logo" class="header__logo-img header__logo-img--light" width="175" height="50" />
+        <img src="assets/images/brand/logo-dark.png" alt="Café Weiss Logo" class="header__logo-img header__logo-img--dark" width="175" height="50" />
+      </a>
+
+      <nav class="header__nav" id="mainNav" aria-label="Hauptnavigation">
+        <a href="#standorte" class="header__nav-link" data-i18n="nav.locations">Unsere Cafés</a>
+        <a href="#philosophie" class="header__nav-link" data-i18n="nav.story">Philosophie</a>
+        <a href="#speisekarte" class="header__nav-link" data-i18n="nav.menu">Speisekarte</a>
+        <a href="#veranstaltungen" class="header__nav-link" data-i18n="nav.events">Veranstaltungen</a>
+        <a href="#chalet" class="header__nav-link" data-i18n="nav.chalet">Chalet Weiß</a>
+        <a href="#karriere" class="header__nav-link" data-i18n="nav.careers">Karriere</a>
+      </nav>
+
+      <div class="header__actions">
+        <!-- Language Switcher -->
+        <div class="lang-switch" role="group" aria-label="Sprachauswahl">
+          <button type="button" class="lang-switch__btn active" data-lang="de">DE</button>
+          <button type="button" class="lang-switch__btn" data-lang="en">EN</button>
+        </div>
+
+        <a href="#reservierung" class="btn btn--gold btn--sm" data-i18n="nav.reserve">Tisch reservieren</a>
+
+        <!-- Mobile Menu Button -->
+        <button type="button" class="burger" id="burgerBtn" aria-label="Menü öffnen" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+      <div class="mobile-drawer__inner">
+        <div class="mobile-drawer__links">
+          <a href="#standorte" class="mobile-drawer__link" data-i18n="nav.locations">Unsere Cafés</a>
+          <a href="#philosophie" class="mobile-drawer__link" data-i18n="nav.story">Philosophie</a>
+          <a href="#speisekarte" class="mobile-drawer__link" data-i18n="nav.menu">Speisekarte</a>
+          <a href="#veranstaltungen" class="mobile-drawer__link" data-i18n="nav.events">Veranstaltungen</a>
+          <a href="#chalet" class="mobile-drawer__link" data-i18n="nav.chalet">Chalet Weiß</a>
+          <a href="#karriere" class="mobile-drawer__link" data-i18n="nav.careers">Karriere</a>
+        </div>
+        <div class="mobile-drawer__footer">
+          <a href="#reservierung" class="btn btn--gold btn--full" data-i18n="nav.reserve">Tisch reservieren</a>
+          <div class="mobile-drawer__contact">
+            <a href="tel:+436609840707">+43 660 9840707</a>
+            <span>•</span>
+            <a href="mailto:cafeweiss.info@gmail.com">cafeweiss.info@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ================= CINEMATIC IMMERSIVE HERO SECTION ================= -->
+    <section class="hero">
+      <!-- Full-bleed Ken Burns Animated Background Image Layer -->
+      <div class="hero__backdrop">
+        <div class="hero__backdrop-img" id="heroBackdropImg" style="background-image: url('assets/images/brand/hero-hinterbruehl.jpg');"></div>
+        <div class="hero__backdrop-veil"></div>
+        <div class="hero__backdrop-glow"></div>
+      </div>
+
+      <!-- Interactive Golden Bokeh & Aroma Particles Canvas -->
+      <canvas class="hero__canvas" id="ambientCanvas" aria-hidden="true"></canvas>
+
+      <div class="container hero__grid">
+        <!-- Left Column: Editorial Content & Interactive Glass Location Switcher -->
+        <div class="hero__content" data-reveal="fade-up">
+          <div class="eyebrow-badge eyebrow-badge--glow">
+            <span class="eyebrow-badge__ornament">✦</span>
+            <span data-i18n="hero.eyebrow">Französische Lebensart &amp; Wiener Kaffeehauskultur · Seit 2020</span>
+          </div>
+
+          <h1 class="hero__title" data-i18n-html="hero.title">
+            Ein Hauch von <em>Frankreich</em> in Hinterbrühl &amp; Mödling
+          </h1>
+
+          <p class="hero__subtitle" data-i18n="hero.subtitle">
+            Wo aromatischer Bio-Kaffee, feine Patisserie und mit Herz gekochte französisch-mediterrane Küche auf unvergessliche Gastfreundschaft treffen.
+          </p>
+
+          <!-- Interactive Glassmorphic Location Switcher Pill in Hero -->
+          <div class="hero-loc-picker">
+            <div class="hero-loc-picker__header">
+              <span class="hero-loc-picker__label" data-i18n="hero.switch.label">Standort wählen:</span>
+              <div class="hero-loc-tabs" role="tablist">
+                <button type="button" class="hero-loc-tab active" data-select-location="hinterbruehl" role="tab" aria-selected="true">
+                  <span class="hero-loc-tab__dot"></span>
+                  <span>Hinterbrühl</span>
+                  <span class="hero-loc-tab__tag">NEU</span>
+                </button>
+                <button type="button" class="hero-loc-tab" data-select-location="moedling" role="tab" aria-selected="false">
+                  <span class="hero-loc-tab__dot"></span>
+                  <span>Mödling</span>
+                  <span class="hero-loc-tab__tag">1607</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Dynamic Active Location Spotlight Card -->
+            <div class="hero-loc-card" id="heroLocCard">
+              <div class="hero-loc-card__top">
+                <div>
+                  <span class="hero-loc-card__badge" id="heroLocBadge">Neues Restaurant &amp; Café · Nahe der Seegrotte</span>
+                  <h2 class="hero-loc-card__name" id="heroLocName">Café Weiss Hinterbrühl</h2>
+                </div>
+                <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria" target="_blank" rel="noopener" class="hero-loc-card__route" id="heroLocMapsUrl">
+                  <span data-i18n="hero.directions">Route planen</span>
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                </a>
+              </div>
+              <p class="hero-loc-card__desc" id="heroLocDesc">
+                Neue Location, mehr Plätze, mehr Natur nahe der Seegrotte. Französisch inspirierte Küche, ganztägiges Frühstück, Mittagsmenü und gemütliche Dinner-Abende.
+              </p>
+              <div class="hero-loc-card__meta">
+                <span class="hero-loc-card__meta-item">
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span id="heroLocAddress">Hauptstraße 16, 2371 Hinterbrühl</span>
+                </span>
+                <span class="hero-loc-card__meta-item">
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span id="heroLocHours">Montag – Sonntag: 08:00 – 20:00 Uhr (Kein Ruhetag)</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__actions">
+            <a href="#speisekarte" class="btn btn--gold btn--lg">
+              <span data-i18n="hero.cta.menu">Speisekarte entdecken</span>
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="#reservierung" class="btn btn--outline-light btn--lg" data-i18n="hero.cta.reserve">
+              Tisch &amp; Event reservieren
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Clean Editorial Showcase Card (No overlapping bobbing clutter) -->
+        <div class="hero__visual" data-reveal="fade-up" style="--delay: 0.12s">
+          <div class="hero-editorial-card">
+            <div class="hero-editorial-card__frame">
+              <img src="assets/images/brand/interior-hinterbruehl.jpg" alt="Café Weiss Salon &amp; Ambiente" class="hero-editorial-card__img" id="heroMainImg" />
+              <div class="hero-editorial-card__badge" id="heroImgCaption">
+                <span>✦ Salon &amp; Kulinarik · Hinterbrühl</span>
+              </div>
+            </div>
+
+            <div class="hero-editorial-card__footer">
+              <img src="assets/images/brand/dish-salmon-dessert.jpg" alt="Lachs à la Provençale &amp; Patisserie" class="hero-editorial-card__thumb" id="heroSecondaryImg" />
+              <div class="hero-editorial-card__text">
+                <span class="hero-editorial-card__kicker">Genuss mit Herz · Seit 2020</span>
+                <strong>Frühstück · Mittagsmenü · Dinner · Patisserie</strong>
+                <span class="hero-editorial-card__sub">100% Bio-Kaffee &amp; frisch gekochte Spezialitäten</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Down Indicator -->
+      <a href="#standorte" class="hero__scroll-cue" aria-label="Nach unten scrollen">
+        <span class="hero__scroll-mouse"><span class="hero__scroll-wheel"></span></span>
+      </a>
+    </section>
+
+    <!-- ================= INFINITE ANIMATED MARQUEE RIBBON ================= -->
+    <div class="marquee-ribbon" aria-label="Highlights">
+      <div class="marquee-ribbon__track">
+        <div class="marquee-ribbon__group">
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span data-i18n="strip.bio">100% Bio-Kaffee &amp; Bio-Produkte</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span data-i18n="strip.locations">2 Standorte: Hinterbrühl &amp; Mödling</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span data-i18n="strip.lunch">Di – Fr Mittagsmenü ab € 10,90</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span data-i18n="strip.events">Hochzeiten, Feiern &amp; historische Räume</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span>Lachs à la Provençale · Steak au Poivre · Crème Brûlée</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span>Chalet Weiß &amp; Exklusiver Mietwagen-Service</span></span>
+        </div>
+        <div class="marquee-ribbon__group" aria-hidden="true">
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span data-i18n="strip.bio">100% Bio-Kaffee &amp; Bio-Produkte</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span data-i18n="strip.locations">2 Standorte: Hinterbrühl &amp; Mödling</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span data-i18n="strip.lunch">Di – Fr Mittagsmenü ab € 10,90</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span data-i18n="strip.events">Hochzeiten, Feiern &amp; historische Räume</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span>Lachs à la Provençale · Steak au Poivre · Crème Brûlée</span></span>
+          <span class="ribbon__item"><span class="ribbon__icon">✦</span><span>Chalet Weiß &amp; Exklusiver Mietwagen-Service</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= OUR TWO LOCATIONS (WITH TEXTURED & ORB BACKDROP) ================= -->
+    <section class="section locations-section has-culinary-pattern" id="standorte">
+      <div class="ambient-orb ambient-orb--gold-left" aria-hidden="true"></div>
+      <div class="ambient-orb ambient-orb--emerald-right" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-eyebrow" data-i18n="locations.eyebrow">Zwei besondere Orte</span>
+          <h2 class="section-title" data-i18n-html="locations.title">Unsere Häuser in <em>Hinterbrühl</em> &amp; <em>Mödling</em></h2>
+          <p class="section-subtitle" data-i18n="locations.subtitle">
+            Wählen Sie Ihr Lieblingshaus – vom neuen Restaurant &amp; Café nahe der Seegrotte Hinterbrühl bis zum charmanten Kaffeehaus aus 1607 im Herzen von Mödling.
+          </p>
+        </div>
+
+        <div class="locations-grid">
+          <!-- LOCATION 1: HINTERBRÜHL -->
+          <article class="loc-card" data-location-card="hinterbruehl" data-reveal="fade-up" style="--delay: 0.1s" data-tilt-card>
+            <div class="loc-card__media">
+              <img src="assets/images/brand/hero-hinterbruehl.jpg" alt="Café Weiss Hinterbrühl Restaurant &amp; Bar" class="loc-card__img" id="cardImgHinterbruehl" />
+              <div class="loc-card__badges">
+                <span class="badge badge--gold">NEUE LOCATION</span>
+                <span class="badge badge--glass">Nahe der Seegrotte</span>
+              </div>
+              <div class="loc-card__thumbs">
+                <button type="button" class="loc-thumb active" data-target="cardImgHinterbruehl" data-src="assets/images/brand/hero-hinterbruehl.jpg" aria-label="Bar &amp; Lounge">
+                  <img src="assets/images/brand/hero-hinterbruehl.jpg" alt="Bar" />
+                </button>
+                <button type="button" class="loc-thumb" data-target="cardImgHinterbruehl" data-src="assets/images/brand/interior-hinterbruehl.jpg" aria-label="Kronleuchter-Salon">
+                  <img src="assets/images/brand/interior-hinterbruehl.jpg" alt="Salon" />
+                </button>
+                <button type="button" class="loc-thumb" data-target="cardImgHinterbruehl" data-src="assets/images/brand/dish-salmon-dessert.jpg" aria-label="Kulinarik">
+                  <img src="assets/images/brand/dish-salmon-dessert.jpg" alt="Küche" />
+                </button>
+              </div>
+            </div>
+
+            <div class="loc-card__body">
+              <div class="loc-card__kicker">2371 Hinterbrühl · Hauptstraße 16</div>
+              <h3 class="loc-card__title">Café Weiss Hinterbrühl – Restaurant &amp; Cafehouse</h3>
+              <p class="loc-card__text">
+                Mehr Plätze, mehr Natur und ganztägige französisch-mediterrane Küche nahe der Seegrotte. Vom ausgiebigen Frühstück über unser beliebtes Mittagsmenü (Di–Fr) bis zum romantischen Dinner am Abend.
+              </p>
+
+              <ul class="loc-card__features">
+                <li>
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Frühstück, Brunch, Warme Küche, Pasta, Steaks &amp; Fisch</span>
+                </li>
+                <li>
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Dienstag – Freitag (11:00–15:00): 2-Gänge € 10,90 · 3-Gänge € 14,90</span>
+                </li>
+                <li>
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Eleganter Kronleuchter-Salon für Hochzeiten, Taufen &amp; Feiern</span>
+                </li>
+              </ul>
+
+              <div class="loc-card__info-box">
+                <div class="loc-card__info-row">
+                  <strong>Öffnungszeiten:</strong>
+                  <span>Montag – Sonntag: 08:00 – 20:00 Uhr (Kein Ruhetag)</span>
+                </div>
+                <div class="loc-card__info-row">
+                  <strong>Adresse &amp; Tel:</strong>
+                  <span>Hauptstraße 16, 2371 Hinterbrühl · <a href="tel:+436609840707">+43 660 9840707</a></span>
+                </div>
+              </div>
+
+              <div class="loc-card__actions">
+                <a href="#speisekarte" class="btn btn--primary" data-jump-menu="hinterbruehl">
+                  <span data-i18n="locations.btn.menu">Menü öffnen</span>
+                </a>
+                <button type="button" class="btn btn--secondary" data-open-lightbox="hinterbruehl">
+                  Original-Karte (8 Seiten)
+                </button>
+                <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria" target="_blank" rel="noopener" class="btn btn--ghost">
+                  <span data-i18n="locations.btn.route">Route planen</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- LOCATION 2: MÖDLING -->
+          <article class="loc-card" data-location-card="moedling" data-reveal="fade-up" style="--delay: 0.22s" data-tilt-card>
+            <div class="loc-card__media">
+              <img src="assets/images/brand/hero-moedling.jpg" alt="Café Weiss Mödling in der Herzoggasse 6" class="loc-card__img" id="cardImgMoedling" />
+              <div class="loc-card__badges">
+                <span class="badge badge--emerald">SEIT 2020</span>
+                <span class="badge badge--glass">Rathaus-Blick &amp; Gewölbe 1607</span>
+              </div>
+              <div class="loc-card__thumbs">
+                <button type="button" class="loc-thumb active" data-target="cardImgMoedling" data-src="assets/images/brand/hero-moedling.jpg" aria-label="Fassade &amp; Schanigarten">
+                  <img src="assets/images/brand/hero-moedling.jpg" alt="Fassade" />
+                </button>
+                <button type="button" class="loc-thumb" data-target="cardImgMoedling" data-src="assets/images/brand/icon-event.png" aria-label="Sonnenterrasse mit Rathaus-Blick">
+                  <img src="assets/images/brand/icon-event.png" alt="Terrasse" />
+                </button>
+                <button type="button" class="loc-thumb" data-target="cardImgMoedling" data-src="assets/images/brand/events-bg.jpg" aria-label="Historischer Raum aus 1607">
+                  <img src="assets/images/brand/events-bg.jpg" alt="Innenraum 1607" />
+                </button>
+              </div>
+            </div>
+
+            <div class="loc-card__body">
+              <div class="loc-card__kicker">2340 Mödling · Herzoggasse 6</div>
+              <h3 class="loc-card__title">Café Weiss Mödling – Französisches Kaffeehaus</h3>
+              <p class="loc-card__text">
+                Mitten im historischen Zentrum von Mödling erwartet Sie unser charmantes französisches Kaffeehaus mit 100% Bio-Kaffee, Frühstückskreationen, hausgemachten Mehlspeisen und sonnigem Schanigarten.
+              </p>
+
+              <ul class="loc-card__features">
+                <li>
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Historisches Gewölbe aus dem Jahr 1607 (20 Sitzplätze)</span>
+                </li>
+                <li>
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Großzügige Sonnenterrasse mit Blick auf das Rathaus (40 Plätze)</span>
+                </li>
+                <li>
+                  <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>100% Bio-Produkte, Kuchenvitrine &amp; lokales TSCHÖAM’S Craft Bier</span>
+                </li>
+              </ul>
+
+              <div class="loc-card__info-box">
+                <div class="loc-card__info-row">
+                  <strong>Öffnungszeiten:</strong>
+                  <span>Täglich 08:00 – 19:00 Uhr (Ab 1. September bis 21:00 Uhr)</span>
+                </div>
+                <div class="loc-card__info-row">
+                  <strong>Adresse &amp; Tel:</strong>
+                  <span>Herzoggasse 6, 2340 Mödling · <a href="tel:+436609840707">+43 660 9840707</a></span>
+                </div>
+              </div>
+
+              <div class="loc-card__actions">
+                <a href="#speisekarte" class="btn btn--primary" data-jump-menu="moedling">
+                  <span data-i18n="locations.btn.menu">Menü öffnen</span>
+                </a>
+                <button type="button" class="btn btn--secondary" data-open-lightbox="moedling">
+                  Original-Karte (5 Seiten)
+                </button>
+                <a href="https://share.google/LVHGprsLfb5v46MXj" target="_blank" rel="noopener" class="btn btn--ghost">
+                  <span data-i18n="locations.btn.route">Route planen</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PHILOSOPHY & STORY (DARK LUXURY PARALLAX BACKDROP) ================= -->
+    <section class="section story-section" id="philosophie">
+      <div class="story-section__parallax" style="background-image: url('assets/images/brand/interior-hinterbruehl.jpg');" aria-hidden="true"></div>
+      <div class="story-section__veil" aria-hidden="true"></div>
+
+      <div class="container story__grid">
+        <div class="story__images" data-reveal="fade-right">
+          <div class="story-collage">
+            <figure class="story-collage__item story-collage__item--main">
+              <img src="assets/images/brand/chalet-car-2.jpg" alt="Café Weiss Eingang &amp; Schild Seit 2020" loading="lazy" />
+            </figure>
+            <figure class="story-collage__item story-collage__item--top">
+              <img src="assets/images/brand/moedling-card.jpg" alt="Bio Latte Art im Café Weiss" loading="lazy" />
+            </figure>
+            <figure class="story-collage__item story-collage__item--bottom">
+              <img src="assets/images/brand/dish-salmon-dessert.jpg" alt="Französische Küche &amp; Patisserie" loading="lazy" />
+            </figure>
+          </div>
+        </div>
+
+        <div class="story__content" data-reveal="fade-left" style="--delay: 0.15s">
+          <span class="section-eyebrow section-eyebrow--light" data-i18n="story.eyebrow">Unsere Geschichte &amp; Philosophie</span>
+          <h2 class="section-title section-title--light" data-i18n-html="story.title">Französischer Charme, mit <em>Herz gekocht</em></h2>
+
+          <p class="story__paragraph" data-i18n="story.p1">
+            Unsere Geschichte lebt von einer einfachen Freude: Menschen bei gutem Essen zusammenzubringen. Im Café Weiss verbinden wir den Charme eines französisch inspirierten Cafés mit einer Küche, in der wir mit Herz und viel Liebe zu Geschmack und Qualität kochen.
+          </p>
+          <p class="story__paragraph" data-i18n="story.p2">
+            Uns inspiriert die französische Art, das Leben zu genießen: ein Kaffee in aller Ruhe, ein feines Dessert aus unserer Vitrine, ein Gespräch, das etwas länger dauern darf, und ein Abendessen, für das man sich bewusst Zeit nimmt.
+          </p>
+          <p class="story__paragraph" data-i18n="story.p3">
+            Am Morgen begrüßen wir Sie mit duftendem Bio-Kaffee und einem reichhaltigen Frühstück. Mittags erwarten Sie feine Gerichte und unser wöchentliches Mittagsmenü in Hinterbrühl. Und am Abend laden wir Sie ein, bei Steak au Poivre, Lachs à la Provençale und einem Glas Wein besondere Momente zu teilen.
+          </p>
+
+          <blockquote class="story__quote" data-i18n="story.quote">
+            „Auf jedem Teller soll spürbar sein, was uns am Herzen liegt: Geschmack, Ausgewogenheit und Qualität.“
+          </blockquote>
+
+          <div class="story__stats">
+            <div class="story-stat">
+              <span class="story-stat__num" data-i18n="story.stat1.num">2020</span>
+              <span class="story-stat__label" data-i18n="story.stat1.label">Gegründet mit Leidenschaft</span>
+            </div>
+            <div class="story-stat">
+              <span class="story-stat__num" data-i18n="story.stat2.num">100%</span>
+              <span class="story-stat__label" data-i18n="story.stat2.label">Bio-Kaffee &amp; Frische</span>
+            </div>
+            <div class="story-stat">
+              <span class="story-stat__num" data-i18n="story.stat3.num">7 Tage</span>
+              <span class="story-stat__label" data-i18n="story.stat3.label">Montag – Sonntag geöffnet</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= INTERACTIVE DIGITAL MENU ================= -->
+    <section class="section menu-section has-culinary-pattern" id="speisekarte">
+      <div class="ambient-orb ambient-orb--gold-right" aria-hidden="true"></div>
+      <div class="ambient-orb ambient-orb--gold-left" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-eyebrow" data-i18n="menu.eyebrow">Kulinarik &amp; Patisserie</span>
+          <h2 class="section-title" data-i18n-html="menu.title">Unsere <em>Speisekarte</em></h2>
+          <p class="section-subtitle" data-i18n="menu.subtitle">
+            Entdecken Sie unsere Gerichte interaktiv oder blättern Sie durch die Original-Speisekarten beider Standorte.
+          </p>
+        </div>
+
+        <!-- Menu Top Bar: Location Switcher & Original Menu Lightbox Trigger -->
+        <div class="menu-LocationBar" data-reveal="fade-up" style="--delay: 0.1s">
+          <div class="menu-loc-switch" role="tablist" aria-label="Speisekarte nach Standort">
+            <button type="button" class="menu-loc-btn active" data-menu-location="hinterbruehl">
+              <span class="menu-loc-btn__title" data-i18n="menu.loc.hinterbruehl">Restaurant &amp; Café Hinterbrühl</span>
+              <span class="menu-loc-btn__sub" data-i18n="menu.loc.hb.sub">Frühstück · Brunch · Warme Küche · Mittagsmenü</span>
+            </button>
+            <button type="button" class="menu-loc-btn" data-menu-location="moedling">
+              <span class="menu-loc-btn__title" data-i18n="menu.loc.moedling">Kaffeehaus Mödling</span>
+              <span class="menu-loc-btn__sub" data-i18n="menu.loc.md.sub">Frühstück · Bio-Kaffee · Salate · Eis &amp; Kuchen</span>
+            </button>
+          </div>
+
+          <button type="button" class="btn btn--gold menu-gallery-trigger" id="openCurrentMenuGallery">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span data-i18n="menu.btn.original">Original-Speisekarte ansehen (Galerie)</span>
+          </button>
+        </div>
+
+        <!-- MITTAGSMENÜ SPECIAL BANNER (Shown for Hinterbrühl, Auto-Scheduled by Date) -->
+        <div class="lunch-banner" id="lunchMenuBanner" data-reveal="fade-up">
+          <!-- Scheduled Weeks Bar & Quick Admin Link -->
+          <div class="lunch-scheduler-bar">
+            <div class="lunch-week-tabs" id="lunchWeekTabs" role="tablist" aria-label="Wochenauswahl Mittagsmenü">
+              <!-- Populated dynamically by js/app.js with Active & Upcoming Scheduled Weeks -->
+            </div>
+            <a href="admin.html" class="lunch-admin-link" title="Wochenmenü verwalten &amp; im Voraus planen">
+              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <span data-i18n="lunch.admin.btn">Wochenmenü bearbeiten &amp; vorplanen</span>
+            </a>
+          </div>
+
+          <div class="lunch-banner__header">
+            <div>
+              <div class="lunch-banner__badges">
+                <span class="badge badge--gold" data-i18n="lunch.badge">DIENSTAG – FREITAG · 11:00 – 15:00 UHR</span>
+                <span class="lunch-period-pill" id="lunchPeriodBadge">📅 03.11.2026 – 06.11.2026</span>
+              </div>
+              <h3 class="lunch-banner__title" id="lunchTitle">Wöchentliches Mittagsmenü in Hinterbrühl</h3>
+              <p class="lunch-banner__subtitle" id="lunchSchedule">Dienstag – Freitag · 11:00 – 15:00 Uhr · Auch vegetarisch erhältlich</p>
+            </div>
+            <div class="lunch-banner__prices">
+              <div class="lunch-price-box">
+                <span class="lunch-price-box__label" data-i18n="lunch.2course.name">2-Gänge-Menü</span>
+                <span class="lunch-price-box__sub" data-i18n="lunch.2course.desc">Hauptspeise &amp; Dessert</span>
+                <strong class="lunch-price-box__val" id="lunchPrice2">€ 10,90</strong>
+              </div>
+              <div class="lunch-price-box lunch-price-box--featured">
+                <span class="lunch-price-box__label" data-i18n="lunch.3course.name">3-Gänge-Menü</span>
+                <span class="lunch-price-box__sub" data-i18n="lunch.3course.desc">Suppe/Vorspeise, Hauptspeise &amp; Dessert</span>
+                <strong class="lunch-price-box__val" id="lunchPrice3">€ 14,90</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="lunch-days-grid" id="lunchDaysGrid">
+            <!-- Populated dynamically by js/app.js -->
+          </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="menu-categories" id="menuCategoryTabs" role="tablist">
+          <!-- Populated dynamically by js/app.js -->
+        </div>
+
+        <!-- Search & Dietary Filter Bar -->
+        <div class="menu-toolbar">
+          <div class="menu-search">
+            <svg class="icon-sm menu-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="menuSearchInput" class="menu-search__input" placeholder="Gericht oder Zutat suchen (z.B. Croissant, Lachs, Matcha)..." data-i18n-placeholder="menu.search.placeholder" />
+          </div>
+
+          <div class="menu-filters" role="group" aria-label="Speisen filtern">
+            <button type="button" class="filter-chip active" data-menu-filter="all" data-i18n="menu.filter.all">Alle Speisen</button>
+            <button type="button" class="filter-chip" data-menu-filter="signature" data-i18n="menu.filter.signature">Signature &amp; Favoriten</button>
+            <button type="button" class="filter-chip" data-menu-filter="veg" data-i18n="menu.filter.veg">Vegetarisch</button>
+            <button type="button" class="filter-chip" data-menu-filter="bio" data-i18n="menu.filter.bio">Bio</button>
+          </div>
+        </div>
+
+        <!-- Menu Items Grid -->
+        <div class="menu-items-grid" id="menuItemsGrid">
+          <!-- Populated dynamically by js/app.js -->
+        </div>
+
+        <!-- Kitchen & Vitrine Footer Note -->
+        <div class="menu-footer-note" data-reveal="fade-up">
+          <div class="menu-footer-note__inner">
+            <div class="menu-footer-note__icon">✦</div>
+            <div>
+              <p class="menu-footer-note__primary" data-i18n="menu.vitrine.note">
+                Hinweis aus unserer Küche: Da wir eine große Auswahl an frischem Fleisch, Fisch sowie hausgemachten Kuchen und Torten anbieten, laden wir Sie herzlich ein, auch einen Blick in unsere Vitrine vor Ort zu werfen.
+              </p>
+              <p class="menu-footer-note__secondary" data-i18n="menu.allergens.note">
+                Wir verwenden ausschließlich hochwertige Bio-Produkte. Unser Team informiert Sie gerne über allergene Zutaten.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRIVATE EVENTS & VENUES (PARALLAX DARK AMBIENCE) ================= -->
+    <section class="section events-section" id="veranstaltungen">
+      <div class="events-section__bg" style="background-image: url('assets/images/brand/hero-hinterbruehl.jpg');" aria-hidden="true"></div>
+      <div class="events-section__veil" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="section-header text-center" data-reveal="fade-up">
+          <span class="section-eyebrow section-eyebrow--light" data-i18n="events.eyebrow">Ihr Event · Unser Raum</span>
+          <h2 class="section-title section-title--light" data-i18n-html="events.title">Wo besondere Momente <em>unvergesslich</em> werden</h2>
+          <p class="section-subtitle section-subtitle--light" data-i18n="events.subtitle">
+            Unsere Häuser in Hinterbrühl und Mödling stehen Ihnen von Montag bis Sonntag für Hochzeiten, Geburtstage, Taufen, Firmenfeiern und private Anlässe zur Verfügung.
+          </p>
+        </div>
+
+        <!-- Event Spaces 3-Column Showcase -->
+        <div class="events-grid">
+          <!-- Space 1: Hinterbrühl Salon -->
+          <article class="event-card" data-reveal="fade-up" style="--delay: 0.08s" data-tilt-card>
+            <div class="event-card__media">
+              <img src="assets/images/brand/event-banquet.jpg" alt="Festlich gedeckte Tafel im Café Weiss Hinterbrühl" loading="lazy" />
+              <span class="event-card__tag" data-i18n="events.space1.tag">Hinterbrühl · Nahe der Seegrotte</span>
+            </div>
+            <div class="event-card__body">
+              <h3 class="event-card__title" data-i18n="events.space1.title">Eleganter Festsaal &amp; Kronleuchter-Salon</h3>
+              <p class="event-card__desc" data-i18n="events.space1.desc">
+                Stilvolles französisches Ambiente mit Kristalllüstern, fein gedeckten Tafeln und individueller Menübegleitung für Hochzeiten, Taufen, Familienfeiern und Firmenevents.
+              </p>
+              <div class="event-card__meta" data-i18n="events.space1.cap">
+                Flexibel für Gesellschaften &amp; Feiern
+              </div>
+            </div>
+          </article>
+
+          <!-- Space 2: Mödling 1607 Vault -->
+          <article class="event-card" data-reveal="fade-up" style="--delay: 0.18s" data-tilt-card>
+            <div class="event-card__media">
+              <img src="assets/images/brand/events-bg.jpg" alt="Historischer Innenraum aus dem Jahr 1607 in Mödling" loading="lazy" />
+              <span class="event-card__tag" data-i18n="events.space2.tag">Mödling · Historisches Gewölbe</span>
+            </div>
+            <div class="event-card__body">
+              <h3 class="event-card__title" data-i18n="events.space2.title">Historischer Innenraum aus dem Jahr 1607</h3>
+              <p class="event-card__desc" data-i18n="events.space2.desc">
+                Eine warme, intime Atmosphäre in einem echten historischen Gewölberaum aus dem Jahr 1607 – französisch eingerichtet, ideal für Geburtstage, Meetings oder Feiern im engen Kreis.
+              </p>
+              <div class="event-card__meta" data-i18n="events.space2.cap">
+                Kapazität: 20 Sitzplätze · Reservierung mind. 1 Woche vorab
+              </div>
+            </div>
+          </article>
+
+          <!-- Space 3: Mödling Terrace -->
+          <article class="event-card" data-reveal="fade-up" style="--delay: 0.28s" data-tilt-card>
+            <div class="event-card__media">
+              <img src="assets/images/brand/icon-event.png" alt="Sonnenterrasse mit Rathaus-Blick in Mödling" loading="lazy" />
+              <span class="event-card__tag" data-i18n="events.space3.tag">Mödling · Herzoggasse 6</span>
+            </div>
+            <div class="event-card__body">
+              <h3 class="event-card__title" data-i18n="events.space3.title">Sonnenterrasse mit Rathaus-Blick</h3>
+              <p class="event-card__desc" data-i18n="events.space3.desc">
+                Unsere großzügige Terrasse im Herzen der Mödlinger Fußgängerzone bietet einen herrlichen Blick auf das historische Rathaus – perfekt für Empfänge, Sommerfeste und Hochzeiten.
+              </p>
+              <div class="event-card__meta" data-i18n="events.space3.cap">
+                Kapazität: 40 Sitzplätze · Reservierung mind. 1 Woche vorab
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Occasions Strip & CTA -->
+        <div class="events-cta-banner" data-reveal="zoom-in">
+          <div class="events-cta-banner__gallery">
+            <img src="assets/images/brand/event-flowers.jpg" alt="Tischdekoration Schön dass Sie da sind" loading="lazy" />
+            <img src="assets/images/brand/event-champagne.jpg" alt="Champagner-Empfang im Café Weiss" loading="lazy" />
+          </div>
+          <div class="events-cta-banner__content">
+            <div class="occasions-pills">
+              <span class="occasion-pill">💍 Hochzeiten</span>
+              <span class="occasion-pill">🥂 Geburtstage</span>
+              <span class="occasion-pill">👶 Taufen</span>
+              <span class="occasion-pill">👨‍👩‍👧‍👦 Familienfeiern</span>
+              <span class="occasion-pill">💼 Firmenevents</span>
+              <span class="occasion-pill">✨ Private Anlässe</span>
+            </div>
+            <h3>Wir machen Ihren besonderen Tag unvergesslich!</h3>
+            <p>
+              Kontaktieren Sie uns für eine persönliche Beratung unter <a href="tel:+436609840707">+43 660 9840707</a> (oder Event-Hotline Hinterbrühl <a href="tel:+436705078850">+43 670 507 88 50</a>) bzw. direkt über unser Anfrageformular.
+            </p>
+            <a href="#reservierung" class="btn btn--gold" id="eventInquiryCta" data-i18n="events.cta">
+              Jetzt Event unverbindlich anfragen
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CHALET WEISS & CAR RENTAL ================= -->
+    <section class="section chalet-section has-culinary-pattern" id="chalet">
+      <div class="container">
+        <div class="chalet-box" data-reveal="zoom-in">
+          <div class="chalet-box__bg-img" style="background-image: url('assets/images/brand/icon-reserve.png');" aria-hidden="true"></div>
+          <div class="chalet-box__content">
+            <span class="section-eyebrow section-eyebrow--light" data-i18n="chalet.eyebrow">Unser zweites Projekt &amp; Mobilität</span>
+            <h2 class="section-title section-title--light" data-i18n-html="chalet.title">Chalet Weiß &amp; <em>Mietwagen-Service</em></h2>
+            <p class="chalet-box__desc" data-i18n="chalet.desc">
+              Entdecken Sie unser Schwesterprojekt Chalet Weiß in den österreichischen Bergen. Zusätzlich können unsere Gäste ab sofort direkt bei uns im Café Weiss ein Auto mieten, um den Wienerwald, die Seegrotte und die Umgebung komfortabel und flexibel zu erkunden.
+            </p>
+
+            <ul class="chalet-box__list">
+              <li>
+                <span class="chalet-box__check">✦</span>
+                <span data-i18n="chalet.perk1">Direkte Fahrzeugübernahme beim Café Weiss</span>
+              </li>
+              <li>
+                <span class="chalet-box__check">✦</span>
+                <span data-i18n="chalet.perk2">Flexible Tages- &amp; Wochenendtarife für Gäste</span>
+              </li>
+              <li>
+                <span class="chalet-box__check">✦</span>
+                <span data-i18n="chalet.perk3">Erholung &amp; alpiner Luxus im Chalet Weiß</span>
+              </li>
+            </ul>
+
+            <div class="chalet-box__actions">
+              <a href="https://chaletweiss.at" target="_blank" rel="noopener" class="btn btn--gold">
+                <span data-i18n="chalet.btn.web">Zur Chalet-Weiß-Webseite</span>
+                <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+              <a href="#reservierung" class="btn btn--outline-light" id="carRentalInquiryBtn" data-i18n="chalet.btn.car">
+                Mietwagen anfragen
+              </a>
+            </div>
+          </div>
+
+          <div class="chalet-box__media">
+            <img src="assets/images/brand/icon-reserve.png" alt="Chalet Weiß in den österreichischen Alpen" loading="lazy" />
+            <div class="chalet-box__caption">
+              <strong>chaletweiss.at</strong>
+              <span>Alpiner Rückzugsort &amp; exklusiver Mietwagen-Service ab Café Weiss</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RESERVATION & EVENT INQUIRY SECTION ================= -->
+    <section class="section reserve-section has-culinary-pattern" id="reservierung">
+      <div class="ambient-orb ambient-orb--emerald-right" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="reserve-layout">
+          <!-- Left Column: Form -->
+          <div class="reserve-card" data-reveal="fade-up">
+            <span class="section-eyebrow" data-i18n="reserve.eyebrow">Reservierung &amp; Kontakt</span>
+            <h2 class="section-title" data-i18n-html="reserve.title">Wir freuen uns auf <em>Ihren Besuch</em></h2>
+            <p class="reserve-card__subtitle" data-i18n="reserve.subtitle">
+              Reservieren Sie Ihren Tisch oder senden Sie uns Ihre Event-Anfrage. Wir melden uns umgehend bei Ihnen zur Bestätigung.
+            </p>
+
+            <!-- Booking Mode Tabs -->
+            <div class="reserve-tabs" role="tablist">
+              <button type="button" class="reserve-tab active" data-booking-mode="table" data-i18n="reserve.tab.table">
+                Tisch reservieren
+              </button>
+              <button type="button" class="reserve-tab" data-booking-mode="event" data-i18n="reserve.tab.event">
+                Event-Anfrage
+              </button>
+            </div>
+
+            <form id="reservationForm" class="reserve-form">
+              <div class="form-row form-row--2">
+                <div class="form-group">
+                  <label for="resLocation" data-i18n="reserve.form.location">Standort auswählen</label>
+                  <select id="resLocation" name="location" required>
+                    <option value="Hinterbrühl (Hauptstraße 16)">Hinterbrühl · Hauptstraße 16 (Restaurant &amp; Café)</option>
+                    <option value="Mödling (Herzoggasse 6)">Mödling · Herzoggasse 6 (Kaffeehaus &amp; Terrasse)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="resOccasion" data-i18n="reserve.form.occasion">Anlass der Veranstaltung</label>
+                  <select id="resOccasion" name="occasion">
+                    <option value="Tischreservierung" data-i18n="reserve.occ.table">Gemütlicher Café- / Restaurantbesuch</option>
+                    <option value="Geburtstagsfeier" data-i18n="reserve.occ.birthday">Geburtstagsfeier</option>
+                    <option value="Hochzeit / Empfang" data-i18n="reserve.occ.wedding">Hochzeit / Standesamt-Empfang</option>
+                    <option value="Taufe / Familienfeier" data-i18n="reserve.occ.baptism">Taufe / Familienfeier</option>
+                    <option value="Firmenfeier / Business" data-i18n="reserve.occ.corporate">Firmenfeier / Business</option>
+                    <option value="Mietwagen-Anfrage" data-i18n="reserve.occ.car">Mietwagen-Anfrage</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row form-row--3">
+                <div class="form-group">
+                  <label for="resDate" data-i18n="reserve.form.date">Datum *</label>
+                  <input type="date" id="resDate" name="date" required />
+                </div>
+                <div class="form-group">
+                  <label for="resTime" data-i18n="reserve.form.time">Uhrzeit *</label>
+                  <input type="time" id="resTime" name="time" value="12:00" min="08:00" max="21:00" required />
+                </div>
+                <div class="form-group">
+                  <label for="resGuests" data-i18n="reserve.form.guests">Anzahl Personen *</label>
+                  <select id="resGuests" name="guests" required>
+                    <option value="2 Personen">2 Personen</option>
+                    <option value="3 Personen">3 Personen</option>
+                    <option value="4 Personen">4 Personen</option>
+                    <option value="5–6 Personen">5–6 Personen</option>
+                    <option value="7–10 Personen">7–10 Personen</option>
+                    <option value="11–20 Personen (Gruppe/Event)">11–20 Personen (Gruppe/Event)</option>
+                    <option value="20–40+ Personen (Private Feier)">20–40+ Personen (Private Feier)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row form-row--2">
+                <div class="form-group">
+                  <label for="resName" data-i18n="reserve.form.name">Ihr Name *</label>
+                  <input type="text" id="resName" name="name" placeholder="Vor- und Nachname" required />
+                </div>
+                <div class="form-group">
+                  <label for="resPhone" data-i18n="reserve.form.phone">Telefonnummer *</label>
+                  <input type="tel" id="resPhone" name="phone" placeholder="+43 660 ..." required />
+                </div>
+              </div>
+
+              <div class="form-row form-row--2">
+                <div class="form-group">
+                  <label for="resEmail" data-i18n="reserve.form.email">E-Mail-Adresse</label>
+                  <input type="email" id="resEmail" name="email" placeholder="ihre.email@beispiel.at" />
+                </div>
+                <div class="form-group">
+                  <label for="resArea" data-i18n="reserve.form.area">Bereich / Wunschplatz</label>
+                  <select id="resArea" name="area">
+                    <option value="Innenbereich / Salon" data-i18n="reserve.area.indoor">Innenbereich / Salon</option>
+                    <option value="Sonnenterrasse" data-i18n="reserve.area.terrace">Sonnenterrasse</option>
+                    <option value="Historischer Raum 1607 (Mödling)" data-i18n="reserve.area.historic">Historischer Raum 1607 (Mödling)</option>
+                    <option value="Festsaal (Hinterbrühl)" data-i18n="reserve.area.banquet">Festsaal (Hinterbrühl)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="resNotes" data-i18n="reserve.form.notes">Nachricht oder besondere Wünsche</label>
+                <textarea id="resNotes" name="notes" rows="3" placeholder="Allergien, Kinderstuhl, Hochzeits-/Geburtstagstorte, Menüwunsch..."></textarea>
+              </div>
+
+              <div class="reserve-form__actions">
+                <button type="submit" class="btn btn--primary btn--lg">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  <span data-i18n="reserve.btn.submit">Reservierungsanfrage senden</span>
+                </button>
+                <button type="button" id="whatsappReserveBtn" class="btn btn--whatsapp btn--lg">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  <span data-i18n="reserve.btn.whatsapp">Per WhatsApp reservieren</span>
+                </button>
+              </div>
+
+              <div id="reservationFeedback" class="reserve-feedback" hidden></div>
+            </form>
+          </div>
+
+          <!-- Right Column: Direct Contact & Locations Summary -->
+          <aside class="contact-sidebar" data-reveal="fade-left" style="--delay: 0.15s">
+            <div class="contact-card">
+              <h3 class="contact-card__title" data-i18n="reserve.direct.title">Direkter Kontakt</h3>
+              <p class="contact-card__desc" data-i18n="reserve.direct.desc">
+                Für kurzfristige Reservierungen am selben Tag erreichen Sie uns am schnellsten telefonisch.
+              </p>
+
+              <div class="contact-direct-links">
+                <a href="tel:+436609840707" class="contact-pill">
+                  <span class="contact-pill__icon">📞</span>
+                  <div>
+                    <small>Reservierungen &amp; Info</small>
+                    <strong>+43 660 9840707</strong>
+                  </div>
+                </a>
+                <a href="tel:+436705078850" class="contact-pill">
+                  <span class="contact-pill__icon">🥂</span>
+                  <div>
+                    <small>Event-Telefon Hinterbrühl</small>
+                    <strong>+43 670 507 88 50</strong>
+                  </div>
+                </a>
+                <a href="mailto:cafeweiss.info@gmail.com" class="contact-pill">
+                  <span class="contact-pill__icon">✉️</span>
+                  <div>
+                    <small>E-Mail</small>
+                    <strong>cafeweiss.info@gmail.com</strong>
+                  </div>
+                </a>
+              </div>
+
+              <hr class="contact-divider" />
+
+              <div class="contact-loc-block">
+                <h4>Café Weiss Hinterbrühl</h4>
+                <p>Hauptstraße 16, 2371 Hinterbrühl (nahe der Seegrotte)</p>
+                <p class="contact-loc-block__hours">Mo – So: 08:00 – 20:00 Uhr</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria" target="_blank" rel="noopener" class="text-link">
+                  In Google Maps öffnen →
+                </a>
+              </div>
+
+              <div class="contact-loc-block">
+                <h4>Café Weiss Mödling</h4>
+                <p>Herzoggasse 6, 2340 Mödling (Fußgängerzone / Rathaus)</p>
+                <p class="contact-loc-block__hours">Mo – So: 08:00 – 19:00 Uhr (ab Sept. bis 21:00 Uhr)</p>
+                <a href="https://share.google/LVHGprsLfb5v46MXj" target="_blank" rel="noopener" class="text-link">
+                  In Google Maps öffnen →
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CAREERS SECTION ================= -->
+    <section class="section careers-section has-culinary-pattern" id="karriere">
+      <div class="container">
+        <div class="careers-banner" data-reveal="fade-up">
+          <div class="careers-banner__intro">
+            <span class="section-eyebrow" data-i18n="careers.eyebrow">Werden Sie Teil der Familie</span>
+            <h2 class="section-title" data-i18n-html="careers.title">Karriere im <em>Café Weiss</em></h2>
+            <p class="careers-banner__desc" data-i18n="careers.desc">
+              Zur Verstärkung unseres herzlichen Teams in Hinterbrühl und Mödling suchen wir ab sofort engagierte Mitarbeiter/innen in Service und Küche.
+            </p>
+            <a href="mailto:cafeweiss.info@gmail.com?subject=Bewerbung%20bei%20Caf%C3%A9%20Weiss" class="btn btn--primary">
+              <span data-i18n="careers.btn">Jetzt per E-Mail bewerben</span>
+              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+
+          <div class="careers-perks">
+            <div class="career-perk">
+              <div class="career-perk__icon">🕰️</div>
+              <h3 data-i18n="careers.perk1.title">Flexible Arbeitszeiten</h3>
+              <p data-i18n="careers.perk1.desc">Vollzeit, Teilzeit oder geringfügig – abgestimmt auf Ihren Lebensrhythmus.</p>
+            </div>
+            <div class="career-perk">
+              <div class="career-perk__icon">🤝</div>
+              <h3 data-i18n="careers.perk2.title">Keine Erfahrung erforderlich</h3>
+              <p data-i18n="careers.perk2.desc">Wir schulen Sie herzlich und Schritt für Schritt in unserem Team ein.</p>
+            </div>
+            <div class="career-perk">
+              <div class="career-perk__icon">✨</div>
+              <h3 data-i18n="careers.perk3.title">Faire &amp; pünktliche Bezahlung</h3>
+              <p data-i18n="careers.perk3.desc">Wertschätzendes Arbeitsklima, gutes Trinkgeld und freie Verpflegung.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img src="assets/images/brand/logo-light.png" alt="Café Weiss Logo" class="footer__logo" width="180" height="52" />
+          <p class="footer__tagline" data-i18n="footer.tagline">
+            Französisches Restaurant &amp; Kaffeehaus in Hinterbrühl und Mödling. Mit Liebe zu Geschmack, Bio-Qualität und echter Gastfreundschaft.
+          </p>
+          <div class="footer__socials">
+            <a href="https://www.instagram.com/cafeweis/" target="_blank" rel="noopener" class="footer__social-btn">
+              Instagram @cafeweis
+            </a>
+            <a href="https://chaletweiss.at" target="_blank" rel="noopener" class="footer__social-btn">
+              Chalet Weiß
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <h4>Hinterbrühl</h4>
+          <p>Hauptstraße 16<br />2371 Hinterbrühl (nahe Seegrotte)</p>
+          <p class="footer__hours">Mo – So: 08:00 – 20:00 Uhr</p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria" target="_blank" rel="noopener">Route planen →</a>
+        </div>
+
+        <div class="footer__col">
+          <h4>Mödling</h4>
+          <p>Herzoggasse 6<br />2340 Mödling</p>
+          <p class="footer__hours">Täglich: 08:00 – 19:00 / 21:00 Uhr</p>
+          <a href="https://share.google/LVHGprsLfb5v46MXj" target="_blank" rel="noopener">Route planen →</a>
+        </div>
+
+        <div class="footer__col">
+          <h4>Kontakt &amp; Navigation</h4>
+          <ul class="footer__links">
+            <li><a href="tel:+436609840707">+43 660 9840707</a></li>
+            <li><a href="mailto:cafeweiss.info@gmail.com">cafeweiss.info@gmail.com</a></li>
+            <li><a href="#speisekarte" data-i18n="nav.menu">Speisekarte</a></li>
+            <li><a href="#veranstaltungen" data-i18n="nav.events">Veranstaltungen</a></li>
+            <li><a href="#karriere" data-i18n="nav.careers">Karriere</a></li>
+            <li><a href="admin.html" class="footer__admin-link">⚙️ Mittagsmenü Admin &amp; Planer</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© <span id="currentYear">2026</span> Café Weiss. <span data-i18n="footer.rights">Alle Rechte vorbehalten.</span></p>
+        <p class="footer__bio-note">🌿 Wir verwenden ausschließlich Bio-Produkte</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= ORIGINAL PRINTED MENU LIGHTBOX DIALOG ================= -->
+  <dialog class="lightbox" id="menuLightbox" aria-label="Original-Speisekarte Galerie">
+    <div class="lightbox__container">
+      <div class="lightbox__header">
+        <div class="lightbox__loc-tabs">
+          <button type="button" class="lightbox__loc-btn active" data-lightbox-loc="hinterbruehl">
+            Hinterbrühl (8 Seiten)
+          </button>
+          <button type="button" class="lightbox__loc-btn" data-lightbox-loc="moedling">
+            Mödling (5 Seiten)
+          </button>
+        </div>
+
+        <div class="lightbox__counter" id="lightboxCounter">Seite 1 / 8</div>
+
+        <button type="button" class="lightbox__close" id="closeLightboxBtn" aria-label="Schließen">
+          ✕
+        </button>
+      </div>
+
+      <div class="lightbox__stage">
+        <button type="button" class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Vorherige Seite">
+          ‹
+        </button>
+        <div class="lightbox__img-wrap">
+          <img src="assets/images/menu-hinterbruehl/page-1.jpg" alt="Speisekarte Seite" id="lightboxImage" />
+        </div>
+        <button type="button" class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Nächste Seite">
+          ›
+        </button>
+      </div>
+
+      <div class="lightbox__thumbs" id="lightboxThumbs">
+        <!-- Populated by js/app.js -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="js/menu-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

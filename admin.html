@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Café Weiss | Mittagsmenü-Verwaltung &amp; Wochenplaner</title>
+  <link rel="icon" type="image/png" href="assets/images/brand/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #F7F3EC;
+      --bg-panel: #FFFFFF;
+      --bg-dark: #161210;
+      --bg-emerald: #17332B;
+      --text-main: #1E1916;
+      --text-muted: #6E6158;
+      --gold: #C89666;
+      --gold-dark: #9D6B3F;
+      --border: rgba(200, 150, 102, 0.28);
+      --green: #1E7E52;
+      --blue: #2563EB;
+      --danger: #DC2626;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    /* Top Header */
+    .admin-header {
+      background: var(--bg-dark);
+      color: #fff;
+      padding: 0.9rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 2px solid var(--gold);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      flex-wrap: wrap;
+    }
+    .admin-header__left {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+    }
+    .admin-header__logo {
+      height: 38px;
+      width: auto;
+    }
+    .admin-header__badge {
+      background: rgba(200, 150, 102, 0.2);
+      border: 1px solid var(--gold);
+      color: #F0D9C0;
+      padding: 0.28rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .admin-header__right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .ui-lang-switch {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 2px;
+    }
+    .ui-lang-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.3rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .ui-lang-btn.active {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.65rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+    .btn--gold {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(157, 107, 63, 0.3);
+    }
+    .btn--gold:hover { transform: translateY(-1px); }
+    .btn--green {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(30, 126, 82, 0.25);
+    }
+    .btn--green:hover { background: #166541; transform: translateY(-1px); }
+    .btn--outline-light {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+    .btn--outline-light:hover { background: rgba(255,255,255,0.16); }
+    .btn--secondary {
+      background: #EFE7DC;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+    .btn--secondary:hover { background: #E5D8C6; }
+    .btn--danger {
+      background: rgba(220, 38, 38, 0.08);
+      color: var(--danger);
+      border: 1px solid rgba(220, 38, 38, 0.25);
+    }
+    .btn--danger:hover { background: var(--danger); color: #fff; }
+
+    /* Simulator Bar */
+    .sim-bar {
+      background: var(--bg-emerald);
+      color: #fff;
+      padding: 0.7rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .sim-bar__controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+    .sim-bar input[type="date"] {
+      padding: 0.38rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid var(--gold);
+      background: rgba(255,255,255,0.95);
+      color: var(--text-main);
+      font-weight: 600;
+      font-family: inherit;
+    }
+
+    /* Main Layout */
+    .admin-layout {
+      max-width: 1380px;
+      margin: 1.75rem auto;
+      padding: 0 1.5rem 3rem;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+
+    /* Sidebar: Weeks List */
+    .weeks-sidebar {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.35rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 84px;
+    }
+    .weeks-sidebar__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .weeks-sidebar__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .weeks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1.15rem;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    .week-item {
+      text-align: left;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      border: 1.5px solid rgba(30,25,22,0.1);
+      background: #FAF7F2;
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .week-item:hover {
+      border-color: var(--gold);
+    }
+    .week-item.active {
+      background: #1E1916;
+      color: #fff;
+      border-color: var(--gold);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .week-item__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .week-item__period {
+      font-weight: 700;
+      font-size: 0.94rem;
+    }
+    .status-pill {
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.16rem 0.52rem;
+      border-radius: 999px;
+    }
+    .status-pill--active {
+      background: #DCFCE7;
+      color: #15803D;
+    }
+    .status-pill--scheduled {
+      background: #DBEAFE;
+      color: #1D4ED8;
+    }
+    .status-pill--past {
+      background: #E5E7EB;
+      color: #4B5563;
+    }
+    .week-item__sub {
+      font-size: 0.76rem;
+      opacity: 0.78;
+    }
+
+    /* Main Editor Panel */
+    .editor-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.06);
+    }
+    .editor-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 1.35rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .editor-top__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    .editor-top__actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    /* Period & Prices Box */
+    .schedule-settings {
+      background: #FAF6F0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .field label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .field input {
+      padding: 0.62rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(30, 25, 22, 0.2);
+      background: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+    }
+    .field input:focus {
+      outline: none;
+      border-color: var(--gold-dark);
+      box-shadow: 0 0 0 3px rgba(200,150,102,0.18);
+    }
+
+    /* 4 Days Editor Grid */
+    .days-editor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+    .day-editor-card {
+      background: #FAF7F2;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .day-editor-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(200,150,102,0.2);
+    }
+    .day-editor-card__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+    }
+    .lang-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .lang-cols:last-child {
+      margin-bottom: 0;
+    }
+
+    .editor-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .save-toast {
+      padding: 0.65rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      background: #DCFCE7;
+      color: #15803D;
+      border: 1px solid #86EFAC;
+    }
+
+    /* Printable A4 Sheet (Hidden on screen, visible when printing) */
+    .print-sheet {
+      display: none;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .print-sheet,
+      .print-sheet * {
+        visibility: visible;
+      }
+      .print-sheet {
+        display: block;
+        position: absolute;
+        inset: 0;
+        background: #fff;
+        color: #000;
+        padding: 15mm 20mm;
+        text-align: center;
+        font-family: Georgia, 'Cormorant Garamond', serif;
+      }
+      .print-sheet__logo {
+        height: 76px;
+        margin: 0 auto 6px;
+      }
+      .print-sheet__sub {
+        font-size: 13pt;
+        letter-spacing: 2px;
+        font-weight: bold;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #444;
+        margin-bottom: 16px;
+      }
+      .print-sheet__title {
+        font-size: 22pt;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+      }
+      .print-sheet__dates {
+        font-size: 14pt;
+        margin-bottom: 2px;
+      }
+      .print-sheet__hours {
+        font-size: 11pt;
+        margin-bottom: 18px;
+      }
+      .print-day {
+        margin-bottom: 16px;
+      }
+      .print-day h4 {
+        font-size: 13pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 3px;
+      }
+      .print-day p {
+        font-size: 13.5pt;
+        line-height: 1.35;
+      }
+      .print-day .print-dessert {
+        font-size: 11pt;
+        font-weight: bold;
+        margin-top: 2px;
+      }
+      .print-day .print-veg {
+        font-size: 9.5pt;
+        color: #444;
+      }
+      .print-prices {
+        margin-top: 20px;
+        padding-top: 14px;
+        border-top: 1px solid #888;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .print-prices h5 {
+        font-size: 15pt;
+        margin-bottom: 2px;
+      }
+      .print-prices p {
+        font-size: 10pt;
+        margin-bottom: 4px;
+      }
+      .print-prices strong {
+        font-size: 22pt;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .weeks-sidebar { position: static; }
+      .schedule-settings { grid-template-columns: repeat(2, 1fr); }
+      .days-editor-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="admin-header">
+    <div class="admin-header__left">
+      <a href="index.html">
+        <img src="assets/images/brand/logo-light.png" alt="Café Weiss" class="admin-header__logo" />
+      </a>
+      <span class="admin-header__badge" data-ui="header.badge">Mittagsmenü-Verwaltung &amp; Automatische Wochenplanung</span>
+    </div>
+
+    <div class="admin-header__right">
+      <div class="ui-lang-switch" title="Sprache wählen / Choose Language">
+        <button type="button" class="ui-lang-btn active" data-set-uilang="de">DE</button>
+        <button type="button" class="ui-lang-btn" data-set-uilang="en">EN</button>
+      </div>
+
+      <button type="button" class="btn btn--outline-light" id="printMenuBtn">
+        🖨️ <span data-ui="btn.print">A4 Drucken / PDF</span>
+      </button>
+
+      <a href="index.html#speisekarte" class="btn btn--gold">
+        ← <span data-ui="btn.back">Zur Live-Webseite</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ================= TIME-TRAVEL SIMULATOR BAR ================= -->
+  <div class="sim-bar">
+    <div>
+      ✨ <strong data-ui="sim.title">Automatische Zeitsteuerung:</strong>
+      <span data-ui="sim.desc">Die Webseite erkennt automatisch das aktuelle Datum und zeigt das passende Wochenmenü an. Sie können Wochen im Voraus planen!</span>
+    </div>
+    <div class="sim-bar__controls">
+      <label for="simDateInput" data-ui="sim.label">Vorschau der Webseite am Datum:</label>
+      <input type="date" id="simDateInput" />
+      <button type="button" class="btn btn--gold" id="openSimulatedSiteBtn" style="padding: 0.42rem 0.95rem; font-size: 0.8rem;">
+        🔍 <span data-ui="sim.btn">Vorschau öffnen</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ADMIN WORKSPACE ================= -->
+  <main class="admin-layout">
+    <!-- Left Sidebar: Scheduled Weeks -->
+    <aside class="weeks-sidebar">
+      <div class="weeks-sidebar__header">
+        <h2 class="weeks-sidebar__title" data-ui="sidebar.title">Geplante Wochen</h2>
+      </div>
+
+      <div class="weeks-list" id="weeksList">
+        <!-- Populated dynamically -->
+      </div>
+
+      <button type="button" class="btn btn--gold" id="addNewWeekBtn" style="width: 100%; justify-content: center;">
+        ➕ <span data-ui="sidebar.add">Neue Woche im Voraus planen</span>
+      </button>
+    </aside>
+
+    <!-- Right Panel: Active Week Editor -->
+    <section class="editor-panel">
+      <div class="editor-top">
+        <div>
+          <span id="editorStatusBadge" class="status-pill status-pill--active">JETZT AKTIV</span>
+          <h1 class="editor-top__title" id="editorHeading">Mittagsmenü: 03.11.2026 – 06.11.2026</h1>
+        </div>
+        <div class="editor-top__actions">
+          <button type="button" class="btn btn--secondary" id="autoTranslateBtn" title="Gerichte automatisch von Deutsch auf Englisch übersetzen">
+            ✨ <span data-ui="btn.autotranslate">Auto-Übersetzen DE → EN</span>
+          </button>
+          <button type="button" class="btn btn--secondary" id="duplicateWeekBtn">
+            📋 <span data-ui="btn.duplicate">Für nächste Woche duplizieren</span>
+          </button>
+          <button type="button" class="btn btn--danger" id="deleteWeekBtn">
+            🗑️ <span data-ui="btn.delete">Löschen</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Date Range & Prices -->
+      <div class="schedule-settings">
+        <div class="field">
+          <label for="validFromInput" data-ui="field.from">Automatisch aktiv ab (Mo)</label>
+          <input type="date" id="validFromInput" />
+        </div>
+        <div class="field">
+          <label for="validToInput" data-ui="field.to">Aktiv bis (So)</label>
+          <input type="date" id="validToInput" />
+        </div>
+        <div class="field">
+          <label for="displayPeriodInput" data-ui="field.display">Angezeigter Zeitraum (Di–Fr)</label>
+          <input type="text" id="displayPeriodInput" placeholder="03.11.2026 – 06.11.2026" />
+        </div>
+        <div class="field">
+          <label for="price2Input" data-ui="field.p2">Preis 2-Gänge-Menü</label>
+          <input type="text" id="price2Input" value="€ 10,90" />
+        </div>
+        <div class="field">
+          <label for="price3Input" data-ui="field.p3">Preis 3-Gänge-Menü</label>
+          <input type="text" id="price3Input" value="€ 14,90" />
+        </div>
+      </div>
+
+      <!-- 4 Days Grid (Tuesday - Friday) -->
+      <div class="days-editor-grid" id="daysEditorGrid">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Footer Save Bar -->
+      <div class="editor-footer">
+        <div>
+          <span id="saveToast" class="save-toast" data-ui="toast.saved" hidden>✓ Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.</span>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <button type="button" class="btn btn--green" id="saveAllBtn" style="padding: 0.85rem 2rem; font-size: 0.96rem;">
+            💾 <span data-ui="btn.save">Speichern &amp; Zeitplan aktivieren</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PRINTABLE A4 SHEET (EXACT CAFÉ WEISS DESIGN) ================= -->
+  <div class="print-sheet" id="printSheet">
+    <img src="assets/images/brand/logo-dark.png" alt="Café Weiss" class="print-sheet__logo" />
+    <div class="print-sheet__sub">RESTAURANT &amp; CAFÉ</div>
+    <h2 class="print-sheet__title">MITTAGSMENÜ</h2>
+    <div class="print-sheet__dates" id="printDates">03.11.2026 - 06.11.2026</div>
+    <div class="print-sheet__hours">Dienstag-Freitag · 11:00-15:00</div>
+    <div id="printDaysContainer"></div>
+    <div class="print-prices">
+      <div>
+        <h5>3-Gänge-Menü</h5>
+        <p>Suppe/Vorspeise, Hauptspeise &amp; Dessert</p>
+        <strong id="printPrice3">€ 14,90</strong>
+      </div>
+      <div>
+        <h5>2-Gänge-Menü</h5>
+        <p>Hauptspeise &amp; Dessert</p>
+        <strong id="printPrice2">€ 10,90</strong>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const UI_STRINGS = {
+        de: {
+          "header.badge": "Mittagsmenü-Verwaltung & Automatische Wochenplanung",
+          "btn.print": "A4 Drucken / PDF",
+          "btn.back": "Zur Live-Webseite",
+          "sim.title": "Automatische Zeitsteuerung:",
+          "sim.desc": "Die Webseite erkennt automatisch das aktuelle Datum und zeigt das passende Wochenmenü an. Sie können Wochen im Voraus planen!",
+          "sim.label": "Vorschau der Webseite am Datum:",
+          "sim.btn": "Vorschau öffnen",
+          "sidebar.title": "Geplante Wochen",
+          "sidebar.add": "Neue Woche im Voraus planen",
+          "btn.autotranslate": "Auto-Übersetzen DE → EN",
+          "btn.duplicate": "Für nächste Woche duplizieren",
+          "btn.delete": "Löschen",
+          "field.from": "Automatisch aktiv ab (Mo)",
+          "field.to": "Aktiv bis (So)",
+          "field.display": "Angezeigter Zeitraum (Di–Fr)",
+          "field.p2": "Preis 2-Gänge-Menü",
+          "field.p3": "Preis 3-Gänge-Menü",
+          "btn.save": "Speichern & Zeitplan aktivieren",
+          "toast.saved": "✓ Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.",
+          "alert.minOne": "Es muss mindestens eine geplante Woche vorhanden sein!",
+          "status.active": "JETZT AKTIV",
+          "status.scheduled": "GEPLANT",
+          "status.past": "ARCHIVIERT",
+          "lbl.soup.de": "Suppe / Vorspeise (Deutsch)",
+          "lbl.soup.en": "Suppe / Vorspeise (Englisch)",
+          "lbl.main.de": "Hauptspeise (Deutsch)",
+          "lbl.main.en": "Hauptspeise (Englisch)",
+          "lbl.dessert.de": "Dessert (Deutsch)",
+          "lbl.dessert.en": "Dessert (Englisch)"
+        },
+        en: {
+          "header.badge": "Weekly Lunch Menu Admin & Auto-Scheduler",
+          "btn.print": "Print A4 / PDF",
+          "btn.back": "View Live Website",
+          "sim.title": "Automatic Date Scheduling:",
+          "sim.desc": "The website automatically detects today's date and displays the matching weekly menu. Schedule weeks in advance effortlessly!",
+          "sim.label": "Preview website on date:",
+          "sim.btn": "Preview on Site",
+          "sidebar.title": "Scheduled Weeks",
+          "sidebar.add": "Schedule New Week",
+          "btn.autotranslate": "Auto-Translate DE → EN",
+          "btn.duplicate": "Duplicate to Next Week",
+          "btn.delete": "Delete",
+          "field.from": "Auto-Active From (Mon)",
+          "field.to": "Active Until (Sun)",
+          "field.display": "Displayed Period (Tue–Fri)",
+          "field.p2": "2-Course Price",
+          "field.p3": "3-Course Price",
+          "btn.save": "Save & Activate Schedule",
+          "toast.saved": "✓ Saved successfully! Changes are now live on the website.",
+          "alert.minOne": "At least one scheduled week must remain!",
+          "status.active": "ACTIVE NOW",
+          "status.scheduled": "SCHEDULED",
+          "status.past": "PAST",
+          "lbl.soup.de": "Soup / Starter (German)",
+          "lbl.soup.en": "Soup / Starter (English)",
+          "lbl.main.de": "Main Course (German)",
+          "lbl.main.en": "Main Course (English)",
+          "lbl.dessert.de": "Dessert (German)",
+          "lbl.dessert.en": "Dessert (English)"
+        }
+      };
+
+      const savedAdminLang = localStorage.getItem("cafeweiss_admin_lang");
+      let uiLang = savedAdminLang === "en" ? "en" : "de";
+      let store = { schedules: [] };
+      let currentWeekId = null;
+
+      function ut(key) {
+        return (UI_STRINGS[uiLang] && UI_STRINGS[uiLang][key]) || UI_STRINGS.de[key] || key;
+      }
+
+      function getTodayIso() {
+        const d = new Date();
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+      }
+
+      function addDaysIso(isoDate, days) {
+        const d = new Date(isoDate + "T12:00:00");
+        d.setDate(d.getDate() + days);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+      }
+
+      function formatDeDate(isoDate) {
+        if (!isoDate) return "";
+        const [y, m, d] = isoDate.split("-");
+        return `${d}.${m}.${y}`;
+      }
+
+      function computeDisplayPeriod(mondayIso) {
+        // Tuesday is +1, Friday is +4
+        const tue = addDaysIso(mondayIso, 1);
+        const fri = addDaysIso(mondayIso, 4);
+        return `${formatDeDate(tue)} – ${formatDeDate(fri)}`;
+      }
+
+      function getWeekStatus(week) {
+        const today = getTodayIso();
+        if (today >= week.validFrom && today <= week.validTo) return "active";
+        if (week.validFrom > today) return "scheduled";
+        return "past";
+      }
+
+      async function loadSchedules() {
+        try {
+          const res = await fetch("api/lunch-schedules?t=" + Date.now(), { cache: "no-store" });
+          if (res.ok) {
+            store = await res.json();
+          } else {
+            const fallbackRes = await fetch("data/lunch-schedules.json?t=" + Date.now(), { cache: "no-store" });
+            store = await fallbackRes.json();
+          }
+        } catch (err) {
+          const local = localStorage.getItem("cafeweiss_lunch_schedules");
+          if (local) store = JSON.parse(local);
+        }
+
+        if (!store.schedules || !store.schedules.length) {
+          store.schedules = [];
+        }
+
+        // Select active week or first week
+        const activeWeek = store.schedules.find((w) => getWeekStatus(w) === "active") || store.schedules[0];
+        if (activeWeek) currentWeekId = activeWeek.id;
+
+        const simInput = document.getElementById("simDateInput");
+        if (simInput) simInput.value = getTodayIso();
+
+        renderAll();
+      }
+
+      function renderAll() {
+        // Translate static UI labels
+        document.querySelectorAll("[data-ui]").forEach((el) => {
+          el.textContent = ut(el.getAttribute("data-ui"));
+        });
+        document.querySelectorAll("[data-set-uilang]").forEach((btn) => {
+          btn.classList.toggle("active", btn.getAttribute("data-set-uilang") === uiLang);
+        });
+
+        renderSidebar();
+        renderEditor();
+        renderPrintSheet();
+      }
+
+      function renderSidebar() {
+        const listEl = document.getElementById("weeksList");
+        if (!listEl) return;
+
+        store.schedules.sort((a, b) => (a.validFrom || "").localeCompare(b.validFrom || ""));
+
+        listEl.innerHTML = store.schedules
+          .map((w) => {
+            const st = getWeekStatus(w);
+            const pillClass =
+              st === "active"
+                ? "status-pill--active"
+                : st === "scheduled"
+                ? "status-pill--scheduled"
+                : "status-pill--past";
+            const pillLabel =
+              st === "active"
+                ? ut("status.active")
+                : st === "scheduled"
+                ? ut("status.scheduled")
+                : ut("status.past");
+
+            const firstDish = w.days && w.days[0] ? w.days[0].main.de : "";
+            return `
+              <button type="button" class="week-item ${w.id === currentWeekId ? "active" : ""}" data-select-week="${w.id}">
+                <div class="week-item__top">
+                  <span class="week-item__period">${w.displayPeriod}</span>
+                  <span class="status-pill ${pillClass}">${pillLabel}</span>
+                </div>
+                <div class="week-item__sub">Auto: ${formatDeDate(w.validFrom)} – ${formatDeDate(w.validTo)}</div>
+                <div class="week-item__sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Di: ${firstDish}</div>
+              </button>
+            `;
+          })
+          .join("");
+
+        listEl.querySelectorAll("[data-select-week]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            syncCurrentEditorToMemory();
+            currentWeekId = btn.getAttribute("data-select-week");
+            renderAll();
+          });
+        });
+      }
+
+      function getCurrentWeekObj() {
+        return store.schedules.find((w) => w.id === currentWeekId) || store.schedules[0];
+      }
+
+      function renderEditor() {
+        const week = getCurrentWeekObj();
+        if (!week) return;
+
+        const st = getWeekStatus(week);
+        const badge = document.getElementById("editorStatusBadge");
+        if (badge) {
+          badge.className =
+            "status-pill " +
+            (st === "active"
+              ? "status-pill--active"
+              : st === "scheduled"
+              ? "status-pill--scheduled"
+              : "status-pill--past");
+          badge.textContent =
+            st === "active"
+              ? ut("status.active")
+              : st === "scheduled"
+              ? ut("status.scheduled")
+              : ut("status.past");
+        }
+
+        const heading = document.getElementById("editorHeading");
+        if (heading) heading.textContent = `Mittagsmenü: ${week.displayPeriod}`;
+
+        document.getElementById("validFromInput").value = week.validFrom || "";
+        document.getElementById("validToInput").value = week.validTo || "";
+        document.getElementById("displayPeriodInput").value = week.displayPeriod || "";
+        document.getElementById("price2Input").value = week.price2Course || "€ 10,90";
+        document.getElementById("price3Input").value = week.price3Course || "€ 14,90";
+
+        const grid = document.getElementById("daysEditorGrid");
+        if (!grid) return;
+
+        grid.innerHTML = (week.days || [])
+          .map(
+            (d, idx) => `
+            <div class="day-editor-card" data-day-index="${idx}">
+              <div class="day-editor-card__header">
+                <span class="day-editor-card__title">${d.day.de} / ${d.day.en}</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">11:00 – 15:00</span>
+              </div>
+
+              <div class="lang-cols">
+                <div class="field">
+                  <label>${ut("lbl.soup.de")}</label>
+                  <input type="text" class="day-soup-de" value="${(d.soup.de || "").replace(/"/g, "&quot;")}" />
+                </div>
+                <div class="field">
+                  <label>${ut("lbl.soup.en")}</label>
+                  <input type="text" class="day-soup-en" value="${(d.soup.en || "").replace(/"/g, "&quot;")}" />
+                </div>
+              </div>
+
+              <div class="lang-cols">
+                <div class="field">
+                  <label>${ut("lbl.main.de")}</label>
+                  <input type="text" class="day-main-de" value="${(d.main.de || "").replace(/"/g, "&quot;")}" />
+                </div>
+                <div class="field">
+                  <label>${ut("lbl.main.en")}</label>
+                  <input type="text" class="day-main-en" value="${(d.main.en || "").replace(/"/g, "&quot;")}" />
+                </div>
+              </div>
+
+              <div class="lang-cols">
+                <div class="field">
+                  <label>${ut("lbl.dessert.de")}</label>
+                  <input type="text" class="day-dessert-de" value="${(d.dessert.de || "").replace(/"/g, "&quot;")}" />
+                </div>
+                <div class="field">
+                  <label>${ut("lbl.dessert.en")}</label>
+                  <input type="text" class="day-dessert-en" value="${(d.dessert.en || "").replace(/"/g, "&quot;")}" />
+                </div>
+              </div>
+            </div>
+          `
+          )
+          .join("");
+      }
+
+      function syncCurrentEditorToMemory() {
+        const week = getCurrentWeekObj();
+        if (!week) return;
+
+        const vf = document.getElementById("validFromInput").value;
+        const vt = document.getElementById("validToInput").value;
+        const dp = document.getElementById("displayPeriodInput").value;
+        const p2 = document.getElementById("price2Input").value;
+        const p3 = document.getElementById("price3Input").value;
+
+        if (vf) week.validFrom = vf;
+        if (vt) week.validTo = vt;
+        if (dp) week.displayPeriod = dp;
+        if (p2) week.price2Course = p2;
+        if (p3) week.price3Course = p3;
+
+        document.querySelectorAll(".day-editor-card").forEach((card) => {
+          const idx = Number(card.getAttribute("data-day-index"));
+          if (week.days && week.days[idx]) {
+            week.days[idx].soup.de = card.querySelector(".day-soup-de").value.trim();
+            week.days[idx].soup.en = card.querySelector(".day-soup-en").value.trim();
+            week.days[idx].main.de = card.querySelector(".day-main-de").value.trim();
+            week.days[idx].main.en = card.querySelector(".day-main-en").value.trim();
+            week.days[idx].dessert.de = card.querySelector(".day-dessert-de").value.trim();
+            week.days[idx].dessert.en = card.querySelector(".day-dessert-en").value.trim();
+          }
+        });
+      }
+
+      function renderPrintSheet() {
+        const week = getCurrentWeekObj();
+        if (!week) return;
+
+        document.getElementById("printDates").textContent = (week.displayPeriod || "").replace("–", "-");
+        document.getElementById("printPrice2").textContent = week.price2Course || "€ 10,90";
+        document.getElementById("printPrice3").textContent = week.price3Course || "€ 14,90";
+
+        const container = document.getElementById("printDaysContainer");
+        if (container) {
+          container.innerHTML = (week.days || [])
+            .map(
+              (d) => `
+              <div class="print-day">
+                <h4>${d.day.de.toUpperCase()}</h4>
+                <p>${d.soup.de}</p>
+                <p>${d.main.de}</p>
+                <div class="print-dessert">${d.dessert.de}</div>
+                <div class="print-veg">Auch vegetarisch erhältlich</div>
+              </div>
+            `
+            )
+            .join("");
+        }
+      }
+
+      // Smart Culinary DE -> EN Dictionary Translator
+      function translateDishDeToEn(textDe) {
+        if (!textDe) return "";
+        const map = [
+          [/Dessert des Tages/gi, "Dessert of the Day"],
+          [/Kürbiscremesuppe/gi, "Creamy Pumpkin Soup"],
+          [/Erbsensuppe/gi, "Green Pea Soup"],
+          [/Linsensuppe/gi, "Hearty Lentil Soup"],
+          [/Griechischer Salat/gi, "Fresh Greek Salad"],
+          [/Französische Zwiebelsuppe/gi, "French Onion Soup"],
+          [/Tomatencremesuppe/gi, "Creamy Tomato Soup"],
+          [/Rindsuppe mit Frittaten/gi, "Viennese Beef Broth with Pancake Strips"],
+          [/Knoblauchcremesuppe/gi, "Creamy Garlic Soup"],
+          [/Waldpilzcremesuppe/gi, "Wild Mushroom Cream Soup"],
+          [/Karotten-Ingwer-Cremesuppe/gi, "Carrot & Ginger Cream Soup"],
+          [/Schweinegeschnetzeltes nach Stroganoff-Art/gi, "Pork Stroganoff"],
+          [/Schweinerippchen/gi, "Tender Pork Ribs"],
+          [/Kartoffelwedges/gi, "Potato Wedges"],
+          [/mit Kartoffeln/gi, "with Potatoes"],
+          [/Rosmarinkartoffeln/gi, "Rosemary Potatoes"],
+          [/Petersilienkartoffeln/gi, "Parsley Potatoes"],
+          [/Pasta mit Lachs/gi, "Artisan Pasta with Salmon"],
+          [/Ravioli in Beurre-blanc-Sauce/gi, "Ravioli in French Beurre Blanc Sauce"],
+          [/Lachsfilet/gi, "Salmon Fillet"],
+          [/Zanderfilet/gi, "Pike-Perch Fillet"],
+          [/Hühnerfilet/gi, "Chicken Breast Fillet"],
+          [/Schweinsmedaillons/gi, "Pork Medallions"],
+          [/Rindergulasch/gi, "Viennese Beef Goulash"],
+          [/Serviettenknödel/gi, "Bread Dumplings"],
+          [/mit Basilikum/gi, "with Fresh Basil"],
+          [/mit/gi, "with"],
+          [/und/gi, "and"]
+        ];
+        let result = textDe;
+        map.forEach(([regex, repl]) => {
+          result = result.replace(regex, repl);
+        });
+        return result;
+      }
+
+      // Event Listeners
+      document.addEventListener("DOMContentLoaded", () => {
+        loadSchedules();
+
+        // UI Language buttons
+        document.querySelectorAll("[data-set-uilang]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            syncCurrentEditorToMemory();
+            uiLang = btn.getAttribute("data-set-uilang");
+            localStorage.setItem("cafeweiss_admin_lang", uiLang);
+            renderAll();
+          });
+        });
+
+        // Auto-update validTo and displayPeriod when validFrom changes
+        const validFromInput = document.getElementById("validFromInput");
+        validFromInput.addEventListener("change", () => {
+          const vf = validFromInput.value;
+          if (vf) {
+            document.getElementById("validToInput").value = addDaysIso(vf, 6);
+            document.getElementById("displayPeriodInput").value = computeDisplayPeriod(vf);
+            syncCurrentEditorToMemory();
+            renderSidebar();
+            renderPrintSheet();
+          }
+        });
+
+        // Auto-Translate DE -> EN button
+        document.getElementById("autoTranslateBtn").addEventListener("click", () => {
+          document.querySelectorAll(".day-editor-card").forEach((card) => {
+            const sDe = card.querySelector(".day-soup-de").value;
+            const mDe = card.querySelector(".day-main-de").value;
+            const dDe = card.querySelector(".day-dessert-de").value;
+            card.querySelector(".day-soup-en").value = translateDishDeToEn(sDe);
+            card.querySelector(".day-main-en").value = translateDishDeToEn(mDe);
+            card.querySelector(".day-dessert-en").value = translateDishDeToEn(dDe);
+          });
+          syncCurrentEditorToMemory();
+        });
+
+        // Add New Scheduled Week in Advance
+        document.getElementById("addNewWeekBtn").addEventListener("click", () => {
+          syncCurrentEditorToMemory();
+          const lastWeek = store.schedules[store.schedules.length - 1];
+          const nextMonday = lastWeek && lastWeek.validFrom
+            ? addDaysIso(lastWeek.validFrom, 7)
+            : getTodayIso();
+          const nextSunday = addDaysIso(nextMonday, 6);
+          const newId = "week-" + nextMonday + "-" + Math.floor(Math.random() * 1000);
+
+          const newWeek = {
+            id: newId,
+            validFrom: nextMonday,
+            validTo: nextSunday,
+            displayPeriod: computeDisplayPeriod(nextMonday),
+            price2Course: "€ 10,90",
+            price3Course: "€ 14,90",
+            days: [
+              {
+                dayKey: "tue",
+                day: { de: "Dienstag", en: "Tuesday" },
+                soup: { de: "Tagessuppe", en: "Soup of the Day" },
+                main: { de: "Hauptspeise am Dienstag", en: "Tuesday Main Course" },
+                dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
+              },
+              {
+                dayKey: "wed",
+                day: { de: "Mittwoch", en: "Wednesday" },
+                soup: { de: "Tagessuppe", en: "Soup of the Day" },
+                main: { de: "Hauptspeise am Mittwoch", en: "Wednesday Main Course" },
+                dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
+              },
+              {
+                dayKey: "thu",
+                day: { de: "Donnerstag", en: "Thursday" },
+                soup: { de: "Tagessuppe", en: "Soup of the Day" },
+                main: { de: "Hauptspeise am Donnerstag", en: "Thursday Main Course" },
+                dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
+              },
+              {
+                dayKey: "fri",
+                day: { de: "Freitag", en: "Friday" },
+                soup: { de: "Frischer Salat", en: "Fresh Salad" },
+                main: { de: "Fisch- oder Pastagericht am Freitag", en: "Friday Fish or Pasta Dish" },
+                dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
+              }
+            ]
+          };
+
+          store.schedules.push(newWeek);
+          currentWeekId = newId;
+          renderAll();
+        });
+
+        // Duplicate Current Week into Next Available Week
+        document.getElementById("duplicateWeekBtn").addEventListener("click", () => {
+          syncCurrentEditorToMemory();
+          const cur = getCurrentWeekObj();
+          if (!cur) return;
+
+          const lastWeek = store.schedules[store.schedules.length - 1];
+          const nextMonday = lastWeek && lastWeek.validFrom
+            ? addDaysIso(lastWeek.validFrom, 7)
+            : addDaysIso(cur.validFrom, 7);
+          const nextSunday = addDaysIso(nextMonday, 6);
+          const clone = JSON.parse(JSON.stringify(cur));
+          clone.id = "week-" + nextMonday + "-" + Math.floor(Math.random() * 1000);
+          clone.validFrom = nextMonday;
+          clone.validTo = nextSunday;
+          clone.displayPeriod = computeDisplayPeriod(nextMonday);
+
+          store.schedules.push(clone);
+          currentWeekId = clone.id;
+          renderAll();
+        });
+
+        // Delete Week
+        document.getElementById("deleteWeekBtn").addEventListener("click", () => {
+          if (store.schedules.length <= 1) {
+            alert(ut("alert.minOne"));
+            return;
+          }
+          store.schedules = store.schedules.filter((w) => w.id !== currentWeekId);
+          currentWeekId = store.schedules[0].id;
+          renderAll();
+        });
+
+        // Save All Schedules to Server & LocalStorage
+        document.getElementById("saveAllBtn").addEventListener("click", async () => {
+          syncCurrentEditorToMemory();
+          renderSidebar();
+          renderPrintSheet();
+
+          localStorage.setItem("cafeweiss_lunch_schedules", JSON.stringify(store));
+
+          try {
+            await fetch("api/lunch-schedules", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(store)
+            });
+          } catch (e) {
+            // Saved in localStorage fallback
+          }
+
+          const toast = document.getElementById("saveToast");
+          if (toast) {
+            toast.hidden = false;
+            setTimeout(() => {
+              toast.hidden = true;
+            }, 4000);
+          }
+        });
+
+        // Print A4 Button
+        document.getElementById("printMenuBtn").addEventListener("click", () => {
+          syncCurrentEditorToMemory();
+          renderPrintSheet();
+          window.print();
+        });
+
+        // Open Simulated Date Preview on Main Website
+        document.getElementById("openSimulatedSiteBtn").addEventListener("click", async () => {
+          syncCurrentEditorToMemory();
+          localStorage.setItem("cafeweiss_lunch_schedules", JSON.stringify(store));
+          try {
+            await fetch("api/lunch-schedules", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(store)
+            });
+          } catch (e) {}
+
+          const simDate = document.getElementById("simDateInput").value || getTodayIso();
+          window.open(`index.html?previewDate=${simDate}#speisekarte`, "_blank");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
+
