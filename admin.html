@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#161210" />
   <title>Café Weiss | Mittagsmenü-Verwaltung &amp; Wochenplaner</title>
   <link rel="icon" type="image/png" href="assets/images/brand/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,34 +16,52 @@
       --bg-dark: #161210;
       --bg-emerald: #17332B;
       --text-main: #1E1916;
-      --text-muted: #6E6158;
+      --text-muted: #5C4E43;
       --gold: #C89666;
-      --gold-dark: #9D6B3F;
-      --border: rgba(200, 150, 102, 0.28);
-      --green: #1E7E52;
-      --blue: #2563EB;
-      --danger: #DC2626;
+      --gold-dark: #7A4F28;
+      --border: rgba(200, 150, 102, 0.32);
+      --green: #1B6E47;
+      --blue: #1D4ED8;
+      --danger: #B91C1C;
       --radius: 14px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; font-size: 16px; }
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-main);
       color: var(--text-main);
       min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Header */
+    a, button, input {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    /* Top Header — Functional Layer (Apple Liquid Glass) */
     .admin-header {
-      background: var(--bg-dark);
+      background: rgba(22, 18, 16, 0.86);
+      backdrop-filter: blur(28px) saturate(1.45);
+      -webkit-backdrop-filter: blur(28px) saturate(1.45);
       color: #fff;
-      padding: 0.9rem 1.75rem;
+      padding: 0.85rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      border-bottom: 2px solid var(--gold);
+      border-bottom: 1.5px solid rgba(200, 150, 102, 0.45);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
       position: sticky;
       top: 0;
       z-index: 50;
@@ -51,17 +70,20 @@
     .admin-header__left {
       display: flex;
       align-items: center;
-      gap: 1.1rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+      min-width: 0;
     }
     .admin-header__logo {
       height: 38px;
       width: auto;
+      display: block;
     }
     .admin-header__badge {
       background: rgba(200, 150, 102, 0.2);
       border: 1px solid var(--gold);
       color: #F0D9C0;
-      padding: 0.28rem 0.75rem;
+      padding: 0.3rem 0.8rem;
       border-radius: 999px;
       font-size: 0.78rem;
       font-weight: 600;
@@ -69,60 +91,68 @@
     .admin-header__right {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
       flex-wrap: wrap;
     }
     .ui-lang-switch {
       display: inline-flex;
+      align-items: center;
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 999px;
       padding: 2px;
     }
     .ui-lang-btn {
       background: none;
       border: none;
-      color: rgba(255, 255, 255, 0.7);
-      padding: 0.3rem 0.65rem;
-      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.78);
+      min-width: 44px;
+      min-height: 40px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.78rem;
       font-weight: 700;
       border-radius: 999px;
       cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
     .ui-lang-btn.active {
-      background: var(--gold);
+      background: #8B5D33;
       color: #fff;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.45rem;
+      min-height: 44px;
+      min-width: 44px;
       padding: 0.65rem 1.2rem;
       border-radius: 999px;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 600;
       border: none;
       cursor: pointer;
       text-decoration: none;
-      transition: 0.2s ease;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
     }
+    .btn:active { transform: scale(0.98); }
     .btn--gold {
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      background: linear-gradient(135deg, #8B5D33 0%, #6A4420 100%);
       color: #fff;
-      box-shadow: 0 6px 18px rgba(157, 107, 63, 0.3);
+      box-shadow: 0 6px 18px rgba(106, 68, 32, 0.3);
     }
     .btn--gold:hover { transform: translateY(-1px); }
     .btn--green {
       background: var(--green);
       color: #fff;
-      box-shadow: 0 6px 18px rgba(30, 126, 82, 0.25);
+      box-shadow: 0 6px 18px rgba(27, 110, 71, 0.25);
     }
-    .btn--green:hover { background: #166541; transform: translateY(-1px); }
+    .btn--green:hover { background: #145738; transform: translateY(-1px); }
     .btn--outline-light {
       background: rgba(255,255,255,0.08);
       color: #fff;
-      border: 1px solid rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.24);
     }
     .btn--outline-light:hover { background: rgba(255,255,255,0.16); }
     .btn--secondary {
@@ -132,9 +162,9 @@
     }
     .btn--secondary:hover { background: #E5D8C6; }
     .btn--danger {
-      background: rgba(220, 38, 38, 0.08);
+      background: rgba(185, 28, 28, 0.08);
       color: var(--danger);
-      border: 1px solid rgba(220, 38, 38, 0.25);
+      border: 1px solid rgba(185, 28, 28, 0.28);
     }
     .btn--danger:hover { background: var(--danger); color: #fff; }
 
@@ -142,13 +172,13 @@
     .sim-bar {
       background: var(--bg-emerald);
       color: #fff;
-      padding: 0.7rem 1.75rem;
+      padding: 0.75rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
       flex-wrap: wrap;
-      font-size: 0.85rem;
+      font-size: 0.86rem;
     }
     .sim-bar__controls {
       display: flex;
@@ -157,13 +187,16 @@
       flex-wrap: wrap;
     }
     .sim-bar input[type="date"] {
-      padding: 0.38rem 0.7rem;
+      min-height: 44px;
+      padding: 0.45rem 0.75rem;
       border-radius: 8px;
       border: 1px solid var(--gold);
-      background: rgba(255,255,255,0.95);
+      background: #FFFFFF;
       color: var(--text-main);
+      font-size: 1rem;
       font-weight: 600;
       font-family: inherit;
+      font-variant-numeric: tabular-nums;
     }
 
     /* Main Layout */
@@ -176,6 +209,9 @@
       gap: 1.75rem;
       align-items: start;
     }
+    .admin-layout > * {
+      min-width: 0;
+    }
 
     /* Sidebar: Weeks List */
     .weeks-sidebar {
@@ -185,7 +221,8 @@
       padding: 1.35rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
       position: sticky;
-      top: 84px;
+      top: 88px;
+      min-width: 0;
     }
     .weeks-sidebar__header {
       display: flex;
@@ -205,18 +242,21 @@
       margin-bottom: 1.15rem;
       max-height: 60vh;
       overflow-y: auto;
+      overscroll-behavior: contain;
     }
     .week-item {
       text-align: left;
+      min-height: 48px;
       padding: 0.9rem 1rem;
       border-radius: 10px;
-      border: 1.5px solid rgba(30,25,22,0.1);
+      border: 1.5px solid rgba(30,25,22,0.12);
       background: #FAF7F2;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
+      font-variant-numeric: tabular-nums;
     }
     .week-item:hover {
       border-color: var(--gold);
@@ -232,17 +272,18 @@
       align-items: center;
       justify-content: space-between;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
     .week-item__period {
       font-weight: 700;
       font-size: 0.94rem;
     }
     .status-pill {
-      font-size: 0.66rem;
+      font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      padding: 0.16rem 0.52rem;
+      padding: 0.18rem 0.55rem;
       border-radius: 999px;
     }
     .status-pill--active {
@@ -258,8 +299,8 @@
       color: #4B5563;
     }
     .week-item__sub {
-      font-size: 0.76rem;
-      opacity: 0.78;
+      font-size: 0.78rem;
+      opacity: 0.82;
     }
 
     /* Main Editor Panel */
@@ -269,6 +310,7 @@
       border-radius: var(--radius);
       padding: 2rem;
       box-shadow: 0 12px 35px rgba(0,0,0,0.06);
+      min-width: 0;
     }
     .editor-top {
       display: flex;
@@ -282,9 +324,10 @@
     }
     .editor-top__title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
+      font-size: clamp(1.6rem, 3vw, 2rem);
       font-weight: 700;
       line-height: 1.15;
+      font-variant-numeric: tabular-nums;
     }
     .editor-top__actions {
       display: flex;
@@ -300,13 +343,14 @@
       padding: 1.25rem;
       margin-bottom: 1.75rem;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 1rem;
     }
     .field {
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
+      min-width: 0;
     }
     .field label {
       font-size: 0.76rem;
@@ -315,25 +359,29 @@
       letter-spacing: 0.05em;
       color: var(--text-muted);
     }
+    /* iOS Safari Rule: font-size: 1rem (16px) & min-height: 44px */
     .field input {
+      width: 100%;
+      min-height: 44px;
       padding: 0.62rem 0.8rem;
       border-radius: 8px;
-      border: 1px solid rgba(30, 25, 22, 0.2);
+      border: 1px solid rgba(30, 25, 22, 0.22);
       background: #fff;
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 600;
       font-family: inherit;
+      font-variant-numeric: tabular-nums;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .field input:focus {
-      outline: none;
       border-color: var(--gold-dark);
-      box-shadow: 0 0 0 3px rgba(200,150,102,0.18);
+      box-shadow: 0 0 0 3px rgba(200,150,102,0.22);
     }
 
     /* 4 Days Editor Grid */
     .days-editor-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1.25rem;
       margin-bottom: 1.75rem;
     }
@@ -342,6 +390,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.25rem;
+      min-width: 0;
     }
     .day-editor-card__header {
       display: flex;
@@ -350,6 +399,8 @@
       margin-bottom: 0.9rem;
       padding-bottom: 0.6rem;
       border-bottom: 1px solid rgba(200,150,102,0.2);
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
     .day-editor-card__title {
       font-family: 'Cormorant Garamond', serif;
@@ -359,7 +410,7 @@
     }
     .lang-cols {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.75rem;
       margin-bottom: 0.75rem;
     }
@@ -411,6 +462,7 @@
       }
       .print-sheet__logo {
         height: 76px;
+        width: auto;
         margin: 0 auto 6px;
       }
       .print-sheet__sub {
@@ -477,11 +529,27 @@
       }
     }
 
+    @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+      .admin-header {
+        background: #161210 !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+    }
+
     @media (max-width: 1024px) {
       .admin-layout { grid-template-columns: 1fr; }
       .weeks-sidebar { position: static; }
-      .schedule-settings { grid-template-columns: repeat(2, 1fr); }
+      .schedule-settings { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .days-editor-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .admin-header, .sim-bar { padding: 0.75rem 1rem; }
+      .admin-layout { padding: 0 1rem 2.5rem; margin: 1rem auto; }
+      .editor-panel { padding: 1.25rem; }
+      .schedule-settings, .lang-cols { grid-template-columns: 1fr; }
+      .editor-top__actions .btn { flex: 1 1 100%; }
     }
   </style>
 </head>
@@ -491,13 +559,13 @@
   <header class="admin-header">
     <div class="admin-header__left">
       <a href="index.html">
-        <img src="assets/images/brand/logo-light.png" alt="Café Weiss" class="admin-header__logo" />
+        <img src="assets/images/brand/logo-light.png" alt="Café Weiss" class="admin-header__logo" width="133" height="38" />
       </a>
       <span class="admin-header__badge" data-ui="header.badge">Mittagsmenü-Verwaltung &amp; Automatische Wochenplanung</span>
     </div>
 
     <div class="admin-header__right">
-      <div class="ui-lang-switch" title="Sprache wählen / Choose Language">
+      <div class="ui-lang-switch" role="group" aria-label="Sprache wählen / Choose Language">
         <button type="button" class="ui-lang-btn active" data-set-uilang="de">DE</button>
         <button type="button" class="ui-lang-btn" data-set-uilang="en">EN</button>
       </div>
@@ -520,8 +588,8 @@
     </div>
     <div class="sim-bar__controls">
       <label for="simDateInput" data-ui="sim.label">Vorschau der Webseite am Datum:</label>
-      <input type="date" id="simDateInput" />
-      <button type="button" class="btn btn--gold" id="openSimulatedSiteBtn" style="padding: 0.42rem 0.95rem; font-size: 0.8rem;">
+      <input type="date" id="simDateInput" name="simDate" />
+      <button type="button" class="btn btn--gold" id="openSimulatedSiteBtn">
         🔍 <span data-ui="sim.btn">Vorschau öffnen</span>
       </button>
     </div>
@@ -568,23 +636,23 @@
       <div class="schedule-settings">
         <div class="field">
           <label for="validFromInput" data-ui="field.from">Automatisch aktiv ab (Mo)</label>
-          <input type="date" id="validFromInput" />
+          <input type="date" id="validFromInput" name="validFrom" />
         </div>
         <div class="field">
           <label for="validToInput" data-ui="field.to">Aktiv bis (So)</label>
-          <input type="date" id="validToInput" />
+          <input type="date" id="validToInput" name="validTo" />
         </div>
         <div class="field">
           <label for="displayPeriodInput" data-ui="field.display">Angezeigter Zeitraum (Di–Fr)</label>
-          <input type="text" id="displayPeriodInput" placeholder="03.11.2026 – 06.11.2026" />
+          <input type="text" id="displayPeriodInput" name="displayPeriod" placeholder="03.11.2026 – 06.11.2026…" />
         </div>
         <div class="field">
           <label for="price2Input" data-ui="field.p2">Preis 2-Gänge-Menü</label>
-          <input type="text" id="price2Input" value="€ 10,90" />
+          <input type="text" id="price2Input" name="price2Course" value="€ 10,90" />
         </div>
         <div class="field">
           <label for="price3Input" data-ui="field.p3">Preis 3-Gänge-Menü</label>
-          <input type="text" id="price3Input" value="€ 14,90" />
+          <input type="text" id="price3Input" name="price3Course" value="€ 14,90" />
         </div>
       </div>
 
@@ -596,7 +664,7 @@
       <!-- Footer Save Bar -->
       <div class="editor-footer">
         <div>
-          <span id="saveToast" class="save-toast" data-ui="toast.saved" hidden>✓ Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.</span>
+          <span id="saveToast" class="save-toast" role="status" aria-live="polite" data-ui="toast.saved" hidden>✓ Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.</span>
         </div>
         <div style="display: flex; gap: 0.75rem;">
           <button type="button" class="btn btn--green" id="saveAllBtn" style="padding: 0.85rem 2rem; font-size: 0.96rem;">
@@ -609,7 +677,7 @@
 
   <!-- ================= PRINTABLE A4 SHEET (EXACT CAFÉ WEISS DESIGN) ================= -->
   <div class="print-sheet" id="printSheet">
-    <img src="assets/images/brand/logo-dark.png" alt="Café Weiss" class="print-sheet__logo" />
+    <img src="assets/images/brand/logo-dark.png" alt="Café Weiss" class="print-sheet__logo" width="266" height="76" />
     <div class="print-sheet__sub">RESTAURANT &amp; CAFÉ</div>
     <h2 class="print-sheet__title">MITTAGSMENÜ</h2>
     <div class="print-sheet__dates" id="printDates">03.11.2026 - 06.11.2026</div>
@@ -655,6 +723,7 @@
           "btn.save": "Speichern & Zeitplan aktivieren",
           "toast.saved": "✓ Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.",
           "alert.minOne": "Es muss mindestens eine geplante Woche vorhanden sein!",
+          "confirm.delete": "Möchten Sie diese geplante Woche wirklich löschen?",
           "status.active": "JETZT AKTIV",
           "status.scheduled": "GEPLANT",
           "status.past": "ARCHIVIERT",
@@ -686,6 +755,7 @@
           "btn.save": "Save & Activate Schedule",
           "toast.saved": "✓ Saved successfully! Changes are now live on the website.",
           "alert.minOne": "At least one scheduled week must remain!",
+          "confirm.delete": "Are you sure you want to delete this scheduled week?",
           "status.active": "ACTIVE NOW",
           "status.scheduled": "SCHEDULED",
           "status.past": "PAST",
@@ -731,7 +801,6 @@
       }
 
       function computeDisplayPeriod(mondayIso) {
-        // Tuesday is +1, Friday is +4
         const tue = addDaysIso(mondayIso, 1);
         const fri = addDaysIso(mondayIso, 4);
         return `${formatDeDate(tue)} – ${formatDeDate(fri)}`;
@@ -762,7 +831,6 @@
           store.schedules = [];
         }
 
-        // Select active week or first week
         const activeWeek = store.schedules.find((w) => getWeekStatus(w) === "active") || store.schedules[0];
         if (activeWeek) currentWeekId = activeWeek.id;
 
@@ -773,7 +841,7 @@
       }
 
       function renderAll() {
-        // Translate static UI labels
+        document.documentElement.lang = uiLang;
         document.querySelectorAll("[data-ui]").forEach((el) => {
           el.textContent = ut(el.getAttribute("data-ui"));
         });
@@ -875,39 +943,39 @@
             <div class="day-editor-card" data-day-index="${idx}">
               <div class="day-editor-card__header">
                 <span class="day-editor-card__title">${d.day.de} / ${d.day.en}</span>
-                <span style="font-size: 0.75rem; color: var(--text-muted);">11:00 – 15:00</span>
+                <span style="font-size: 0.78rem; color: var(--text-muted); font-variant-numeric: tabular-nums;">11:00 – 15:00</span>
               </div>
 
               <div class="lang-cols">
                 <div class="field">
-                  <label>${ut("lbl.soup.de")}</label>
-                  <input type="text" class="day-soup-de" value="${(d.soup.de || "").replace(/"/g, "&quot;")}" />
+                  <label for="soup-de-${idx}">${ut("lbl.soup.de")}</label>
+                  <input type="text" id="soup-de-${idx}" name="soup_de_${idx}" class="day-soup-de" value="${(d.soup.de || "").replace(/"/g, "&quot;")}" />
                 </div>
                 <div class="field">
-                  <label>${ut("lbl.soup.en")}</label>
-                  <input type="text" class="day-soup-en" value="${(d.soup.en || "").replace(/"/g, "&quot;")}" />
-                </div>
-              </div>
-
-              <div class="lang-cols">
-                <div class="field">
-                  <label>${ut("lbl.main.de")}</label>
-                  <input type="text" class="day-main-de" value="${(d.main.de || "").replace(/"/g, "&quot;")}" />
-                </div>
-                <div class="field">
-                  <label>${ut("lbl.main.en")}</label>
-                  <input type="text" class="day-main-en" value="${(d.main.en || "").replace(/"/g, "&quot;")}" />
+                  <label for="soup-en-${idx}">${ut("lbl.soup.en")}</label>
+                  <input type="text" id="soup-en-${idx}" name="soup_en_${idx}" class="day-soup-en" value="${(d.soup.en || "").replace(/"/g, "&quot;")}" />
                 </div>
               </div>
 
               <div class="lang-cols">
                 <div class="field">
-                  <label>${ut("lbl.dessert.de")}</label>
-                  <input type="text" class="day-dessert-de" value="${(d.dessert.de || "").replace(/"/g, "&quot;")}" />
+                  <label for="main-de-${idx}">${ut("lbl.main.de")}</label>
+                  <input type="text" id="main-de-${idx}" name="main_de_${idx}" class="day-main-de" value="${(d.main.de || "").replace(/"/g, "&quot;")}" />
                 </div>
                 <div class="field">
-                  <label>${ut("lbl.dessert.en")}</label>
-                  <input type="text" class="day-dessert-en" value="${(d.dessert.en || "").replace(/"/g, "&quot;")}" />
+                  <label for="main-en-${idx}">${ut("lbl.main.en")}</label>
+                  <input type="text" id="main-en-${idx}" name="main_en_${idx}" class="day-main-en" value="${(d.main.en || "").replace(/"/g, "&quot;")}" />
+                </div>
+              </div>
+
+              <div class="lang-cols">
+                <div class="field">
+                  <label for="dessert-de-${idx}">${ut("lbl.dessert.de")}</label>
+                  <input type="text" id="dessert-de-${idx}" name="dessert_de_${idx}" class="day-dessert-de" value="${(d.dessert.de || "").replace(/"/g, "&quot;")}" />
+                </div>
+                <div class="field">
+                  <label for="dessert-en-${idx}">${ut("lbl.dessert.en")}</label>
+                  <input type="text" id="dessert-en-${idx}" name="dessert_en_${idx}" class="day-dessert-en" value="${(d.dessert.en || "").replace(/"/g, "&quot;")}" />
                 </div>
               </div>
             </div>
@@ -971,7 +1039,6 @@
         }
       }
 
-      // Smart Culinary DE -> EN Dictionary Translator
       function translateDishDeToEn(textDe) {
         if (!textDe) return "";
         const map = [
@@ -1011,11 +1078,9 @@
         return result;
       }
 
-      // Event Listeners
       document.addEventListener("DOMContentLoaded", () => {
         loadSchedules();
 
-        // UI Language buttons
         document.querySelectorAll("[data-set-uilang]").forEach((btn) => {
           btn.addEventListener("click", () => {
             syncCurrentEditorToMemory();
@@ -1025,7 +1090,6 @@
           });
         });
 
-        // Auto-update validTo and displayPeriod when validFrom changes
         const validFromInput = document.getElementById("validFromInput");
         validFromInput.addEventListener("change", () => {
           const vf = validFromInput.value;
@@ -1038,7 +1102,6 @@
           }
         });
 
-        // Auto-Translate DE -> EN button
         document.getElementById("autoTranslateBtn").addEventListener("click", () => {
           document.querySelectorAll(".day-editor-card").forEach((card) => {
             const sDe = card.querySelector(".day-soup-de").value;
@@ -1051,7 +1114,6 @@
           syncCurrentEditorToMemory();
         });
 
-        // Add New Scheduled Week in Advance
         document.getElementById("addNewWeekBtn").addEventListener("click", () => {
           syncCurrentEditorToMemory();
           const lastWeek = store.schedules[store.schedules.length - 1];
@@ -1105,7 +1167,6 @@
           renderAll();
         });
 
-        // Duplicate Current Week into Next Available Week
         document.getElementById("duplicateWeekBtn").addEventListener("click", () => {
           syncCurrentEditorToMemory();
           const cur = getCurrentWeekObj();
@@ -1127,10 +1188,12 @@
           renderAll();
         });
 
-        // Delete Week
         document.getElementById("deleteWeekBtn").addEventListener("click", () => {
           if (store.schedules.length <= 1) {
             alert(ut("alert.minOne"));
+            return;
+          }
+          if (!window.confirm(ut("confirm.delete"))) {
             return;
           }
           store.schedules = store.schedules.filter((w) => w.id !== currentWeekId);
@@ -1138,7 +1201,6 @@
           renderAll();
         });
 
-        // Save All Schedules to Server & LocalStorage
         document.getElementById("saveAllBtn").addEventListener("click", async () => {
           syncCurrentEditorToMemory();
           renderSidebar();
@@ -1165,14 +1227,12 @@
           }
         });
 
-        // Print A4 Button
         document.getElementById("printMenuBtn").addEventListener("click", () => {
           syncCurrentEditorToMemory();
           renderPrintSheet();
           window.print();
         });
 
-        // Open Simulated Date Preview on Main Website
         document.getElementById("openSimulatedSiteBtn").addEventListener("click", async () => {
           syncCurrentEditorToMemory();
           localStorage.setItem("cafeweiss_lunch_schedules", JSON.stringify(store));
@@ -1192,4 +1252,3 @@
   </script>
 </body>
 </html>
-

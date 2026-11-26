@@ -82,8 +82,10 @@ class CafeWeissHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
 
-class ReusableTCPServer(socketserver.TCPServer):
+class ReusableTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     allow_reuse_address = True
+    daemon_threads = True
+    request_queue_size = 64
 
 
 if __name__ == "__main__":

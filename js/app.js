@@ -34,7 +34,6 @@
     initReservationSystem();
     initScrollReveal();
     initAmbientCanvas();
-    initCursorGlow();
     applyTranslations();
 
     const yearEl = document.getElementById("currentYear");
@@ -45,6 +44,9 @@
   function initAmbientCanvas() {
     const canvas = document.getElementById("ambientCanvas");
     if (!canvas) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
     const ctx = canvas.getContext("2d");
     let width = 0;
     let height = 0;
@@ -130,17 +132,6 @@
     );
 
     elements.forEach((el) => observer.observe(el));
-  }
-
-  // ================= AMBIENT CURSOR GLOW =================
-  function initCursorGlow() {
-    const glow = document.getElementById("cursorGlow");
-    if (!glow || window.matchMedia("(max-width: 860px)").matches) return;
-
-    window.addEventListener("mousemove", (e) => {
-      glow.style.left = `${e.clientX}px`;
-      glow.style.top = `${e.clientY}px`;
-    }, { passive: true });
   }
 
   // ================= HEADER & MOBILE DRAWER =================
@@ -781,8 +772,8 @@
       thumbsEl.innerHTML = pages
         .map(
           (src, idx) => `
-          <button type="button" class="lightbox-thumb ${idx === state.lightboxIndex ? "active" : ""}" data-page-idx="${idx}">
-            <img src="${src}" alt="Seite ${idx + 1}" />
+          <button type="button" class="lightbox-thumb ${idx === state.lightboxIndex ? "active" : ""}" data-page-idx="${idx}" aria-label="Seite ${idx + 1}">
+            <img src="${src}" alt="" width="88" height="126" loading="lazy" />
           </button>
         `
         )
