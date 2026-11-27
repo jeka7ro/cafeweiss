@@ -3724,7 +3724,7 @@ html.dark .events-section__veil {
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.15rem;
     max-width: 100%;
   }
 
@@ -3740,29 +3740,59 @@ html.dark .events-section__veil {
     flex: 0 0 auto;
     scroll-snap-align: start;
   }
+
+  /* Hide redundant Hero quick dock on mobile since iOS bottom tab bar is always visible */
+  .hero-quick-dock {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {
   .container {
-    padding: 0 1rem;
+    padding: 0 0.9rem;
   }
 
   .section {
-    padding: 3.5rem 0;
+    padding: 2.5rem 0;
+  }
+
+  .section-header {
+    margin: 0 auto 1.5rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.35rem);
+    margin-bottom: 0.45rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.5;
   }
 
   .hero {
     min-height: auto;
-    padding: 2.25rem 0 3.25rem;
+    padding: 1.35rem 0 2rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2rem, 7.5vw, 2.6rem);
+    margin-bottom: 0.65rem;
+  }
+
+  .hero__subtitle {
+    font-size: 0.94rem;
+    line-height: 1.5;
+    margin-bottom: 1.1rem;
   }
 
   .header__inner {
-    height: 68px;
+    height: 62px;
     gap: 0.4rem;
   }
 
   .header__logo-img {
-    height: 34px;
+    height: 32px;
   }
 
   .header__actions {
@@ -3801,87 +3831,242 @@ html.dark .events-section__veil {
     padding: 0.3rem 0.5rem;
   }
 
-  .lunch-days-grid,
+  /* Compact Single-Line 50/50 Location Segmented Controls on Mobile */
+  .hero-loc-picker {
+    padding: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-loc-picker__header {
+    padding-bottom: 0.65rem;
+    margin-bottom: 0.65rem;
+    gap: 0.35rem;
+  }
+
+  .hero-loc-picker__label {
+    display: none;
+  }
+
+  .loc-segmented {
+    padding: 0.22rem;
+    gap: 0.25rem;
+  }
+
+  .loc-segmented--section {
+    margin-top: 0.9rem;
+  }
+
+  .loc-seg-btn {
+    min-height: 44px;
+    padding: 0.45rem 0.6rem;
+    align-items: center;
+  }
+
+  .loc-seg-btn__top {
+    justify-content: center;
+  }
+
+  .loc-seg-btn .hero-loc-tab__tag,
+  .loc-seg-btn__sub {
+    display: none;
+  }
+
+  .loc-seg-btn__title {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .hero-loc-card__name {
+    font-size: 1.35rem;
+  }
+
+  .hero-loc-card__desc {
+    font-size: 0.86rem;
+    margin-bottom: 0.65rem;
+    line-height: 1.45;
+  }
+
+  .hero-loc-card__meta {
+    gap: 0.45rem 0.9rem;
+    font-size: 0.8rem;
+  }
+
+  .hero__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  /* Ultra-Compact Menu Top Bar & Lunch Banner on Mobile */
+  .menu-LocationBar {
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .menu-loc-switch {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem;
+    padding: 0.22rem;
+    width: 100%;
+  }
+
+  .menu-loc-btn {
+    min-height: 44px;
+    padding: 0.45rem 0.6rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-loc-btn__title {
+    font-size: 0.98rem;
+    line-height: 1.15;
+  }
+
+  .menu-loc-btn__sub {
+    display: none;
+  }
+
+  .menu-gallery-trigger {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+  }
+
+  .lunch-banner {
+    padding: 0.95rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .lunch-scheduler-bar {
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .lunch-week-tab {
+    min-height: 38px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .lunch-banner__badges {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .lunch-banner__header {
+    gap: 0.65rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .lunch-banner__title {
+    font-size: 1.35rem;
+    margin: 0 0 0.15rem;
+  }
+
+  .lunch-banner__subtitle {
+    font-size: 0.78rem;
+  }
+
+  .lunch-banner__prices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+    width: 100%;
+  }
+
+  .lunch-price-box {
+    min-width: 0;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem;
+  }
+
+  .lunch-price-box__sub {
+    display: none;
+  }
+
+  .lunch-price-box__label {
+    font-size: 0.78rem;
+  }
+
+  .lunch-price-box__val {
+    font-size: 1.2rem;
+  }
+
+  .lunch-days-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .lunch-day-card {
+    padding: 0.7rem 0.75rem;
+  }
+
+  .lunch-day-card__head {
+    margin-bottom: 0.25rem;
+  }
+
+  .lunch-day-card__day {
+    font-size: 0.68rem;
+  }
+
+  .lunch-day-card__soup {
+    font-size: 0.76rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .lunch-day-card__main {
+    font-size: 0.96rem;
+    line-height: 1.22;
+    margin-bottom: 0.2rem;
+  }
+
+  .lunch-day-card__dessert {
+    font-size: 0.7rem;
+  }
+
   .events-grid,
   .footer__top {
     grid-template-columns: 1fr;
   }
 
-  .menu-loc-switch {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.4rem;
-    padding: 0.35rem;
-  }
-
-  .menu-loc-btn {
-    padding: 0.65rem 0.75rem;
-  }
-
-  .menu-loc-btn__title {
-    font-size: 1.05rem;
-  }
-
-  .menu-loc-btn__sub {
-    font-size: 0.72rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .loc-seg-btn {
-    padding: 0.55rem 0.65rem;
-  }
-
-  .loc-seg-btn .hero-loc-tab__tag {
-    display: none;
-  }
-
-  .loc-seg-btn__title {
-    font-size: 1.05rem;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-  }
-
-  .loc-seg-btn__sub {
-    font-size: 0.72rem;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-  }
-
-  .lunch-banner,
   .reserve-card,
   .chalet-box,
   .careers-banner,
   .contact-card,
   .loc-card__body {
-    padding: 1.25rem;
-  }
-
-  .hero-loc-picker {
-    padding: 1rem;
+    padding: 1.15rem;
   }
 
   .hero-live-lunch {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-live-lunch__right {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    padding: 0.65rem 0.85rem;
   }
 
   .hero-live-lunch__dish {
-    white-space: normal;
+    white-space: nowrap;
+    font-size: 0.92rem;
   }
 
-  .hero__actions .btn,
-  .reserve-form__actions .btn,
-  .menu-gallery-trigger {
+  .reserve-form__actions .btn {
     width: 100%;
     white-space: normal;
     text-align: center;
