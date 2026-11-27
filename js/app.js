@@ -922,6 +922,9 @@
     function getFormData() {
       const fd = new FormData(form);
       return {
+        id: `res-${Date.now()}`,
+        createdAt: new Date().toISOString(),
+        status: "new",
         location: fd.get("location") || "Hinterbrühl",
         occasion: fd.get("occasion") || "Tischreservierung",
         date: fd.get("date") || "",
@@ -935,55 +938,84 @@
       };
     }
 
+    async function persistReservation(entry) {
+      try {
+        const raw = localStorage.getItem("cafeweiss_reservations_v1");
+        const list = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(list)) {
+          list.unshift(entry);
+          localStorage.setItem("cafeweiss_reservations_v1", JSON.stringify(list.slice(0, 100)));
+        }
+      } catch (err) {}
+
+      try {
+        await fetch("/api/reservations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(entry)
+        });
+      } catch (err) {}
+    }
+
+    function buildWhatsAppUrl(d) {
+      const text = encodeURIComponent(
+        `Hallo Café Weiss Team! Ich möchte gerne reservieren:\n` +
+          `📍 Standort: ${d.location}\n` +
+          `✨ Anlass: ${d.occasion}\n` +
+          `📅 Datum: ${d.date} um ${d.time} Uhr\n` +
+          `👥 Personen: ${d.guests} (${d.area})\n` +
+          `👤 Name: ${d.name} (${d.phone})\n` +
+          `💬 Wunsch: ${d.notes}`
+      );
+      return `https://wa.me/436609840707?text=${text}`;
+    }
+
+    function buildMailtoUrl(d) {
+      const subject = encodeURIComponent(
+        `[Café Weiss] ${d.occasion} – ${d.location} am ${d.date} (${d.time})`
+      );
+      const body = encodeURIComponent(
+        `Guten Tag liebes Café Weiss Team,\n\n` +
+          `ich möchte gerne folgende Anfrage senden:\n\n` +
+          `• Standort: ${d.location}\n` +
+          `• Anlass: ${d.occasion}\n` +
+          `• Datum & Uhrzeit: ${d.date} um ${d.time} Uhr\n` +
+          `• Personenanzahl: ${d.guests}\n` +
+          `• Wunschbereich: ${d.area}\n` +
+          `• Name: ${d.name}\n` +
+          `• Telefon: ${d.phone}\n` +
+          `• E-Mail: ${d.email}\n` +
+          `• Anmerkungen: ${d.notes}\n\n` +
+          `Bitte um kurze Rückbestätigung.\nHerzlichen Dank!`
+      );
+      return `mailto:cafeweiss.info@gmail.com?subject=${subject}&body=${body}`;
+    }
+
     if (form) {
-      form.addEventListener("submit", (e) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const d = getFormData();
+        await persistReservation(d);
 
-        const subject = encodeURIComponent(
-          `[Café Weiss] ${d.occasion} – ${d.location} am ${d.date} (${d.time})`
-        );
-        const body = encodeURIComponent(
-          `Guten Tag liebes Café Weiss Team,\n\n` +
-            `ich möchte gerne folgende Anfrage senden:\n\n` +
-            `• Standort: ${d.location}\n` +
-            `• Anlass: ${d.occasion}\n` +
-            `• Datum & Uhrzeit: ${d.date} um ${d.time} Uhr\n` +
-            `• Personenanzahl: ${d.guests}\n` +
-            `• Wunschbereich: ${d.area}\n` +
-            `• Name: ${d.name}\n` +
-            `• Telefon: ${d.phone}\n` +
-            `• E-Mail: ${d.email}\n` +
-            `• Anmerkungen: ${d.notes}\n\n` +
-            `Bitte um kurze Rückbestätigung.\nHerzlichen Dank!`
-        );
+        const waUrl = buildWhatsAppUrl(d);
+        const mailUrl = buildMailtoUrl(d);
 
         if (feedbackEl) {
           feedbackEl.hidden = false;
           feedbackEl.innerHTML =
             state.lang === "de"
-              ? `<strong>Vielen Dank, ${d.name}!</strong> Ihr E-Mail-Programm wird mit allen Reservierungsdaten für <em>${d.location}</em> (${d.date}, ${d.time} Uhr) geöffnet. Alternativ erreichen Sie uns jederzeit direkt unter <strong>+43 660 9840707</strong>.`
-              : `<strong>Thank you, ${d.name}!</strong> Your email client is opening with your booking details for <em>${d.location}</em> (${d.date} at ${d.time}). You can also reach us directly at <strong>+43 660 9840707</strong>.`;
+              ? `<strong>✓ Reservierung gespeichert, ${d.name}!</strong><br/>Ihre Anfrage für <em>${d.location}</em> (${d.date}, ${d.time} Uhr · ${d.guests}) wurde im System registriert.<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.65rem;"><a href="${waUrl}" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Sofort per WhatsApp senden</a><a href="${mailUrl}" class="btn btn--secondary btn--sm">✉️ Per E-Mail senden</a></div>`
+              : `<strong>✓ Reservation saved, ${d.name}!</strong><br/>Your booking request for <em>${d.location}</em> (${d.date} at ${d.time} · ${d.guests}) has been recorded.<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.65rem;"><a href="${waUrl}" target="_blank" rel="noopener" class="btn btn--whatsapp btn--sm">💬 Send via WhatsApp Now</a><a href="${mailUrl}" class="btn btn--secondary btn--sm">✉️ Send via Email</a></div>`;
         }
-
-        window.location.href = `mailto:cafeweiss.info@gmail.com?subject=${subject}&body=${body}`;
       });
     }
 
     if (whatsappBtn && form) {
-      whatsappBtn.addEventListener("click", () => {
+      whatsappBtn.addEventListener("click", async () => {
         if (!form.reportValidity()) return;
         const d = getFormData();
-        const text = encodeURIComponent(
-          `Hallo Café Weiss Team! Ich möchte gerne reservieren:\n` +
-            `📍 Standort: ${d.location}\n` +
-            `✨ Anlass: ${d.occasion}\n` +
-            `📅 Datum: ${d.date} um ${d.time} Uhr\n` +
-            `👥 Personen: ${d.guests} (${d.area})\n` +
-            `👤 Name: ${d.name} (${d.phone})\n` +
-            `💬 Wunsch: ${d.notes}`
-        );
-        window.open(`https://wa.me/436609840707?text=${text}`, "_blank", "noopener");
+        await persistReservation(d);
+        window.open(buildWhatsAppUrl(d), "_blank", "noopener");
       });
     }
   }

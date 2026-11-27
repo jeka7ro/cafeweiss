@@ -1124,6 +1124,16 @@
           <span data-ui="btn.print">A4 Drucken</span>
         </button>
 
+        <a href="#reservationsSection" class="ui-btn-secondary">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Reservierungen (<strong id="resCountBadge">0</strong>)</span>
+        </a>
+
         <a href="index.html#speisekarte" class="ui-btn-secondary">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
@@ -1286,6 +1296,21 @@
           </svg>
           <span data-ui="btn.save">Änderungen speichern</span>
         </button>
+      </div>
+
+      <!-- ================= RESERVATIONS & EVENT INQUIRIES INBOX ================= -->
+      <div class="ui-inset-card" id="reservationsSection" style="margin-top: 2rem; padding: 1.35rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <div>
+            <h2 style="font-size:1.2rem;font-weight:700;margin:0 0 0.2rem;">📅 Eingegangene Tisch- &amp; Event-Reservierungen</h2>
+            <p style="font-size:0.82rem;color:var(--ui-label-secondary);margin:0;">
+              Alle über das Formular gesendeten Reservierungen (plus direkter Versand an WhatsApp <strong>+43 660 9840707</strong> &amp; <strong>cafeweiss.info@gmail.com</strong>).
+            </p>
+          </div>
+        </div>
+        <div id="reservationsListContainer" style="display:flex;flex-direction:column;gap:0.65rem;">
+          <!-- Populated dynamically -->
+        </div>
       </div>
     </section>
   </main>
@@ -1682,6 +1707,76 @@
         }
       }
 
+      async function loadReservationsInbox() {
+        const container = document.getElementById("reservationsListContainer");
+        const countBadge = document.getElementById("resCountBadge");
+        if (!container) return;
+
+        let items = [];
+        try {
+          const res = await fetch(`/api/reservations?t=${Date.now()}`, { cache: "no-store" });
+          if (res.ok) {
+            const data = await res.json();
+            if (data && Array.isArray(data.reservations)) {
+              items = data.reservations;
+            }
+          }
+        } catch (err) {}
+
+        try {
+          const localRaw = localStorage.getItem("cafeweiss_reservations_v1");
+          const localItems = localRaw ? JSON.parse(localRaw) : [];
+          if (Array.isArray(localItems)) {
+            const seen = new Set(items.map((r) => r.id));
+            localItems.forEach((r) => {
+              if (r && r.id && !seen.has(r.id)) {
+                items.unshift(r);
+                seen.add(r.id);
+              }
+            });
+          }
+        } catch (err) {}
+
+        if (countBadge) countBadge.textContent = String(items.length);
+
+        if (items.length === 0) {
+          container.innerHTML = `<div style="padding:1rem;color:var(--ui-label-secondary);font-size:0.86rem;">Noch keine Reservierungen vorhanden.</div>`;
+          return;
+        }
+
+        container.innerHTML = items
+          .map((r) => {
+            const cleanPhone = String(r.phone || "").replace(/[^0-9+]/g, "").replace(/^\+/, "");
+            const confirmMsg = encodeURIComponent(
+              `Guten Tag ${r.name}! Herzlichen Dank für Ihre Reservierung im Café Weiss (${r.location}) am ${r.date} um ${r.time} Uhr für ${r.guests}. Wir bestätigen Ihren Tisch herzlich und freuen uns auf Ihren Besuch!`
+            );
+            const waReplyUrl = cleanPhone ? `https://wa.me/${cleanPhone}?text=${confirmMsg}` : `https://wa.me/436609840707?text=${confirmMsg}`;
+            return `
+              <div class="ui-card" style="padding:0.95rem 1.15rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+                <div style="display:flex;flex-direction:column;gap:0.2rem;min-width:220px;flex:1;">
+                  <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                    <strong style="font-size:0.95rem;">${r.name || "Gast"}</strong>
+                    <span class="status-badge status-badge--active"><span class="status-badge__dot"></span><span>${r.date || "Heute"} · ${r.time || ""} Uhr</span></span>
+                    <span class="status-badge status-badge--scheduled">${r.guests || "2 Personen"}</span>
+                    <span class="status-badge status-badge--past">${r.location || "Hinterbrühl"}</span>
+                  </div>
+                  <div style="font-size:0.8rem;color:var(--ui-label-secondary);">
+                    ${r.occasion || "Tischreservierung"} · ${r.area || "Innenbereich"} · Tel: <strong>${r.phone || "-"}</strong> ${r.email ? `· ${r.email}` : ""}
+                  </div>
+                  ${r.notes && r.notes !== "-" ? `<div style="font-size:0.78rem;color:var(--tenant-accent-text);">💬 Wunsch: ${r.notes}</div>` : ""}
+                </div>
+                <div style="display:flex;align-items:center;gap:0.45rem;flex-wrap:wrap;">
+                  <a href="${waReplyUrl}" target="_blank" rel="noopener" class="ui-btn-primary" style="text-decoration:none;">
+                    <span>💬 WhatsApp Bestätigung senden</span>
+                  </a>
+                  ${r.phone ? `<a href="tel:${r.phone}" class="ui-btn-secondary" style="text-decoration:none;">📞 Anrufen</a>` : ""}
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
       async function handleSaveAll() {
         syncCurrentEditorToMemory();
         const result = await SCHEDULER.saveStore(store);
@@ -1716,6 +1811,7 @@
         });
 
         loadSchedules();
+        loadReservationsInbox();
 
         window.addEventListener("beforeunload", (e) => {
           if (hasUnsavedChanges) {

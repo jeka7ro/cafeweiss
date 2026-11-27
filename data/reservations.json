@@ -1,0 +1,20 @@
+{
+  "updatedAt": "2026-11-27T15:00:00Z",
+  "reservations": [
+    {
+      "id": "res-demo-1",
+      "createdAt": "2026-11-27T11:30:00Z",
+      "status": "confirmed",
+      "location": "Hinterbrühl (Hauptstraße 16)",
+      "occasion": "Tischreservierung",
+      "date": "2026-11-28",
+      "time": "12:30",
+      "guests": "4 Personen",
+      "area": "Innenbereich / Salon",
+      "name": "Familie Mayer",
+      "phone": "+43 664 1234567",
+      "email": "mayer@example.at",
+      "notes": "Fenstertisch wenn möglich"
+    }
+  ]
+}
