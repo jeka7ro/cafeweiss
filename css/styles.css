@@ -915,6 +915,14 @@ html.dark .header.is-scrolled .header__logo-img--dark {
   letter-spacing: 0.02em;
 }
 
+html:not(.dark) #siteThemeIconSun {
+  display: none !important;
+}
+
+html.dark #siteThemeIconMoon {
+  display: none !important;
+}
+
 .theme-toggle-btn:hover,
 .header.is-scrolled .theme-toggle-btn:hover {
   background: var(--tenant-accent-soft);
@@ -3693,8 +3701,21 @@ html.dark .events-section__veil {
   }
 
   .header__actions .btn--sm {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.76rem;
+    display: none;
+  }
+
+  .topbar__sep {
+    display: none;
+  }
+
+  .topbar__right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+
+  .topbar__social {
+    display: none;
   }
 
   .lang-switch__btn {

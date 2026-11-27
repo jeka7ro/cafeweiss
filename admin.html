@@ -1445,8 +1445,10 @@
         const moon = document.getElementById("themeIconMoon");
         const meta = document.getElementById("metaThemeColor");
         if (sun && moon) {
-          sun.hidden = !isDark;
-          moon.hidden = isDark;
+          sun.removeAttribute("hidden");
+          moon.removeAttribute("hidden");
+          sun.style.display = isDark ? "block" : "none";
+          moon.style.display = isDark ? "none" : "block";
         }
         if (meta) {
           meta.setAttribute("content", isDark ? "#0C0C0E" : "#F2F2F4");

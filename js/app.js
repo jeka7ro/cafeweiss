@@ -60,8 +60,8 @@
         metaTheme.setAttribute("content", isDark ? "#0C0C0E" : "#F2F2F4");
       }
       if (sunIcon && moonIcon) {
-        sunIcon.hidden = !isDark;
-        moonIcon.hidden = isDark;
+        sunIcon.style.display = isDark ? "block" : "none";
+        moonIcon.style.display = isDark ? "none" : "block";
       }
       if (themeLabel) {
         themeLabel.textContent = isDark ? "Light" : "Dark";
