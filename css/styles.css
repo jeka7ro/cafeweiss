@@ -4,6 +4,19 @@
    ========================================================================== */
 
 :root {
+  --tenant-accent: #7A4F28;
+  --tenant-accent-fg: #FFFFFF;
+  --tenant-accent-hover: color-mix(in oklch, var(--tenant-accent) 86%, black);
+  --tenant-accent-soft: color-mix(in oklch, var(--tenant-accent) 12%, transparent);
+  --tenant-accent-border: color-mix(in oklch, var(--tenant-accent) 30%, transparent);
+  --tenant-accent-gradient: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--tenant-accent) 90%, white) 0%,
+    var(--tenant-accent) 100%
+  );
+  --tenant-accent-shadow: color-mix(in oklch, var(--tenant-accent) 32%, transparent);
+  --tenant-focus-ring: var(--tenant-accent);
+
   --bg-ivory: #FAF6F0;
   --bg-parchment: #F2EAE0;
   --bg-card: #FFFFFF;
@@ -15,26 +28,26 @@
   --text-muted: #5C4E43;
   --text-light: #FAF6F0;
 
-  --gold: #C89666;
-  --gold-bright: #E5B88B;
-  --gold-dark: #7A4F28;
-  --gold-light: #F0D9C0;
-  --gold-subtle: rgba(200, 150, 102, 0.16);
+  --gold: color-mix(in oklch, var(--tenant-accent) 76%, white);
+  --gold-bright: color-mix(in oklch, var(--tenant-accent) 62%, white);
+  --gold-dark: var(--tenant-accent);
+  --gold-light: color-mix(in oklch, var(--tenant-accent) 35%, white);
+  --gold-subtle: var(--tenant-accent-soft);
 
   --emerald: #1B3F35;
   --emerald-soft: rgba(27, 63, 53, 0.12);
-  --success: #2A6F4E;
+  --success: #15803D;
 
-  --border-warm: rgba(200, 150, 102, 0.32);
+  --border-warm: var(--tenant-accent-border);
   --border-subtle: rgba(30, 25, 22, 0.11);
 
   --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", 'Plus Jakarta Sans', system-ui, sans-serif;
 
   --shadow-sm: 0 8px 24px rgba(20, 16, 14, 0.06);
   --shadow-md: 0 18px 45px rgba(20, 16, 14, 0.11);
   --shadow-lg: 0 28px 70px rgba(15, 11, 9, 0.22);
-  --shadow-gold: 0 12px 35px rgba(122, 79, 40, 0.28);
+  --shadow-gold: 0 12px 35px var(--tenant-accent-shadow);
 
   --radius-sm: 10px;
   --radius-md: 16px;
@@ -455,16 +468,16 @@ ul {
 }
 
 .btn--gold {
-  background: linear-gradient(135deg, #8B5D33 0%, #6A4420 100%);
-  color: #fff;
-  border: 1px solid rgba(229, 184, 139, 0.38);
+  background: var(--tenant-accent-gradient);
+  color: var(--tenant-accent-fg);
+  border: 1px solid var(--tenant-accent-border);
   box-shadow: var(--shadow-gold);
 }
 
 .btn--gold:hover {
-  background: linear-gradient(135deg, #9C6A3C 0%, #7A4F28 100%);
+  filter: brightness(1.06);
   transform: translateY(-2px);
-  box-shadow: 0 16px 38px rgba(122, 79, 40, 0.38);
+  box-shadow: 0 16px 38px var(--tenant-accent-shadow);
 }
 
 .btn--secondary {
@@ -772,8 +785,8 @@ ul {
 }
 
 .lang-switch__btn.active {
-  background: #8B5D33;
-  color: #fff !important;
+  background: var(--tenant-accent-gradient);
+  color: var(--tenant-accent-fg) !important;
 }
 
 /* Burger — 44x44px Apple Touch Target */
@@ -1053,10 +1066,10 @@ ul {
 }
 
 .hero-loc-tab.active {
-  background: linear-gradient(135deg, #8B5D33 0%, #6A4420 100%);
-  color: #fff;
-  border-color: var(--gold-bright);
-  box-shadow: 0 6px 20px rgba(139, 93, 51, 0.38);
+  background: var(--tenant-accent-gradient);
+  color: var(--tenant-accent-fg);
+  border-color: var(--tenant-accent-border);
+  box-shadow: 0 6px 20px var(--tenant-accent-shadow);
 }
 
 .hero-loc-tab.active .hero-loc-tab__dot {
@@ -2006,9 +2019,9 @@ ul {
 }
 
 .menu-cat-tab.active {
-  background: linear-gradient(135deg, #8B5D33 0%, #6A4420 100%);
-  border-color: #6A4420;
-  color: #fff;
+  background: var(--tenant-accent-gradient);
+  border-color: var(--tenant-accent-border);
+  color: var(--tenant-accent-fg);
   box-shadow: var(--shadow-gold);
 }
 
@@ -2552,8 +2565,8 @@ ul {
 }
 
 .reserve-tab.active {
-  background: linear-gradient(135deg, #8B5D33 0%, #6A4420 100%);
-  color: #fff;
+  background: var(--tenant-accent-gradient);
+  color: var(--tenant-accent-fg);
   box-shadow: var(--shadow-sm);
 }
 

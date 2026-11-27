@@ -3,55 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#F5F2EB" />
+  <meta name="theme-color" content="#F2F2F4" id="metaThemeColor" />
   <title>Café Weiss | Mittagsmenü-Verwaltung &amp; Wochenplaner</title>
   <link rel="icon" type="image/png" href="assets/images/brand/favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* ==========================================================================
-       Café Weiss — Apple HIG macOS / iPadOS Split-View Admin & Week Planner
-       Principles:
-       - Single Unified Liquid Glass Toolbar (Primary 'Save' action always visible)
-       - True Split-View Sidebar + Grouped Inset Form Canvas
-       - Full-Width Bilingual Input Rows (Zero truncated dish names!)
-       - Aligned Form Baselines & Lining Tabular Numerals (lnum + tnum)
-       - Crisp Vector Icons (SF-Symbols style, zero emoji clutter)
-       ========================================================================== */
+    /* ============================================================================
+       Apple Tahoe (macOS 26) Multi-Tenant Neutral Design System
+       Zero hardcoded brand colors — 100% driven by --tenant-accent
+       ============================================================================ */
+
     :root {
-      --bg-canvas: #F4F0E8;
-      --bg-sidebar: #ECE6DB;
-      --bg-card: #FFFFFF;
-      --bg-group: #F9F6F0;
-      --bg-dark: #181411;
+      color-scheme: light;
+      --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", system-ui, sans-serif;
 
-      --text-primary: #1C1714;
-      --text-secondary: #4A3F37;
-      --text-muted: #65574C;
+      /* ── Tenant Runtime Defaults (overwritten at runtime by applyTenantTheme) ── */
+      --tenant-accent: #7A4F28;
+      --tenant-accent-fg: #FFFFFF;
 
-      --accent: #7A4F28;
-      --accent-hover: #633F1F;
-      --accent-light: #C89666;
-      --accent-soft: rgba(122, 79, 40, 0.1);
+      /* ── Derived Tenant Scale (Pure CSS oklch — zero JS math needed) ── */
+      --tenant-accent-text: color-mix(in oklch, var(--tenant-accent) 82%, black);
+      --tenant-accent-hover: color-mix(in oklch, var(--tenant-accent) 86%, black);
+      --tenant-accent-soft: color-mix(in oklch, var(--tenant-accent) 10%, transparent);
+      --tenant-accent-soft-hover: color-mix(in oklch, var(--tenant-accent) 16%, transparent);
+      --tenant-accent-border: color-mix(in oklch, var(--tenant-accent) 28%, transparent);
+      --tenant-accent-gradient: linear-gradient(
+        180deg,
+        color-mix(in oklch, var(--tenant-accent) 90%, white) 0%,
+        var(--tenant-accent) 100%
+      );
+      --tenant-accent-shadow: color-mix(in oklch, var(--tenant-accent) 32%, transparent);
+      --tenant-focus-ring: var(--tenant-accent);
 
-      --green: #186A43;
-      --green-bg: #E3F5EC;
-      --blue: #1D4ED8;
-      --blue-bg: #E6EFFD;
-      --danger: #B91C1C;
-      --danger-bg: #FEECEC;
+      /* ── True Neutral Light Surfaces (ZERO bluish slate cast) ── */
+      --ui-canvas: #F2F2F4;
+      --ui-canvas-mesh:
+        radial-gradient(ellipse 75% 55% at 12% 0%, color-mix(in oklch, var(--tenant-accent) 6%, transparent), transparent 58%),
+        radial-gradient(ellipse 65% 50% at 88% 100%, color-mix(in oklch, var(--tenant-accent) 4.5%, transparent), transparent 58%),
+        #F2F2F4;
+      --ui-surface: #FFFFFF;
+      --ui-surface-subtle: #F6F6F8;
+      --ui-label: #1D1D1F;
+      --ui-label-secondary: #48484A;
+      --ui-label-tertiary: #636366;
+      --ui-separator: rgba(0, 0, 0, 0.075);
+      --ui-separator-strong: rgba(0, 0, 0, 0.13);
 
-      --border-hairline: rgba(28, 23, 20, 0.11);
-      --border-warm: rgba(122, 79, 40, 0.24);
+      /* ── Functional Layer — Liquid Glass (Sidebar / Toolbar / Popovers ONLY) ── */
+      --ui-glass-bar: rgba(255, 255, 255, 0.74);
+      --ui-glass-sidebar: rgba(255, 255, 255, 0.78);
+      --ui-glass-popover: rgba(255, 255, 255, 0.88);
+      --ui-sheet-header-bg: rgba(255, 255, 255, 0.84);
+      --ui-glass-specular: rgba(255, 255, 255, 0.92);
+      --ui-glass-border: rgba(0, 0, 0, 0.085);
 
-      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Plus Jakarta Sans', sans-serif;
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --ui-card-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.075),
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 8px 24px -14px rgba(0, 0, 0, 0.10);
+      --ui-sidebar-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.08),
+        0 10px 30px -12px rgba(0, 0, 0, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      --ui-toolbar-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.075),
+        0 6px 20px -10px rgba(0, 0, 0, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
 
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-pill: 999px;
+      /* ── Segmented Controls & Tables ── */
+      --ui-seg-track: #F4F4F6;
+      --ui-seg-border: rgba(0, 0, 0, 0.09);
+      --ui-thead-bg: rgba(246, 246, 248, 0.95);
+      --ui-row-alt: rgba(0, 0, 0, 0.018);
+      --ui-row-hover: color-mix(in oklch, var(--tenant-accent) 6%, transparent);
+
+      /* ── Semantic Status (Independent of Tenant Brand Color) ── */
+      --status-ok: #15803D;
+      --status-ok-bg: rgba(21, 128, 61, 0.12);
+      --status-warn: #B45309;
+      --status-warn-bg: rgba(180, 83, 9, 0.12);
+      --status-danger: #BE123C;
+      --status-danger-bg: rgba(190, 18, 60, 0.10);
+    }
+
+    html.dark {
+      color-scheme: dark;
+
+      --tenant-accent-text: color-mix(in oklch, var(--tenant-accent) 78%, white);
+      --tenant-accent-hover: color-mix(in oklch, var(--tenant-accent) 84%, white);
+      --tenant-accent-soft: color-mix(in oklch, var(--tenant-accent) 16%, transparent);
+      --tenant-accent-soft-hover: color-mix(in oklch, var(--tenant-accent) 24%, transparent);
+      --tenant-accent-border: color-mix(in oklch, var(--tenant-accent) 36%, transparent);
+
+      /* ── Pure Apple Charcoal Dark Surfaces (ZERO blue/slate tint!) ── */
+      --ui-canvas: #0C0C0E;
+      --ui-canvas-mesh:
+        radial-gradient(ellipse 70% 50% at 15% 0%, color-mix(in oklch, var(--tenant-accent) 8%, transparent), transparent 55%),
+        radial-gradient(ellipse 60% 45% at 88% 100%, color-mix(in oklch, var(--tenant-accent) 6%, transparent), transparent 55%),
+        #0C0C0E;
+      --ui-surface: #1C1C1E;
+      --ui-surface-subtle: #262629;
+      --ui-label: #F5F5F7;
+      --ui-label-secondary: #AEAEB2;
+      --ui-label-tertiary: #8E8E93;
+      --ui-separator: rgba(255, 255, 255, 0.085);
+      --ui-separator-strong: rgba(255, 255, 255, 0.16);
+
+      --ui-glass-bar: rgba(26, 26, 28, 0.78);
+      --ui-glass-sidebar: rgba(24, 24, 26, 0.82);
+      --ui-glass-popover: rgba(30, 30, 32, 0.92);
+      --ui-sheet-header-bg: rgba(28, 28, 30, 0.86);
+      --ui-glass-specular: rgba(255, 255, 255, 0.12);
+      --ui-glass-border: rgba(255, 255, 255, 0.11);
+
+      --ui-card-shadow:
+        0 0 0 0.5px rgba(255, 255, 255, 0.095),
+        0 2px 10px rgba(0, 0, 0, 0.34),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.06);
+      --ui-sidebar-shadow:
+        0 0 0 0.5px rgba(255, 255, 255, 0.11),
+        0 12px 36px -10px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+      --ui-toolbar-shadow:
+        0 0 0 0.5px rgba(255, 255, 255, 0.11),
+        0 8px 24px -8px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+
+      --ui-seg-track: rgba(255, 255, 255, 0.065);
+      --ui-seg-border: rgba(255, 255, 255, 0.11);
+      --ui-thead-bg: rgba(28, 28, 30, 0.96);
+      --ui-row-alt: rgba(255, 255, 255, 0.022);
+      --ui-row-hover: color-mix(in oklch, var(--tenant-accent) 12%, transparent);
+
+      --status-ok: #34D399;
+      --status-ok-bg: rgba(52, 211, 153, 0.14);
+      --status-warn: #FBBF24;
+      --status-warn-bg: rgba(251, 191, 36, 0.14);
+      --status-danger: #FB7185;
+      --status-danger-bg: rgba(251, 113, 133, 0.14);
     }
 
     *, *::before, *::after {
@@ -60,54 +148,154 @@
       padding: 0;
     }
 
-    html {
+    html, body {
+      margin: 0;
+      max-width: 100vw;
+      overflow-x: hidden;
+      background: var(--ui-canvas-mesh);
+      background-color: var(--ui-canvas);
+      color: var(--ui-label);
+      font-family: var(--font-system);
       font-size: 16px;
       -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-      font-family: var(--font-sans);
-      background: var(--bg-canvas);
-      color: var(--text-primary);
-      min-height: 100vh;
       -webkit-font-smoothing: antialiased;
-      font-variant-numeric: lining-nums tabular-nums;
-      font-feature-settings: "lnum" 1, "tnum" 1;
-      overflow-x: hidden;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-variant-numeric: tabular-nums;
+      min-height: 100vh;
     }
 
-    a, button, input {
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      font-family: inherit;
-      font-variant-numeric: lining-nums tabular-nums;
-      font-feature-settings: "lnum" 1, "tnum" 1;
-    }
-
-    a:focus-visible,
-    button:focus-visible,
-    input:focus-visible {
-      outline: 2px solid var(--accent);
+    :where(button, a, input, select, textarea, [tabindex]):focus-visible {
+      outline: 2px solid var(--tenant-focus-ring);
       outline-offset: 2px;
     }
 
+    button, a, input, select, textarea, [role="button"] {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      font-family: inherit;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 767px) {
+      input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+      select,
+      textarea {
+        font-size: 16px !important;
+      }
+    }
+
+    .tabular-nums, td, th { font-variant-numeric: tabular-nums; }
+    [hidden] { display: none !important; }
+
     .icon {
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       flex-shrink: 0;
     }
 
-    /* ================= SINGLE UNIFIED APPLE LIQUID GLASS TOOLBAR ================= */
+    /* ── Apple Tahoe Core Primitives ── */
+    .ui-glass-sidebar {
+      background-color: var(--ui-glass-sidebar);
+      backdrop-filter: blur(36px) saturate(195%);
+      -webkit-backdrop-filter: blur(36px) saturate(195%);
+      box-shadow: var(--ui-sidebar-shadow);
+    }
+
+    .ui-glass-toolbar {
+      background-color: var(--ui-glass-bar);
+      backdrop-filter: blur(28px) saturate(195%);
+      -webkit-backdrop-filter: blur(28px) saturate(195%);
+      box-shadow: var(--ui-toolbar-shadow);
+    }
+
+    .ui-card {
+      background-color: var(--ui-surface);
+      color: var(--ui-label);
+      border: 0.5px solid var(--ui-separator);
+      border-radius: 16px;
+      box-shadow: var(--ui-card-shadow);
+    }
+
+    .ui-inset-card {
+      background-color: var(--ui-surface-subtle);
+      border: 0.5px solid var(--ui-separator);
+      border-radius: 14px;
+    }
+
+    html.dark .ui-inset-card {
+      background-color: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .ui-btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      min-height: 36px; padding: 0 15px; border-radius: 9999px;
+      font-size: 13px; font-weight: 600;
+      color: var(--tenant-accent-fg);
+      background: var(--tenant-accent-gradient);
+      border: 0.5px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 3px var(--tenant-accent-shadow), inset 0 0.5px 0 rgba(255, 255, 255, 0.28);
+      cursor: pointer; white-space: nowrap; text-decoration: none;
+      transition: filter 120ms ease, transform 80ms ease;
+    }
+    .ui-btn-primary:hover { filter: brightness(1.06); }
+    .ui-btn-primary:active { transform: scale(0.985); }
+
+    .ui-btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      min-height: 36px; padding: 0 13px; border-radius: 9999px;
+      font-size: 13px; font-weight: 500;
+      color: var(--ui-label); background-color: var(--ui-surface);
+      border: 0.5px solid var(--ui-separator-strong);
+      cursor: pointer; white-space: nowrap; text-decoration: none;
+      transition: background-color 120ms ease, transform 80ms ease, border-color 120ms ease;
+    }
+    .ui-btn-secondary:hover { background-color: var(--ui-surface-subtle); }
+    .ui-btn-secondary:active { transform: scale(0.985); }
+
+    .ui-btn-danger {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      min-height: 36px; padding: 0 13px; border-radius: 9999px;
+      font-size: 13px; font-weight: 500;
+      color: var(--status-danger); background-color: transparent;
+      border: 0.5px solid color-mix(in oklch, var(--status-danger) 35%, transparent);
+      cursor: pointer; white-space: nowrap;
+      transition: background-color 120ms ease, transform 80ms ease;
+    }
+    .ui-btn-danger:hover { background-color: var(--status-danger-bg); }
+    .ui-btn-danger:active { transform: scale(0.985); }
+
+    .ui-segmented {
+      display: inline-flex; align-items: center; gap: 2px; padding: 3px;
+      border-radius: 9999px;
+      background-color: var(--ui-seg-track);
+      border: 1px solid var(--ui-seg-border);
+    }
+
+    .ui-segment {
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      min-height: 30px; min-width: 38px; padding: 0 11px; border-radius: 9999px;
+      font-size: 12px; font-weight: 500;
+      color: var(--ui-label-secondary); background: transparent; border: 0;
+      cursor: pointer; white-space: nowrap;
+      transition: background-color 140ms ease, color 140ms ease;
+    }
+    .ui-segment:hover { color: var(--ui-label); }
+    .ui-segment-active {
+      background: var(--tenant-accent-gradient);
+      color: var(--tenant-accent-fg) !important;
+      font-weight: 600;
+      box-shadow: 0 1px 4px var(--tenant-accent-shadow), inset 0 0.5px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    /* ── Sticky Floating macOS Tahoe Toolbar ── */
     .toolbar {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(244, 240, 232, 0.82);
-      backdrop-filter: blur(28px) saturate(1.45);
-      -webkit-backdrop-filter: blur(28px) saturate(1.45);
-      border-bottom: 1px solid var(--border-hairline);
-      box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.55);
-      padding: 0.6rem 1.5rem;
+      padding: 0.55rem 1.35rem;
+      border-bottom: 0.5px solid var(--ui-glass-border);
     }
 
     .toolbar__inner {
@@ -116,375 +304,262 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 0.85rem;
       flex-wrap: wrap;
     }
 
     .toolbar__brand {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 0.85rem;
       min-width: 0;
     }
 
     .toolbar__logo-link {
       display: inline-flex;
       align-items: center;
-      min-height: 44px;
+      min-height: 36px;
     }
 
     .toolbar__logo {
-      height: 34px;
+      height: 32px;
       width: auto;
       display: block;
     }
 
+    .toolbar__logo--light { display: none; }
+    html.dark .toolbar__logo--dark { display: none; }
+    html.dark .toolbar__logo--light { display: block; }
+
     .toolbar__divider {
       width: 1px;
-      height: 22px;
-      background: var(--border-hairline);
+      height: 20px;
+      background: var(--ui-separator-strong);
     }
 
     .toolbar__title-group {
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     .toolbar__app-name {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ui-label);
       line-height: 1.2;
     }
 
     .toolbar__app-sub {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      font-weight: 500;
+      font-size: 11px;
+      color: var(--ui-label-tertiary);
     }
 
     .toolbar__controls {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
     }
 
-    /* Apple Segmented Control for Language (DE | EN) */
-    .segmented {
-      display: inline-flex;
-      align-items: center;
-      background: rgba(28, 23, 20, 0.07);
-      padding: 3px;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(28, 23, 20, 0.06);
-    }
-
-    .segmented__btn {
-      min-width: 44px;
-      min-height: 38px;
-      padding: 0.3rem 0.7rem;
-      border: none;
-      background: transparent;
-      color: var(--text-secondary);
-      font-size: 0.78rem;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .segmented__btn.active {
-      background: #FFFFFF;
-      color: var(--text-primary);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
-    }
-
-    /* Apple HIG Buttons (44px minimum hit target) */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      min-height: 44px;
-      min-width: 44px;
-      padding: 0.52rem 0.95rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.84rem;
-      font-weight: 600;
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Standard Subtle Toolbar Button */
-    .btn--toolbar {
-      background: #FFFFFF;
-      color: var(--text-primary);
-      border-color: var(--border-hairline);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-
-    .btn--toolbar:hover {
-      background: var(--bg-group);
-      border-color: rgba(28, 23, 20, 0.22);
-    }
-
-    /* Prominent Primary Action (Apple HIG: 1 prominent button per view) */
-    .btn--primary {
-      background: var(--green);
-      color: #FFFFFF;
-      border-color: rgba(0, 0, 0, 0.1);
-      padding: 0.52rem 1.2rem;
-      box-shadow: 0 2px 6px rgba(24, 106, 67, 0.25);
-    }
-
-    .btn--primary:hover {
-      background: #135837;
-    }
-
-    .btn--accent {
-      background: var(--accent);
-      color: #FFFFFF;
-      box-shadow: 0 2px 6px rgba(122, 79, 40, 0.22);
-    }
-
-    .btn--accent:hover {
-      background: var(--accent-hover);
-    }
-
-    .btn--danger {
-      background: transparent;
-      color: var(--danger);
-      border-color: rgba(185, 28, 28, 0.25);
-    }
-
-    .btn--danger:hover {
-      background: var(--danger-bg);
-      border-color: var(--danger);
-    }
-
-    /* ================= APPLE SPLIT-VIEW WORKSPACE ================= */
+    /* ── Workspace Split View (Floating Liquid Glass Sidebar + Opaque Content Canvas) ── */
     .workspace {
       max-width: 1440px;
       margin: 0 auto;
-      padding: 1.25rem 1.35rem;
+      padding: 1.25rem 1.35rem 2.5rem;
       display: grid;
       grid-template-columns: 326px minmax(0, 1fr);
       gap: 1.25rem;
       align-items: start;
     }
 
-    /* ================= LEFT SIDEBAR (SCHEDULED WEEKS + SIMULATOR) ================= */
+    /* ── Left Sidebar (Functional Layer: Liquid Glass) ── */
     .sidebar {
+      position: sticky;
+      top: 68px;
+      border-radius: 18px;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      position: sticky;
-      top: 76px;
       min-width: 0;
     }
 
-    .sidebar-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-lg);
-      padding: 1.15rem;
-      box-shadow: 0 4px 16px rgba(28, 23, 20, 0.04);
-    }
-
-    .sidebar-panel__header {
+    .sidebar__section-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.85rem;
-      padding: 0 0.2rem;
+      padding: 0 0.25rem;
+      margin-bottom: 0.55rem;
     }
 
-    .sidebar-panel__title {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-      letter-spacing: 0.01em;
-    }
-
-    .sidebar-panel__count {
-      font-size: 0.75rem;
+    .sidebar__title {
+      font-size: 12px;
       font-weight: 600;
-      color: var(--text-muted);
-      background: var(--bg-group);
-      padding: 0.12rem 0.5rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-hairline);
+      color: var(--ui-label-secondary);
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar__count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ui-label-tertiary);
+      background: var(--ui-surface-subtle);
+      padding: 1px 8px;
+      border-radius: 9999px;
+      border: 0.5px solid var(--ui-separator);
     }
 
     .weeks-list {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 0.9rem;
+      gap: 0.45rem;
       max-height: 52vh;
       overflow-y: auto;
       overscroll-behavior: contain;
+      margin-bottom: 0.75rem;
     }
 
     .week-item {
       width: 100%;
       text-align: left;
-      min-height: 64px;
-      padding: 0.75rem 0.9rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-hairline);
-      background: var(--bg-group);
+      min-height: 58px;
+      padding: 0.65rem 0.75rem;
+      border-radius: 12px;
+      border: 0.5px solid var(--ui-separator);
+      background: var(--ui-surface);
+      color: var(--ui-label);
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 0.28rem;
-      transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+      gap: 0.25rem;
+      transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
     }
 
     .week-item:hover {
-      background: #F2ECE1;
-      border-color: var(--border-warm);
+      background: var(--ui-row-hover);
+      border-color: var(--tenant-accent-border);
     }
 
+    /* Active Sidebar Item uses --tenant-accent-soft + --tenant-accent-border (10% Rule) */
     .week-item.active {
-      background: var(--bg-dark);
-      color: #FFFFFF;
-      border-color: var(--bg-dark);
-      box-shadow: 0 6px 16px rgba(24, 20, 17, 0.16);
+      background: var(--tenant-accent-soft);
+      border: 1px solid var(--tenant-accent-border);
+      box-shadow: 0 2px 8px -2px var(--tenant-accent-shadow);
     }
 
     .week-item__row1 {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.4rem;
+      gap: 0.35rem;
     }
 
     .week-item__period {
-      font-weight: 700;
-      font-size: 0.83rem;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--ui-label);
       white-space: nowrap;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      font-size: 0.67rem;
-      font-weight: 700;
-      padding: 0.14rem 0.45rem;
-      border-radius: var(--radius-pill);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .status-badge__dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-    }
-
-    .status-badge--active {
-      background: var(--green-bg);
-      color: var(--green);
-    }
-    .status-badge--active .status-badge__dot {
-      background: #16A34A;
-    }
-
-    .status-badge--scheduled {
-      background: var(--blue-bg);
-      color: var(--blue);
-    }
-    .status-badge--scheduled .status-badge__dot {
-      background: var(--blue);
-    }
-
-    .status-badge--past {
-      background: rgba(28, 23, 20, 0.08);
-      color: var(--text-secondary);
-    }
-    .status-badge--past .status-badge__dot {
-      background: var(--text-muted);
-    }
-
-    .week-item.active .status-badge--past {
-      background: rgba(255, 255, 255, 0.16);
-      color: #E5E0D8;
     }
 
     .week-item__preview {
-      font-size: 0.77rem;
-      color: var(--text-muted);
+      font-size: 11.5px;
+      color: var(--ui-label-tertiary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .week-item.active .week-item__preview {
-      color: rgba(255, 255, 255, 0.74);
+    /* Semantic Status Badges (Independent of Tenant Color) */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* Compact Date Simulator Card in Sidebar */
-    .sim-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.15rem;
-      box-shadow: 0 4px 16px rgba(28, 23, 20, 0.04);
+    .status-badge__dot {
+      width: 5.5px;
+      height: 5.5px;
+      border-radius: 50%;
     }
 
-    .sim-card__title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.25rem;
+    .status-badge--active {
+      background: var(--status-ok-bg);
+      color: var(--status-ok);
+    }
+    .status-badge--active .status-badge__dot {
+      background: var(--status-ok);
+    }
+
+    .status-badge--scheduled {
+      background: var(--status-warn-bg);
+      color: var(--status-warn);
+    }
+    .status-badge--scheduled .status-badge__dot {
+      background: var(--status-warn);
+    }
+
+    .status-badge--past {
+      background: var(--ui-row-alt);
+      color: var(--ui-label-tertiary);
+      border: 0.5px solid var(--ui-separator);
+    }
+    .status-badge--past .status-badge__dot {
+      background: var(--ui-label-tertiary);
+    }
+
+    /* Simulator Inset Box inside Sidebar */
+    .sim-box {
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .sim-box__title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ui-label);
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
     }
 
-    .sim-card__desc {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-      margin-bottom: 0.75rem;
+    .sim-box__desc {
+      font-size: 11.5px;
+      color: var(--ui-label-secondary);
+      line-height: 1.4;
     }
 
-    .sim-card__row {
+    .sim-box__row {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.45rem;
       align-items: center;
+      margin-top: 0.2rem;
     }
 
-    .sim-card__input {
+    .sim-box__input {
       flex: 1;
       min-width: 0;
-      min-height: 44px;
-      padding: 0.45rem 0.65rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-hairline);
-      background: var(--bg-group);
-      color: var(--text-primary);
-      font-size: 1rem;
-      font-weight: 600;
+      height: 36px;
+      padding: 0 0.6rem;
+      border-radius: 8px;
+      border: 0.5px solid var(--ui-separator-strong);
+      background: var(--ui-surface);
+      color: var(--ui-label);
+      font-size: 13px;
+      font-weight: 500;
     }
 
-    /* ================= RIGHT DETAIL PANE (EDITOR INSPECTOR) ================= */
+    /* ── Right Inspector Pane (Content Layer: Opaque Neutral .ui-card) ── */
     .inspector {
-      background: var(--bg-card);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem 1.6rem;
-      box-shadow: 0 6px 24px rgba(28, 23, 20, 0.05);
+      padding: 1.4rem 1.5rem;
       min-width: 0;
     }
 
@@ -493,159 +568,153 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding-bottom: 1.25rem;
-      margin-bottom: 1.35rem;
-      border-bottom: 1px solid var(--border-hairline);
+      padding-bottom: 1.1rem;
+      margin-bottom: 1.15rem;
+      border-bottom: 0.5px solid var(--ui-separator);
       flex-wrap: wrap;
     }
 
     .inspector__title-wrap {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
       flex-wrap: wrap;
     }
 
     .inspector__title {
-      font-family: var(--font-serif);
-      font-size: clamp(1.45rem, 2vw, 1.75rem);
+      font-size: 20px;
       font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.15;
-      font-variant-numeric: lining-nums tabular-nums;
-      font-feature-settings: "lnum" 1, "tnum" 1;
+      letter-spacing: -0.02em;
+      color: var(--ui-label);
     }
 
     .inspector__actions {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
       flex-wrap: wrap;
     }
 
-    /* Save Status Toast Banner */
     .save-toast {
-      margin-bottom: 1.25rem;
-      padding: 0.75rem 1.1rem;
-      border-radius: var(--radius-md);
-      font-size: 0.86rem;
+      margin-bottom: 1rem;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      font-size: 13px;
       font-weight: 600;
-      background: var(--green-bg);
-      color: var(--green);
-      border: 1px solid rgba(24, 106, 67, 0.25);
+      background: var(--status-ok-bg);
+      color: var(--status-ok);
+      border: 0.5px solid color-mix(in oklch, var(--status-ok) 30%, transparent);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
     }
+    .save-toast[hidden] { display: none !important; }
 
-    .save-toast[hidden] {
-      display: none !important;
-    }
-
-    /* ================= SCHEDULE SETTINGS BAR (PERFECTLY ALIGNED BASELINE) ================= */
+    /* ── Schedule Settings Bar (Opaque Neutral Inset Card, Aligned Baseline) ── */
     .settings-group {
-      background: var(--bg-group);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-md);
-      padding: 1.1rem 1.25rem;
-      margin-bottom: 1.5rem;
+      padding: 0.95rem 1.1rem;
+      margin-bottom: 1.25rem;
       display: grid;
       grid-template-columns: 1fr 1fr 1.45fr 0.75fr 0.75fr;
-      gap: 0.9rem;
+      gap: 0.8rem;
       align-items: end;
     }
 
     .field {
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.3rem;
       min-width: 0;
     }
 
     .field__label {
-      font-size: 0.78rem;
+      font-size: 11.5px;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--ui-label-secondary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* iOS Safari & Apple HIG Input: font-size 16px (1rem), min-height 44px */
     .field__input {
       width: 100%;
-      min-height: 44px;
-      padding: 0.55rem 0.8rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(28, 23, 20, 0.16);
-      background: #FFFFFF;
-      color: var(--text-primary);
-      font-size: 1rem;
+      height: 38px;
+      padding: 0 0.75rem;
+      border-radius: 8px;
+      border: 0.5px solid var(--ui-separator-strong);
+      background: var(--ui-surface);
+      color: var(--ui-label);
+      font-size: 13.5px;
       font-weight: 600;
-      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
     }
 
     .field__input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(122, 79, 40, 0.16);
+      border-color: var(--tenant-accent);
+      box-shadow: 0 0 0 3px var(--tenant-accent-soft);
     }
 
-    /* ================= FULL-WIDTH APPLE GROUPED DAY CARDS (ZERO TRUNCATION!) ================= */
+    /* ── 4 Weekday Cards (Content Layer: Neutral .ui-inset-card, Zero Truncation) ── */
     .days-stack {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.85rem;
     }
 
     .day-card {
-      background: var(--bg-group);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-md);
       overflow: hidden;
     }
 
     .day-card__header {
-      background: rgba(28, 23, 20, 0.035);
-      padding: 0.7rem 1.2rem;
-      border-bottom: 1px solid var(--border-hairline);
+      padding: 0.6rem 1.1rem;
+      border-bottom: 0.5px solid var(--ui-separator);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .day-card__title {
-      font-family: var(--font-serif);
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .day-card__hours {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .day-card__body {
-      padding: 1rem 1.2rem;
-      display: flex;
-      flex-direction: column;
       gap: 0.75rem;
     }
 
-    /* Course Row: Course Label on Left (96px) + Full-Width DE (1.45fr) and EN (0.94fr) Inputs */
+    .day-card__title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ui-label);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .day-card__accent-bar {
+      width: 4px;
+      height: 14px;
+      border-radius: 2px;
+      background: var(--tenant-accent);
+      display: inline-block;
+    }
+
+    .day-card__hours {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--ui-label-tertiary);
+    }
+
+    .day-card__body {
+      padding: 0.85rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
     .course-row {
       display: grid;
-      grid-template-columns: 96px minmax(0, 1.45fr) minmax(0, 0.94fr);
+      grid-template-columns: 96px minmax(0, 1.45fr) minmax(0, 0.95fr);
       gap: 0.6rem;
       align-items: center;
     }
 
     .course-row__label {
-      font-size: 0.82rem;
+      font-size: 12.5px;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--ui-label-secondary);
     }
 
     .lang-input-wrap {
@@ -658,44 +727,44 @@
     .lang-input-wrap__tag {
       position: absolute;
       left: 0.55rem;
-      font-size: 0.66rem;
+      font-size: 10px;
       font-weight: 700;
-      padding: 0.12rem 0.36rem;
-      border-radius: 5px;
-      background: var(--bg-sidebar);
-      color: var(--text-secondary);
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: var(--ui-seg-track);
+      color: var(--ui-label-secondary);
+      border: 0.5px solid var(--ui-separator);
       pointer-events: none;
-      letter-spacing: 0.03em;
     }
 
     .lang-input-wrap__tag--en {
-      background: rgba(29, 78, 216, 0.1);
-      color: #1E40AF;
+      background: var(--tenant-accent-soft);
+      color: var(--tenant-accent-text);
+      border-color: var(--tenant-accent-border);
     }
 
     .lang-input-wrap input {
       width: 100%;
-      min-height: 44px;
-      padding: 0.52rem 0.7rem 0.52rem 2.4rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(28, 23, 20, 0.15);
-      background: #FFFFFF;
-      color: var(--text-primary);
-      font-size: 1rem;
+      height: 38px;
+      padding: 0 0.7rem 0 2.35rem;
+      border-radius: 8px;
+      border: 0.5px solid var(--ui-separator-strong);
+      background: var(--ui-surface);
+      color: var(--ui-label);
+      font-size: 13.5px;
       font-weight: 500;
-      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
     }
 
     .lang-input-wrap input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(122, 79, 40, 0.16);
+      border-color: var(--tenant-accent);
+      box-shadow: 0 0 0 3px var(--tenant-accent-soft);
     }
 
-    /* Bottom Bar inside Inspector */
     .inspector__footer {
-      margin-top: 1.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--border-hairline);
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 0.5px solid var(--ui-separator);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -704,23 +773,16 @@
     }
 
     .inspector__hint {
-      font-size: 0.82rem;
-      color: var(--text-muted);
+      font-size: 12px;
+      color: var(--ui-label-tertiary);
     }
 
-    /* Printable A4 Sheet (Hidden on screen, visible when printing) */
-    .print-sheet {
-      display: none;
-    }
+    /* Printable A4 Sheet */
+    .print-sheet { display: none; }
 
     @media print {
-      body * {
-        visibility: hidden;
-      }
-      .print-sheet,
-      .print-sheet * {
-        visibility: visible;
-      }
+      body * { visibility: hidden; }
+      .print-sheet, .print-sheet * { visibility: visible; }
       .print-sheet {
         display: block;
         position: absolute;
@@ -729,133 +791,68 @@
         color: #000;
         padding: 15mm 20mm;
         text-align: center;
-        font-family: Georgia, 'Cormorant Garamond', serif;
+        font-family: Georgia, serif;
       }
-      .print-sheet__logo {
-        height: 76px;
-        width: auto;
-        margin: 0 auto 6px;
-      }
-      .print-sheet__sub {
-        font-size: 13pt;
-        letter-spacing: 2px;
-        font-weight: bold;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #444;
-        margin-bottom: 16px;
-      }
-      .print-sheet__title {
-        font-size: 22pt;
-        letter-spacing: 1px;
-        margin-bottom: 4px;
-      }
-      .print-sheet__dates {
-        font-size: 14pt;
-        margin-bottom: 2px;
-      }
-      .print-sheet__hours {
-        font-size: 11pt;
-        margin-bottom: 18px;
-      }
-      .print-day {
-        margin-bottom: 16px;
-      }
-      .print-day h4 {
-        font-size: 13pt;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 3px;
-      }
-      .print-day p {
-        font-size: 13.5pt;
-        line-height: 1.35;
-      }
-      .print-day .print-dessert {
-        font-size: 11pt;
-        font-weight: bold;
-        margin-top: 2px;
-      }
-      .print-day .print-veg {
-        font-size: 9.5pt;
-        color: #444;
-      }
-      .print-prices {
-        margin-top: 20px;
-        padding-top: 14px;
-        border-top: 1px solid #888;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-      }
-      .print-prices h5 {
-        font-size: 15pt;
-        margin-bottom: 2px;
-      }
-      .print-prices p {
-        font-size: 10pt;
-        margin-bottom: 4px;
-      }
-      .print-prices strong {
-        font-size: 22pt;
-      }
+      .print-sheet__logo { height: 76px; width: auto; margin: 0 auto 6px; }
+      .print-sheet__sub { font-size: 13pt; letter-spacing: 2px; font-weight: bold; padding-bottom: 10px; border-bottom: 1px solid #444; margin-bottom: 16px; }
+      .print-sheet__title { font-size: 22pt; letter-spacing: 1px; margin-bottom: 4px; }
+      .print-sheet__dates { font-size: 14pt; margin-bottom: 2px; }
+      .print-sheet__hours { font-size: 11pt; margin-bottom: 18px; }
+      .print-day { margin-bottom: 16px; }
+      .print-day h4 { font-size: 13pt; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+      .print-day p { font-size: 13.5pt; line-height: 1.35; }
+      .print-day .print-dessert { font-size: 11pt; font-weight: bold; margin-top: 2px; }
+      .print-day .print-veg { font-size: 9.5pt; color: #444; }
+      .print-prices { margin-top: 20px; padding-top: 14px; border-top: 1px solid #888; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+      .print-prices h5 { font-size: 15pt; margin-bottom: 2px; }
+      .print-prices p { font-size: 10pt; margin-bottom: 4px; }
+      .print-prices strong { font-size: 22pt; }
     }
 
-    @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-      .toolbar {
-        background: #F4F0E8 !important;
+    @media (prefers-reduced-transparency: reduce) {
+      .ui-glass-sidebar, .ui-glass-toolbar {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        border-bottom: 2px solid #1C1714 !important;
+      }
+      :root { --ui-glass-bar: #FFFFFF; --ui-glass-sidebar: #F6F6F8; }
+      html.dark { --ui-glass-bar: #1C1C1E; --ui-glass-sidebar: #18181A; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
       }
     }
 
     @media (max-width: 1120px) {
-      .workspace {
-        grid-template-columns: 1fr;
-      }
-      .sidebar {
-        position: static;
-      }
-      .settings-group {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .workspace { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .settings-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 780px) {
-      .course-row {
-        grid-template-columns: 1fr;
-        gap: 0.45rem;
-      }
-      .inspector {
-        padding: 1.25rem;
-      }
+      .course-row { grid-template-columns: 1fr; gap: 0.4rem; }
+      .inspector { padding: 1.1rem; }
     }
 
     @media (max-width: 560px) {
-      .toolbar {
-        padding: 0.6rem 1rem;
-      }
-      .workspace {
-        padding: 1rem;
-      }
-      .settings-group {
-        grid-template-columns: 1fr;
-      }
-      .toolbar__divider,
-      .toolbar__title-group {
-        display: none;
-      }
+      .toolbar { padding: 0.5rem 0.9rem; }
+      .workspace { padding: 0.9rem; }
+      .settings-group { grid-template-columns: 1fr; }
+      .toolbar__divider, .toolbar__title-group { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ================= SINGLE UNIFIED APPLE LIQUID GLASS TOOLBAR ================= -->
-  <header class="toolbar">
+  <!-- ================= FUNCTIONAL LAYER: APPLE TAHOE LIQUID GLASS TOOLBAR ================= -->
+  <header class="toolbar ui-glass-toolbar">
     <div class="toolbar__inner">
       <div class="toolbar__brand">
         <a href="index.html" class="toolbar__logo-link" aria-label="Café Weiss Startseite">
-          <img src="assets/images/brand/logo-dark.png?v=2" alt="Café Weiss" class="toolbar__logo" width="119" height="34" />
+          <img src="assets/images/brand/logo-dark.png?v=2" alt="Café Weiss" class="toolbar__logo toolbar__logo--dark" width="112" height="32" />
+          <img src="assets/images/brand/logo-light.png?v=2" alt="Café Weiss" class="toolbar__logo toolbar__logo--light" width="112" height="32" />
         </a>
         <span class="toolbar__divider" aria-hidden="true"></span>
         <div class="toolbar__title-group">
@@ -865,35 +862,41 @@
       </div>
 
       <div class="toolbar__controls">
-        <!-- Segmented Language Control -->
-        <div class="segmented" role="group" aria-label="Sprache wählen / Choose Language">
-          <button type="button" class="segmented__btn active" data-set-uilang="de">DE</button>
-          <button type="button" class="segmented__btn" data-set-uilang="en">EN</button>
+        <!-- Segmented Language Control (DE | EN) -->
+        <div class="ui-segmented" role="group" aria-label="Sprache wählen / Choose Language">
+          <button type="button" class="ui-segment ui-segment-active" data-set-uilang="de">DE</button>
+          <button type="button" class="ui-segment" data-set-uilang="en">EN</button>
         </div>
 
-        <button type="button" class="btn btn--toolbar" id="exportJsonBtn" title="JSON-Backup herunterladen">
+        <!-- Light / Dark Appearance Toggle -->
+        <button type="button" class="ui-btn-secondary" id="themeToggleBtn" aria-label="Erscheinungsbild wechseln (Hell/Dunkel)">
+          <svg class="icon" id="themeIconSun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" hidden><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon" id="themeIconMoon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <button type="button" class="ui-btn-secondary" id="exportJsonBtn" title="JSON-Backup herunterladen">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span data-ui="btn.export">Backup</span>
         </button>
 
-        <label class="btn btn--toolbar" for="importJsonInput" title="JSON-Backup importieren">
+        <label class="ui-btn-secondary" for="importJsonInput" title="JSON-Backup importieren">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <span data-ui="btn.import">Import</span>
           <input type="file" id="importJsonInput" accept="application/json,.json" hidden />
         </label>
 
-        <button type="button" class="btn btn--toolbar" id="printMenuBtn">
+        <button type="button" class="ui-btn-secondary" id="printMenuBtn">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           <span data-ui="btn.print">A4 Drucken</span>
         </button>
 
-        <a href="index.html#speisekarte" class="btn btn--toolbar">
+        <a href="index.html#speisekarte" class="ui-btn-secondary">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           <span data-ui="btn.back">Live-Webseite</span>
         </a>
 
-        <!-- Single Prominent Primary Action in Toolbar -->
-        <button type="button" class="btn btn--primary" id="toolbarSaveBtn">
+        <!-- Single Prominent Primary Action (.ui-btn-primary — 10% Tenant Accent Rule) -->
+        <button type="button" class="ui-btn-primary" id="toolbarSaveBtn">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
           <span data-ui="btn.save">Änderungen speichern</span>
         </button>
@@ -903,44 +906,44 @@
 
   <!-- ================= MAIN SPLIT-VIEW WORKSPACE ================= -->
   <main class="workspace">
-    <!-- Left Sidebar: Scheduled Weeks + Date Simulator -->
-    <aside class="sidebar">
-      <div class="sidebar-panel">
-        <div class="sidebar-panel__header">
-          <h2 class="sidebar-panel__title" data-ui="sidebar.title">Geplante Wochen</h2>
-          <span class="sidebar-panel__count" id="weeksCountBadge">4</span>
+    <!-- Left Sidebar (Functional Layer: .ui-glass-sidebar) -->
+    <aside class="sidebar ui-glass-sidebar">
+      <div>
+        <div class="sidebar__section-header">
+          <h2 class="sidebar__title" data-ui="sidebar.title">Geplante Wochen</h2>
+          <span class="sidebar__count" id="weeksCountBadge">4</span>
         </div>
 
         <div class="weeks-list" id="weeksList" role="tablist">
           <!-- Populated dynamically -->
         </div>
 
-        <button type="button" class="btn btn--accent" id="addNewWeekBtn" style="width: 100%;">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <button type="button" class="ui-btn-secondary" id="addNewWeekBtn" style="width: 100%; justify-content: center;">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           <span data-ui="sidebar.add">Neue Woche im Voraus planen</span>
         </button>
       </div>
 
-      <!-- Compact Date Simulator Card -->
-      <div class="sim-card">
-        <div class="sim-card__title">
+      <!-- Compact Date Simulator (Neutral Inset Card) -->
+      <div class="sim-box ui-inset-card">
+        <div class="sim-box__title">
           <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span data-ui="sim.title">Datum-Vorschau testen</span>
         </div>
-        <p class="sim-card__desc" data-ui="sim.desc">
+        <p class="sim-box__desc" data-ui="sim.desc">
           Die Webseite schaltet das Menü automatisch nach Datum um. Testen Sie hier einen beliebigen Tag:
         </p>
-        <div class="sim-card__row">
-          <input type="date" id="simDateInput" name="simDate" class="sim-card__input" aria-label="Vorschau-Datum" />
-          <button type="button" class="btn btn--toolbar" id="openSimulatedSiteBtn">
+        <div class="sim-box__row">
+          <input type="date" id="simDateInput" name="simDate" class="sim-box__input" aria-label="Vorschau-Datum" />
+          <button type="button" class="ui-btn-secondary" id="openSimulatedSiteBtn">
             <span data-ui="sim.btn">Testen</span>
           </button>
         </div>
       </div>
     </aside>
 
-    <!-- Right Inspector Panel: Active Week Editor -->
-    <section class="inspector">
+    <!-- Right Inspector Panel (Content Layer: Opaque Neutral .ui-card) -->
+    <section class="inspector ui-card">
       <div id="saveToast" class="save-toast" role="status" aria-live="polite" hidden>
         <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
         <span data-ui="toast.saved">Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.</span>
@@ -956,25 +959,25 @@
         </div>
 
         <div class="inspector__actions">
-          <button type="button" class="btn btn--toolbar" id="autoTranslateBtn" title="Gerichte automatisch von Deutsch auf Englisch übersetzen">
+          <button type="button" class="ui-btn-secondary" id="autoTranslateBtn" title="Gerichte automatisch von Deutsch auf Englisch übersetzen">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
             <span data-ui="btn.autotranslate">DE → EN übersetzen</span>
           </button>
 
-          <button type="button" class="btn btn--toolbar" id="duplicateWeekBtn">
+          <button type="button" class="ui-btn-secondary" id="duplicateWeekBtn">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             <span data-ui="btn.duplicate">Woche duplizieren</span>
           </button>
 
-          <button type="button" class="btn btn--danger" id="deleteWeekBtn">
+          <button type="button" class="ui-btn-danger" id="deleteWeekBtn">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             <span data-ui="btn.delete">Löschen</span>
           </button>
         </div>
       </div>
 
-      <!-- Date Range & Prices (Aligned Single-Line Labels & Full Period Width) -->
-      <div class="settings-group">
+      <!-- Date Range & Prices (Opaque Neutral .ui-inset-card) -->
+      <div class="settings-group ui-inset-card">
         <div class="field">
           <label class="field__label" for="validFromInput" data-ui="field.from">Aktiv ab (Montag)</label>
           <input class="field__input" type="date" id="validFromInput" name="validFrom" />
@@ -1002,13 +1005,13 @@
         <!-- Populated dynamically -->
       </div>
 
-      <!-- Bottom Save Bar -->
+      <!-- Bottom Hint Bar -->
       <div class="inspector__footer">
         <span class="inspector__hint" data-ui="footer.hint">
           Tipp: Sie können Gerichte auf Deutsch eingeben und mit „DE → EN übersetzen“ automatisch ins Englische übertragen.
         </span>
-        <button type="button" class="btn btn--primary" id="saveAllBtn">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+        <button type="button" class="ui-btn-secondary" id="saveAllBtn">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
           <span data-ui="btn.save">Änderungen speichern</span>
         </button>
       </div>
@@ -1039,6 +1042,32 @@
 
   <script src="js/lunch-scheduler.js"></script>
   <script>
+    // 1. Dynamic Tenant Color Engine (Apple Tahoe Multi-Tenant Design System)
+    window.applyTenantTheme = function applyTenantTheme(primaryHex, secondaryHex) {
+      const hex = /^#[0-9a-fA-F]{6}$/.test(primaryHex) ? primaryHex : "#18181B";
+      const r = parseInt(hex.slice(1, 3), 16) / 255;
+      const g = parseInt(hex.slice(3, 5), 16) / 255;
+      const b = parseInt(hex.slice(5, 7), 16) / 255;
+      const toLinear = (c) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+      const luminance = 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+
+      // Automatic WCAG AA readable text on top of --tenant-accent
+      const fg = luminance > 0.42 ? "#111113" : "#FFFFFF";
+
+      const root = document.documentElement;
+      root.style.setProperty("--tenant-accent", hex);
+      root.style.setProperty("--tenant-accent-fg", fg);
+      if (secondaryHex && /^#[0-9a-fA-F]{6}$/.test(secondaryHex)) {
+        root.style.setProperty("--tenant-secondary", secondaryHex);
+      } else {
+        root.style.removeProperty("--tenant-secondary");
+      }
+      return { hex, fg, luminance };
+    };
+
+    // Initialize Café Weiss tenant brand accent (#7A4F28)
+    window.applyTenantTheme("#7A4F28", "#17332B");
+
     (function () {
       "use strict";
 
@@ -1129,16 +1158,26 @@
         return SCHEDULER.addDaysISO(isoDate, days);
       }
 
-      function formatDeDate(isoDate) {
-        return SCHEDULER.formatDeDate(isoDate);
-      }
-
       function computeDisplayPeriod(mondayIso) {
         return SCHEDULER.computeDisplayPeriod(mondayIso);
       }
 
       function getWeekStatus(week) {
         return SCHEDULER.getWeekStatus(week, getTodayIso());
+      }
+
+      function applyAppearance(isDark) {
+        document.documentElement.classList.toggle("dark", isDark);
+        const sun = document.getElementById("themeIconSun");
+        const moon = document.getElementById("themeIconMoon");
+        const meta = document.getElementById("metaThemeColor");
+        if (sun && moon) {
+          sun.hidden = !isDark;
+          moon.hidden = isDark;
+        }
+        if (meta) {
+          meta.setAttribute("content", isDark ? "#0C0C0E" : "#F2F2F4");
+        }
       }
 
       async function loadSchedules() {
@@ -1159,7 +1198,7 @@
           el.textContent = ut(el.getAttribute("data-ui"));
         });
         document.querySelectorAll("[data-set-uilang]").forEach((btn) => {
-          btn.classList.toggle("active", btn.getAttribute("data-set-uilang") === uiLang);
+          btn.classList.toggle("ui-segment-active", btn.getAttribute("data-set-uilang") === uiLang);
         });
 
         renderSidebar();
@@ -1261,9 +1300,12 @@
         grid.innerHTML = (week.days || [])
           .map(
             (d, idx) => `
-            <div class="day-card day-editor-card" data-day-index="${idx}">
+            <div class="day-card day-editor-card ui-inset-card" data-day-index="${idx}">
               <div class="day-card__header">
-                <span class="day-card__title">${d.day.de} · ${d.day.en}</span>
+                <span class="day-card__title">
+                  <span class="day-card__accent-bar" aria-hidden="true"></span>
+                  <span>${d.day.de} · ${d.day.en}</span>
+                </span>
                 <span class="day-card__hours">11:00 – 15:00 Uhr</span>
               </div>
 
@@ -1383,6 +1425,15 @@
       }
 
       document.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("cafeweiss_admin_theme");
+        applyAppearance(savedTheme === "dark");
+
+        document.getElementById("themeToggleBtn").addEventListener("click", () => {
+          const nextDark = !document.documentElement.classList.contains("dark");
+          localStorage.setItem("cafeweiss_admin_theme", nextDark ? "dark" : "light");
+          applyAppearance(nextDark);
+        });
+
         loadSchedules();
 
         window.addEventListener("beforeunload", (e) => {

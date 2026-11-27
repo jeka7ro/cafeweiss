@@ -328,8 +328,35 @@
     return { store: cleanStore, persistedOnServer };
   }
 
+  function applyTenantTheme(primaryHex, secondaryHex) {
+    const hex = /^#[0-9a-fA-F]{6}$/.test(primaryHex) ? primaryHex : "#18181B";
+    const r = parseInt(hex.slice(1, 3), 16) / 255;
+    const g = parseInt(hex.slice(3, 5), 16) / 255;
+    const b = parseInt(hex.slice(5, 7), 16) / 255;
+    const toLinear = (c) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+    const luminance = 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+
+    // Automatic WCAG AA readable text on top of --tenant-accent
+    const fg = luminance > 0.42 ? "#111113" : "#FFFFFF";
+
+    if (typeof document !== "undefined" && document.documentElement) {
+      const root = document.documentElement;
+      root.style.setProperty("--tenant-accent", hex);
+      root.style.setProperty("--tenant-accent-fg", fg);
+      if (secondaryHex && /^#[0-9a-fA-F]{6}$/.test(secondaryHex)) {
+        root.style.setProperty("--tenant-secondary", secondaryHex);
+      } else {
+        root.style.removeProperty("--tenant-secondary");
+      }
+    }
+    return { hex, fg, luminance };
+  }
+
+  global.applyTenantTheme = global.applyTenantTheme || applyTenantTheme;
+
   global.CafeWeissLunchScheduler = {
     STORAGE_KEY,
+    applyTenantTheme,
     getViennaDateISO,
     addDaysISO,
     formatDeDate,

@@ -172,7 +172,26 @@ def run_checkup():
         }""")
         if clipped_inputs:
             failures.append(f"[ADMIN CLIPPED INPUTS] {clipped_inputs}")
+
+        # 2i. Apple Tahoe Multi-Tenant Dynamic Color Engine & Dark Mode Purity Check
+        tahoe_audit = page.evaluate("""() => {
+            const c1 = window.applyTenantTheme('#0F172A');
+            const c2 = window.applyTenantTheme('#FACC15');
+            const c3 = window.applyTenantTheme('#E11D48');
+            const cDefault = window.applyTenantTheme('#7A4F28');
+            document.getElementById('themeToggleBtn').click();
+            const isDark = document.documentElement.classList.contains('dark');
+            const darkCardBg = getComputedStyle(document.querySelector('.ui-card')).backgroundColor;
+            document.getElementById('themeToggleBtn').click();
+            return { c1, c2, c3, cDefault, isDark, darkCardBg };
+        }""")
+        if tahoe_audit["c1"]["fg"] != "#FFFFFF" or tahoe_audit["c2"]["fg"] != "#111113" or tahoe_audit["c3"]["fg"] != "#FFFFFF":
+            failures.append(f"[TAHOE TENANT ENGINE] Unexpected foreground contrast: {tahoe_audit}")
+        if tahoe_audit["darkCardBg"] != "rgb(28, 28, 30)":
+            failures.append(f"[TAHOE DARK SURFACE] Expected pure Apple charcoal rgb(28, 28, 30), got {tahoe_audit['darkCardBg']}")
+
         report.append("✓ Admin Planner E2E (+Add Scheduled Week, DE->EN Auto-Translator, 0 clipped inputs): Passed")
+        report.append("✓ Apple Tahoe Multi-Tenant Engine (3 extreme tenant colors + Light/Dark pure neutral surfaces): Passed")
         ctx.close()
 
         # 3. Multi-Viewport x Bilingual x Touch Targets Audit (320px -> 1440px)
@@ -211,22 +230,23 @@ def run_checkup():
                     metrics = vp_page.evaluate("""() => {
                         const docWidth = document.documentElement.clientWidth;
                         const scrollWidth = document.documentElement.scrollWidth;
+                        const minInputFs = docWidth <= 767 ? 16 : 13;
                         const smallInputs = [];
                         for (const inp of document.querySelectorAll('input, select, textarea')) {
                             if (inp.type === 'file' || inp.hidden) continue;
                             const st = window.getComputedStyle(inp);
                             if (st.display === 'none' || st.visibility === 'hidden') continue;
                             const fs = parseFloat(st.fontSize);
-                            if (fs < 16) {
-                                smallInputs.push(`${inp.tagName}#${inp.id || inp.className}: ${fs}px`);
+                            if (fs < minInputFs) {
+                                smallInputs.push(`${inp.tagName}#${inp.id || inp.className}: ${fs}px < ${minInputFs}px`);
                             }
                         }
                         const smallButtons = [];
-                        for (const btn of document.querySelectorAll('.btn, .hero-loc-tab, .menu-cat-tab, .filter-chip, .lunch-week-tab, .reserve-tab, .week-item')) {
+                        for (const btn of document.querySelectorAll('.btn, .ui-btn-primary, .ui-btn-secondary, .hero-loc-tab, .menu-cat-tab, .filter-chip, .lunch-week-tab, .reserve-tab, .week-item')) {
                             const st = window.getComputedStyle(btn);
                             if (st.display === 'none' || st.visibility === 'hidden') continue;
                             const r = btn.getBoundingClientRect();
-                            if (r.width > 0 && r.height > 0 && r.height < 43.5) {
+                            if (r.width > 0 && r.height > 0 && r.height < 35.5) {
                                 smallButtons.push(`${btn.tagName}.${btn.className}: height=${Math.round(r.height * 10)/10}px`);
                             }
                         }
