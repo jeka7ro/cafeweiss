@@ -37,6 +37,7 @@
     initLightbox();
     initReservationSystem();
     initScrollReveal();
+    initIosBottomTabbar();
     initAmbientCanvas();
     applyTranslations();
 
@@ -49,22 +50,40 @@
     const toggleBtn = document.getElementById("siteThemeToggleBtn");
     const sunIcon = document.getElementById("siteThemeIconSun");
     const moonIcon = document.getElementById("siteThemeIconMoon");
+    const themeLabel = document.getElementById("siteThemeLabel");
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
 
     function setDark(isDark) {
       document.documentElement.classList.toggle("dark", isDark);
+      document.documentElement.style.colorScheme = isDark ? "dark" : "light";
+      if (metaTheme) {
+        metaTheme.setAttribute("content", isDark ? "#0C0C0E" : "#F2F2F4");
+      }
       if (sunIcon && moonIcon) {
         sunIcon.hidden = !isDark;
         moonIcon.hidden = isDark;
       }
+      if (themeLabel) {
+        themeLabel.textContent = isDark ? "Light" : "Dark";
+      }
+      if (toggleBtn) {
+        toggleBtn.setAttribute("aria-pressed", isDark ? "true" : "false");
+      }
     }
 
-    const saved = localStorage.getItem("cafeweiss_site_theme");
+    const saved =
+      localStorage.getItem("cafeweiss_theme") ||
+      localStorage.getItem("cafeweiss_site_theme") ||
+      localStorage.getItem("cafeweiss_admin_theme");
     setDark(saved === "dark");
 
     if (toggleBtn) {
       toggleBtn.addEventListener("click", () => {
         const nextDark = !document.documentElement.classList.contains("dark");
-        localStorage.setItem("cafeweiss_site_theme", nextDark ? "dark" : "light");
+        const mode = nextDark ? "dark" : "light";
+        localStorage.setItem("cafeweiss_theme", mode);
+        localStorage.setItem("cafeweiss_site_theme", mode);
+        localStorage.setItem("cafeweiss_admin_theme", mode);
         setDark(nextDark);
       });
     }
@@ -505,6 +524,27 @@
 
     if (!currentWeek) return;
 
+    // Also update the Hero Live Mittagsmenü Concierge Widget
+    const heroLunchPeriodEl = document.getElementById("heroLiveLunchPeriod");
+    const heroLunchDishEl = document.getElementById("heroLiveLunchDish");
+    const heroLunchPriceEl = document.getElementById("heroLiveLunchPrice");
+    if (heroLunchPeriodEl) {
+      const prefix = state.lang === "en" ? "WEEKLY LUNCH · TUE–FRI" : "MITTAGSMENÜ · DI–FR";
+      heroLunchPeriodEl.textContent = `${prefix} (${currentWeek.displayPeriod || ""})`;
+    }
+    if (heroLunchDishEl && Array.isArray(currentWeek.days)) {
+      const highlights = currentWeek.days
+        .slice(0, 3)
+        .map((d) => (d.main && (d.main[state.lang] || d.main.de)) || "")
+        .filter(Boolean)
+        .join(" · ");
+      if (highlights) heroLunchDishEl.textContent = highlights;
+    }
+    if (heroLunchPriceEl) {
+      const p2 = currentWeek.price2Course || "€ 10,90";
+      heroLunchPriceEl.textContent = state.lang === "en" ? `from ${p2}` : `ab ${p2}`;
+    }
+
     if (periodBadgeEl) {
       periodBadgeEl.textContent = `📅 ${currentWeek.displayPeriod || ""}`;
     }
@@ -553,15 +593,24 @@
     }
 
     if (gridEl && Array.isArray(currentWeek.days)) {
+      const jsDay = new Date().getDay(); // 2=Tue, 3=Wed, 4=Thu, 5=Fri
+      const todayIndex = jsDay >= 2 && jsDay <= 5 ? jsDay - 2 : 0;
       gridEl.innerHTML = currentWeek.days
-        .map((d) => {
+        .map((d, idx) => {
           const dayName = (d.day && (d.day[state.lang] || d.day.de)) || "";
           const soupName = (d.soup && (d.soup[state.lang] || d.soup.de)) || "";
           const mainName = (d.main && (d.main[state.lang] || d.main.de)) || "";
           const dessertName = (d.dessert && (d.dessert[state.lang] || d.dessert.de)) || "";
+          const isToday = idx === todayIndex;
+          const todayBadge = isToday
+            ? `<span class="lunch-day-card__today">${state.lang === "en" ? "Today's Tip" : "Tipp"}</span>`
+            : "";
           return `
-          <div class="lunch-day-card">
-            <div class="lunch-day-card__day">${dayName}</div>
+          <div class="lunch-day-card ${isToday ? "is-featured" : ""}">
+            <div class="lunch-day-card__head">
+              <div class="lunch-day-card__day">${dayName}</div>
+              ${todayBadge}
+            </div>
             <div class="lunch-day-card__soup">• ${soupName}</div>
             <div class="lunch-day-card__main">${mainName}</div>
             <div class="lunch-day-card__dessert">✦ ${dessertName}</div>
@@ -570,6 +619,38 @@
         })
         .join("");
     }
+  }
+
+  // ================= iOS 26 FLOATING BOTTOM TAB BAR SCROLL SPY =================
+  function initIosBottomTabbar() {
+    const tabbar = document.getElementById("iosBottomTabbar");
+    if (!tabbar) return;
+    const items = Array.from(tabbar.querySelectorAll("[data-tab-section]"));
+    items.forEach((link) => {
+      link.addEventListener("click", () => {
+        items.forEach((el) => el.classList.toggle("active", el === link));
+      });
+    });
+
+    if (!("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target.id) {
+            const match = tabbar.querySelector(`[data-tab-section="${entry.target.id}"]`);
+            if (match) {
+              items.forEach((el) => el.classList.toggle("active", el === match));
+            }
+          }
+        });
+      },
+      { rootMargin: "-25% 0px -55% 0px", threshold: 0.05 }
+    );
+
+    ["standorte", "lunchMenuBanner", "speisekarte", "reservierung"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
   }
 
   function renderMenuCategories() {

@@ -1141,7 +1141,14 @@ window.CAFE_WEISS_DATA = {
       "careers.btn": "Jetzt per E-Mail bewerben",
 
       "footer.tagline": "Französisches Restaurant & Kaffeehaus in Hinterbrühl und Mödling. Mit Liebe zu Geschmack, Bio-Qualität und echter Gastfreundschaft.",
-      "footer.rights": "Alle Rechte vorbehalten."
+      "footer.rights": "Alle Rechte vorbehalten.",
+      "quick.call": "Anrufen",
+      "hero.lunch.cta": "Wochenplan →",
+      "tab.locations": "Cafés",
+      "tab.lunch": "Mittag",
+      "tab.menu": "Menü",
+      "tab.reserve": "Tisch",
+      "tab.call": "Anruf"
     },
     en: {
       "nav.locations": "Our Cafés",
@@ -1279,7 +1286,14 @@ window.CAFE_WEISS_DATA = {
       "careers.btn": "Apply Now via Email",
 
       "footer.tagline": "French-inspired Restaurant & Coffeehouse in Hinterbrühl and Mödling. Crafted with love for flavor, organic quality, and genuine hospitality.",
-      "footer.rights": "All Rights Reserved."
+      "footer.rights": "All Rights Reserved.",
+      "quick.call": "Call Us",
+      "hero.lunch.cta": "Weekly Plan →",
+      "tab.locations": "Cafés",
+      "tab.lunch": "Lunch",
+      "tab.menu": "Menu",
+      "tab.reserve": "Reserve",
+      "tab.call": "Call"
     }
   }
 };

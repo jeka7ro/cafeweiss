@@ -15,8 +15,9 @@ DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "lu
 
 class CafeWeissHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
-        if self.path.startswith("/api/") or self.path.endswith(".json"):
-            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
         super().end_headers()
 
     def do_GET(self):

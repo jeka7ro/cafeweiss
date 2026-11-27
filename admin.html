@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -26,11 +27,9 @@
       --tenant-accent-soft: color-mix(in oklch, var(--tenant-accent) 10%, transparent);
       --tenant-accent-soft-hover: color-mix(in oklch, var(--tenant-accent) 16%, transparent);
       --tenant-accent-border: color-mix(in oklch, var(--tenant-accent) 28%, transparent);
-      --tenant-accent-gradient: linear-gradient(
-        180deg,
-        color-mix(in oklch, var(--tenant-accent) 90%, white) 0%,
-        var(--tenant-accent) 100%
-      );
+      --tenant-accent-gradient: linear-gradient(180deg,
+          color-mix(in oklch, var(--tenant-accent) 90%, white) 0%,
+          var(--tenant-accent) 100%);
       --tenant-accent-shadow: color-mix(in oklch, var(--tenant-accent) 32%, transparent);
       --tenant-focus-ring: var(--tenant-accent);
 
@@ -142,13 +141,16 @@
       --status-danger-bg: rgba(251, 113, 133, 0.14);
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       max-width: 100vw;
       overflow-x: hidden;
@@ -170,7 +172,12 @@
       outline-offset: 2px;
     }
 
-    button, a, input, select, textarea, [role="button"] {
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    [role="button"] {
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
       font-family: inherit;
@@ -178,6 +185,7 @@
     }
 
     @media (max-width: 767px) {
+
       input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
       select,
       textarea {
@@ -185,8 +193,15 @@
       }
     }
 
-    .tabular-nums, td, th { font-variant-numeric: tabular-nums; }
-    [hidden] { display: none !important; }
+    .tabular-nums,
+    td,
+    th {
+      font-variant-numeric: tabular-nums;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
 
     .icon {
       width: 15px;
@@ -229,59 +244,119 @@
     }
 
     .ui-btn-primary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      min-height: 36px; padding: 0 15px; border-radius: 9999px;
-      font-size: 13px; font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 0 15px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
       color: var(--tenant-accent-fg);
       background: var(--tenant-accent-gradient);
       border: 0.5px solid rgba(0, 0, 0, 0.08);
       box-shadow: 0 1px 3px var(--tenant-accent-shadow), inset 0 0.5px 0 rgba(255, 255, 255, 0.28);
-      cursor: pointer; white-space: nowrap; text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
       transition: filter 120ms ease, transform 80ms ease;
     }
-    .ui-btn-primary:hover { filter: brightness(1.06); }
-    .ui-btn-primary:active { transform: scale(0.985); }
+
+    .ui-btn-primary:hover {
+      filter: brightness(1.06);
+    }
+
+    .ui-btn-primary:active {
+      transform: scale(0.985);
+    }
 
     .ui-btn-secondary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      min-height: 36px; padding: 0 13px; border-radius: 9999px;
-      font-size: 13px; font-weight: 500;
-      color: var(--ui-label); background-color: var(--ui-surface);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 0 13px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ui-label);
+      background-color: var(--ui-surface);
       border: 0.5px solid var(--ui-separator-strong);
-      cursor: pointer; white-space: nowrap; text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
       transition: background-color 120ms ease, transform 80ms ease, border-color 120ms ease;
     }
-    .ui-btn-secondary:hover { background-color: var(--ui-surface-subtle); }
-    .ui-btn-secondary:active { transform: scale(0.985); }
+
+    .ui-btn-secondary:hover {
+      background-color: var(--ui-surface-subtle);
+    }
+
+    .ui-btn-secondary:active {
+      transform: scale(0.985);
+    }
 
     .ui-btn-danger {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      min-height: 36px; padding: 0 13px; border-radius: 9999px;
-      font-size: 13px; font-weight: 500;
-      color: var(--status-danger); background-color: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 0 13px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--status-danger);
+      background-color: transparent;
       border: 0.5px solid color-mix(in oklch, var(--status-danger) 35%, transparent);
-      cursor: pointer; white-space: nowrap;
+      cursor: pointer;
+      white-space: nowrap;
       transition: background-color 120ms ease, transform 80ms ease;
     }
-    .ui-btn-danger:hover { background-color: var(--status-danger-bg); }
-    .ui-btn-danger:active { transform: scale(0.985); }
+
+    .ui-btn-danger:hover {
+      background-color: var(--status-danger-bg);
+    }
+
+    .ui-btn-danger:active {
+      transform: scale(0.985);
+    }
 
     .ui-segmented {
-      display: inline-flex; align-items: center; gap: 2px; padding: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 3px;
       border-radius: 9999px;
       background-color: var(--ui-seg-track);
       border: 1px solid var(--ui-seg-border);
     }
 
     .ui-segment {
-      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-      min-height: 30px; min-width: 38px; padding: 0 11px; border-radius: 9999px;
-      font-size: 12px; font-weight: 500;
-      color: var(--ui-label-secondary); background: transparent; border: 0;
-      cursor: pointer; white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 30px;
+      min-width: 38px;
+      padding: 0 11px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ui-label-secondary);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      white-space: nowrap;
       transition: background-color 140ms ease, color 140ms ease;
     }
-    .ui-segment:hover { color: var(--ui-label); }
+
+    .ui-segment:hover {
+      color: var(--ui-label);
+    }
+
     .ui-segment-active {
       background: var(--tenant-accent-gradient);
       color: var(--tenant-accent-fg) !important;
@@ -327,9 +402,17 @@
       display: block;
     }
 
-    .toolbar__logo--light { display: none; }
-    html.dark .toolbar__logo--dark { display: none; }
-    html.dark .toolbar__logo--light { display: block; }
+    .toolbar__logo--light {
+      display: none;
+    }
+
+    html.dark .toolbar__logo--dark {
+      display: none;
+    }
+
+    html.dark .toolbar__logo--light {
+      display: block;
+    }
 
     .toolbar__divider {
       width: 1px;
@@ -493,6 +576,7 @@
       background: var(--status-ok-bg);
       color: var(--status-ok);
     }
+
     .status-badge--active .status-badge__dot {
       background: var(--status-ok);
     }
@@ -501,6 +585,7 @@
       background: var(--status-warn-bg);
       color: var(--status-warn);
     }
+
     .status-badge--scheduled .status-badge__dot {
       background: var(--status-warn);
     }
@@ -510,6 +595,7 @@
       color: var(--ui-label-tertiary);
       border: 0.5px solid var(--ui-separator);
     }
+
     .status-badge--past .status-badge__dot {
       background: var(--ui-label-tertiary);
     }
@@ -608,7 +694,10 @@
       align-items: center;
       gap: 0.45rem;
     }
-    .save-toast[hidden] { display: none !important; }
+
+    .save-toast[hidden] {
+      display: none !important;
+    }
 
     /* ── Schedule Settings Bar (Opaque Neutral Inset Card, Aligned Baseline) ── */
     .settings-group {
@@ -778,11 +867,20 @@
     }
 
     /* Printable A4 Sheet */
-    .print-sheet { display: none; }
+    .print-sheet {
+      display: none;
+    }
 
     @media print {
-      body * { visibility: hidden; }
-      .print-sheet, .print-sheet * { visibility: visible; }
+      body * {
+        visibility: hidden;
+      }
+
+      .print-sheet,
+      .print-sheet * {
+        visibility: visible;
+      }
+
       .print-sheet {
         display: block;
         position: absolute;
@@ -793,57 +891,164 @@
         text-align: center;
         font-family: Georgia, serif;
       }
-      .print-sheet__logo { height: 76px; width: auto; margin: 0 auto 6px; }
-      .print-sheet__sub { font-size: 13pt; letter-spacing: 2px; font-weight: bold; padding-bottom: 10px; border-bottom: 1px solid #444; margin-bottom: 16px; }
-      .print-sheet__title { font-size: 22pt; letter-spacing: 1px; margin-bottom: 4px; }
-      .print-sheet__dates { font-size: 14pt; margin-bottom: 2px; }
-      .print-sheet__hours { font-size: 11pt; margin-bottom: 18px; }
-      .print-day { margin-bottom: 16px; }
-      .print-day h4 { font-size: 13pt; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
-      .print-day p { font-size: 13.5pt; line-height: 1.35; }
-      .print-day .print-dessert { font-size: 11pt; font-weight: bold; margin-top: 2px; }
-      .print-day .print-veg { font-size: 9.5pt; color: #444; }
-      .print-prices { margin-top: 20px; padding-top: 14px; border-top: 1px solid #888; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-      .print-prices h5 { font-size: 15pt; margin-bottom: 2px; }
-      .print-prices p { font-size: 10pt; margin-bottom: 4px; }
-      .print-prices strong { font-size: 22pt; }
+
+      .print-sheet__logo {
+        height: 76px;
+        width: auto;
+        margin: 0 auto 6px;
+      }
+
+      .print-sheet__sub {
+        font-size: 13pt;
+        letter-spacing: 2px;
+        font-weight: bold;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #444;
+        margin-bottom: 16px;
+      }
+
+      .print-sheet__title {
+        font-size: 22pt;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+      }
+
+      .print-sheet__dates {
+        font-size: 14pt;
+        margin-bottom: 2px;
+      }
+
+      .print-sheet__hours {
+        font-size: 11pt;
+        margin-bottom: 18px;
+      }
+
+      .print-day {
+        margin-bottom: 16px;
+      }
+
+      .print-day h4 {
+        font-size: 13pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 3px;
+      }
+
+      .print-day p {
+        font-size: 13.5pt;
+        line-height: 1.35;
+      }
+
+      .print-day .print-dessert {
+        font-size: 11pt;
+        font-weight: bold;
+        margin-top: 2px;
+      }
+
+      .print-day .print-veg {
+        font-size: 9.5pt;
+        color: #444;
+      }
+
+      .print-prices {
+        margin-top: 20px;
+        padding-top: 14px;
+        border-top: 1px solid #888;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .print-prices h5 {
+        font-size: 15pt;
+        margin-bottom: 2px;
+      }
+
+      .print-prices p {
+        font-size: 10pt;
+        margin-bottom: 4px;
+      }
+
+      .print-prices strong {
+        font-size: 22pt;
+      }
     }
 
     @media (prefers-reduced-transparency: reduce) {
-      .ui-glass-sidebar, .ui-glass-toolbar {
+
+      .ui-glass-sidebar,
+      .ui-glass-toolbar {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
       }
-      :root { --ui-glass-bar: #FFFFFF; --ui-glass-sidebar: #F6F6F8; }
-      html.dark { --ui-glass-bar: #1C1C1E; --ui-glass-sidebar: #18181A; }
+
+      :root {
+        --ui-glass-bar: #FFFFFF;
+        --ui-glass-sidebar: #F6F6F8;
+      }
+
+      html.dark {
+        --ui-glass-bar: #1C1C1E;
+        --ui-glass-sidebar: #18181A;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+
+      *,
+      *::before,
+      *::after {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
       }
     }
 
     @media (max-width: 1120px) {
-      .workspace { grid-template-columns: 1fr; }
-      .sidebar { position: static; }
-      .settings-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .settings-group {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 780px) {
-      .course-row { grid-template-columns: 1fr; gap: 0.4rem; }
-      .inspector { padding: 1.1rem; }
+      .course-row {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+      }
+
+      .inspector {
+        padding: 1.1rem;
+      }
     }
 
     @media (max-width: 560px) {
-      .toolbar { padding: 0.5rem 0.9rem; }
-      .workspace { padding: 0.9rem; }
-      .settings-group { grid-template-columns: 1fr; }
-      .toolbar__divider, .toolbar__title-group { display: none; }
+      .toolbar {
+        padding: 0.5rem 0.9rem;
+      }
+
+      .workspace {
+        padding: 0.9rem;
+      }
+
+      .settings-group {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar__divider,
+      .toolbar__title-group {
+        display: none;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- ================= FUNCTIONAL LAYER: APPLE TAHOE LIQUID GLASS TOOLBAR ================= -->
@@ -851,8 +1056,10 @@
     <div class="toolbar__inner">
       <div class="toolbar__brand">
         <a href="index.html" class="toolbar__logo-link" aria-label="Café Weiss Startseite">
-          <img src="assets/images/brand/logo-dark.png?v=2" alt="Café Weiss" class="toolbar__logo toolbar__logo--dark" width="112" height="32" />
-          <img src="assets/images/brand/logo-light.png?v=2" alt="Café Weiss" class="toolbar__logo toolbar__logo--light" width="112" height="32" />
+          <img src="assets/images/brand/logo-dark.png?v=2" alt="Café Weiss" class="toolbar__logo toolbar__logo--dark"
+            width="112" height="32" />
+          <img src="assets/images/brand/logo-light.png?v=2" alt="Café Weiss" class="toolbar__logo toolbar__logo--light"
+            width="112" height="32" />
         </a>
         <span class="toolbar__divider" aria-hidden="true"></span>
         <div class="toolbar__title-group">
@@ -869,35 +1076,68 @@
         </div>
 
         <!-- Light / Dark Appearance Toggle -->
-        <button type="button" class="ui-btn-secondary" id="themeToggleBtn" aria-label="Erscheinungsbild wechseln (Hell/Dunkel)">
-          <svg class="icon" id="themeIconSun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" hidden><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          <svg class="icon" id="themeIconMoon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <button type="button" class="ui-btn-secondary" id="themeToggleBtn"
+          aria-label="Erscheinungsbild wechseln (Hell/Dunkel)">
+          <svg class="icon" id="themeIconSun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" hidden>
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg class="icon" id="themeIconMoon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
         </button>
 
         <button type="button" class="ui-btn-secondary" id="exportJsonBtn" title="JSON-Backup herunterladen">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
           <span data-ui="btn.export">Backup</span>
         </button>
 
         <label class="ui-btn-secondary" for="importJsonInput" title="JSON-Backup importieren">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
           <span data-ui="btn.import">Import</span>
           <input type="file" id="importJsonInput" accept="application/json,.json" hidden />
         </label>
 
         <button type="button" class="ui-btn-secondary" id="printMenuBtn">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polyline points="6 9 6 2 18 2 18 9" />
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+            <rect x="6" y="14" width="12" height="8" />
+          </svg>
           <span data-ui="btn.print">A4 Drucken</span>
         </button>
 
         <a href="index.html#speisekarte" class="ui-btn-secondary">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
           <span data-ui="btn.back">Live-Webseite</span>
         </a>
 
         <!-- Single Prominent Primary Action (.ui-btn-primary — 10% Tenant Accent Rule) -->
         <button type="button" class="ui-btn-primary" id="toolbarSaveBtn">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
           <span data-ui="btn.save">Änderungen speichern</span>
         </button>
       </div>
@@ -919,7 +1159,10 @@
         </div>
 
         <button type="button" class="ui-btn-secondary" id="addNewWeekBtn" style="width: 100%; justify-content: center;">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
           <span data-ui="sidebar.add">Neue Woche im Voraus planen</span>
         </button>
       </div>
@@ -927,7 +1170,12 @@
       <!-- Compact Date Simulator (Neutral Inset Card) -->
       <div class="sim-box ui-inset-card">
         <div class="sim-box__title">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
           <span data-ui="sim.title">Datum-Vorschau testen</span>
         </div>
         <p class="sim-box__desc" data-ui="sim.desc">
@@ -945,7 +1193,9 @@
     <!-- Right Inspector Panel (Content Layer: Opaque Neutral .ui-card) -->
     <section class="inspector ui-card">
       <div id="saveToast" class="save-toast" role="status" aria-live="polite" hidden>
-        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
         <span data-ui="toast.saved">Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.</span>
       </div>
 
@@ -959,18 +1209,35 @@
         </div>
 
         <div class="inspector__actions">
-          <button type="button" class="ui-btn-secondary" id="autoTranslateBtn" title="Gerichte automatisch von Deutsch auf Englisch übersetzen">
-            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+          <button type="button" class="ui-btn-secondary" id="autoTranslateBtn"
+            title="Gerichte automatisch von Deutsch auf Englisch übersetzen">
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8">
+              <path d="M5 8l6 6" />
+              <path d="M4 14l6-6 2-3" />
+              <path d="M2 5h12" />
+              <path d="M7 2h1" />
+              <path d="M22 22l-5-10-5 10" />
+              <path d="M14 18h6" />
+            </svg>
             <span data-ui="btn.autotranslate">DE → EN übersetzen</span>
           </button>
 
           <button type="button" class="ui-btn-secondary" id="duplicateWeekBtn">
-            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
             <span data-ui="btn.duplicate">Woche duplizieren</span>
           </button>
 
           <button type="button" class="ui-btn-danger" id="deleteWeekBtn">
-            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
             <span data-ui="btn.delete">Löschen</span>
           </button>
         </div>
@@ -987,8 +1254,10 @@
           <input class="field__input" type="date" id="validToInput" name="validTo" />
         </div>
         <div class="field">
-          <label class="field__label" for="displayPeriodInput" data-ui="field.display">Zeitraum auf Karte (Di–Fr)</label>
-          <input class="field__input" type="text" id="displayPeriodInput" name="displayPeriod" placeholder="24.11.2026 – 27.11.2026…" />
+          <label class="field__label" for="displayPeriodInput" data-ui="field.display">Zeitraum auf Karte
+            (Di–Fr)</label>
+          <input class="field__input" type="text" id="displayPeriodInput" name="displayPeriod"
+            placeholder="24.11.2026 – 27.11.2026…" />
         </div>
         <div class="field">
           <label class="field__label" for="price2Input" data-ui="field.p2">2-Gänge-Preis</label>
@@ -1008,10 +1277,13 @@
       <!-- Bottom Hint Bar -->
       <div class="inspector__footer">
         <span class="inspector__hint" data-ui="footer.hint">
-          Tipp: Sie können Gerichte auf Deutsch eingeben und mit „DE → EN übersetzen“ automatisch ins Englische übertragen.
+          Tipp: Sie können Gerichte auf Deutsch eingeben und mit „DE → EN übersetzen“ automatisch ins Englische
+          übertragen.
         </span>
         <button type="button" class="ui-btn-secondary" id="saveAllBtn">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
           <span data-ui="btn.save">Änderungen speichern</span>
         </button>
       </div>
@@ -1020,7 +1292,8 @@
 
   <!-- ================= PRINTABLE A4 SHEET (EXACT CAFÉ WEISS DESIGN) ================= -->
   <div class="print-sheet" id="printSheet">
-    <img src="assets/images/brand/logo-dark.png?v=2" alt="Café Weiss" class="print-sheet__logo" width="266" height="76" />
+    <img src="assets/images/brand/logo-dark.png?v=2" alt="Café Weiss" class="print-sheet__logo" width="266"
+      height="76" />
     <div class="print-sheet__sub">RESTAURANT &amp; CAFÉ</div>
     <h2 class="print-sheet__title">MITTAGSMENÜ</h2>
     <div class="print-sheet__dates" id="printDates">24.11.2026 - 27.11.2026</div>
@@ -1221,14 +1494,14 @@
               st === "active"
                 ? "status-badge--active"
                 : st === "scheduled"
-                ? "status-badge--scheduled"
-                : "status-badge--past";
+                  ? "status-badge--scheduled"
+                  : "status-badge--past";
             const badgeLabel =
               st === "active"
                 ? ut("status.active")
                 : st === "scheduled"
-                ? ut("status.scheduled")
-                : ut("status.past");
+                  ? ut("status.scheduled")
+                  : ut("status.past");
 
             const firstDish = w.days && w.days[0] ? w.days[0].main.de : "";
             return `
@@ -1270,14 +1543,14 @@
             st === "active"
               ? "status-badge--active"
               : st === "scheduled"
-              ? "status-badge--scheduled"
-              : "status-badge--past";
+                ? "status-badge--scheduled"
+                : "status-badge--past";
           const badgeLabel =
             st === "active"
               ? ut("status.active")
               : st === "scheduled"
-              ? ut("status.scheduled")
-              : ut("status.past");
+                ? ut("status.scheduled")
+                : ut("status.past");
           badge.className = `status-badge ${badgeClass}`;
           badge.innerHTML = `<span class="status-badge__dot"></span><span>${badgeLabel}</span>`;
         }
@@ -1425,12 +1698,18 @@
       }
 
       document.addEventListener("DOMContentLoaded", () => {
-        const savedTheme = localStorage.getItem("cafeweiss_admin_theme");
+        const savedTheme =
+          localStorage.getItem("cafeweiss_theme") ||
+          localStorage.getItem("cafeweiss_admin_theme") ||
+          localStorage.getItem("cafeweiss_site_theme");
         applyAppearance(savedTheme === "dark");
 
         document.getElementById("themeToggleBtn").addEventListener("click", () => {
           const nextDark = !document.documentElement.classList.contains("dark");
-          localStorage.setItem("cafeweiss_admin_theme", nextDark ? "dark" : "light");
+          const mode = nextDark ? "dark" : "light";
+          localStorage.setItem("cafeweiss_theme", mode);
+          localStorage.setItem("cafeweiss_admin_theme", mode);
+          localStorage.setItem("cafeweiss_site_theme", mode);
           applyAppearance(nextDark);
         });
 
@@ -1572,4 +1851,5 @@
     })();
   </script>
 </body>
+
 </html>
