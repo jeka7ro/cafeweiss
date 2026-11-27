@@ -217,142 +217,92 @@
   </header>
 
   <main id="top">
-    <!-- ================= CINEMATIC IMMERSIVE HERO SECTION ================= -->
-    <section class="hero">
-      <!-- Full-bleed Ken Burns Animated Background Image Layer -->
+    <!-- ================= KOBENZL × APPLE TAHOE CENTERED EDITORIAL HERO ================= -->
+    <section class="hero hero--centered">
+      <!-- Full-bleed Background Image Layer -->
       <div class="hero__backdrop">
         <div class="hero__backdrop-img" id="heroBackdropImg"
           style="background-image: url('assets/images/brand/hero-hinterbruehl.jpg');"></div>
         <div class="hero__backdrop-veil"></div>
-        <div class="hero__backdrop-glow"></div>
       </div>
 
-      <!-- Interactive Golden Bokeh & Aroma Particles Canvas -->
-      <canvas class="hero__canvas" id="ambientCanvas" aria-hidden="true"></canvas>
+      <canvas class="hero__canvas" id="ambientCanvas" aria-hidden="true" hidden></canvas>
 
-      <div class="container hero__grid">
-        <!-- Left Column: Editorial Content & Interactive Glass Location Switcher -->
-        <div class="hero__content" data-reveal="fade-up">
-          <div class="eyebrow-badge eyebrow-badge--glow">
+      <div class="container hero__center-wrap">
+        <div class="hero__content hero__content--centered" data-reveal="fade-up">
+          <div class="eyebrow-badge">
             <span class="eyebrow-badge__ornament">✦</span>
-            <span data-i18n="hero.eyebrow">Französische Lebensart &amp; Wiener Kaffeehauskultur · Seit 2020</span>
+            <span data-i18n="hero.eyebrow">Französisches Café &amp; Restaurant · Seit 2020</span>
           </div>
 
           <h1 class="hero__title" data-i18n-html="hero.title">
-            Ein Hauch von <em>Frankreich</em> in Hinterbrühl &amp; Mödling
+            Willkommen im <em>Café Weiss</em>
           </h1>
 
           <p class="hero__subtitle" data-i18n="hero.subtitle">
-            Wo aromatischer Bio-Kaffee, feine Patisserie und mit Herz gekochte französisch-mediterrane Küche auf
-            unvergessliche Gastfreundschaft treffen.
+            Hinterbrühl &amp; Mödling · 100% Bio-Kaffee, französische Küche &amp; Patisserie
           </p>
 
-          <!-- Interactive Apple Tahoe 50/50 Segmented Location Switcher in Hero -->
-          <div class="hero-loc-picker">
-            <div class="hero-loc-picker__header">
-              <span class="hero-loc-picker__label" data-i18n="hero.switch.label">Standort wählen (2 Häuser):</span>
-              <div class="loc-segmented" role="tablist" aria-label="Standort wählen">
-                <button type="button" class="loc-seg-btn hero-loc-tab active" data-select-location="hinterbruehl" role="tab" aria-selected="true">
-                  <span class="loc-seg-btn__top">
-                    <span class="hero-loc-tab__dot"></span>
-                    <span class="loc-seg-btn__title">Hinterbrühl</span>
-                    <span class="hero-loc-tab__tag">NEU</span>
-                  </span>
-                  <span class="loc-seg-btn__sub" data-i18n="loc.tab.hb.sub">Restaurant &amp; Mittagsmenü</span>
-                </button>
-                <button type="button" class="loc-seg-btn hero-loc-tab" data-select-location="moedling" role="tab" aria-selected="false">
-                  <span class="loc-seg-btn__top">
-                    <span class="hero-loc-tab__dot"></span>
-                    <span class="loc-seg-btn__title">Mödling</span>
-                    <span class="hero-loc-tab__tag">1607</span>
-                  </span>
-                  <span class="loc-seg-btn__sub" data-i18n="loc.tab.md.sub">Kaffeehaus &amp; Terrasse</span>
-                </button>
-              </div>
+          <!-- Sleek Apple Tahoe Liquid Glass 50/50 Location Pill Switcher -->
+          <div class="hero-loc-picker hero-loc-picker--compact">
+            <div class="loc-segmented" role="tablist" aria-label="Standort wählen">
+              <button type="button" class="loc-seg-btn hero-loc-tab active" data-select-location="hinterbruehl" role="tab" aria-selected="true">
+                <span class="loc-seg-btn__top">
+                  <span class="hero-loc-tab__dot"></span>
+                  <span class="loc-seg-btn__title">Hinterbrühl</span>
+                  <span class="hero-loc-tab__tag">NEU</span>
+                </span>
+                <span class="loc-seg-btn__sub" data-i18n="loc.tab.hb.sub">Restaurant &amp; Mittagsmenü</span>
+              </button>
+              <button type="button" class="loc-seg-btn hero-loc-tab" data-select-location="moedling" role="tab" aria-selected="false">
+                <span class="loc-seg-btn__top">
+                  <span class="hero-loc-tab__dot"></span>
+                  <span class="loc-seg-btn__title">Mödling</span>
+                  <span class="hero-loc-tab__tag">1607</span>
+                </span>
+                <span class="loc-seg-btn__sub" data-i18n="loc.tab.md.sub">Kaffeehaus &amp; Terrasse</span>
+              </button>
             </div>
 
-            <!-- Dynamic Active Location Spotlight Card -->
-            <div class="hero-loc-card" id="heroLocCard">
-              <div class="hero-loc-card__top">
-                <div>
-                  <span class="hero-loc-card__badge" id="heroLocBadge">Neues Restaurant &amp; Café · Nahe der
-                    Seegrotte</span>
-                  <h2 class="hero-loc-card__name" id="heroLocName">Café Weiss Hinterbrühl</h2>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria"
-                  target="_blank" rel="noopener" class="hero-loc-card__route" id="heroLocMapsUrl">
-                  <span data-i18n="hero.directions">Route planen</span>
-                  <svg class="icon-xs" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </a>
-              </div>
-              <p class="hero-loc-card__desc" id="heroLocDesc">
-                Neue Location, mehr Plätze, mehr Natur nahe der Seegrotte. Französisch inspirierte Küche, ganztägiges
-                Frühstück, Mittagsmenü und gemütliche Dinner-Abende.
-              </p>
-              <div class="hero-loc-card__meta">
-                <span class="hero-loc-card__meta-item">
-                  <svg class="icon-xs" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.8">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                  <span id="heroLocAddress">Hauptstraße 16, 2371 Hinterbrühl</span>
-                </span>
-                <span class="hero-loc-card__meta-item">
-                  <svg class="icon-xs" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.8">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <span id="heroLocHours">Montag – Sonntag: 08:00 – 20:00 Uhr (Kein Ruhetag)</span>
-                </span>
-              </div>
+            <!-- Compact 1-Line Active Location Bar -->
+            <div class="hero-loc-card hero-loc-card--inline" id="heroLocCard">
+              <span class="hero-loc-card__badge" id="heroLocBadge" hidden>Restaurant &amp; Café</span>
+              <strong class="hero-loc-card__name" id="heroLocName">Café Weiss Hinterbrühl</strong>
+              <span class="hero-loc-card__sep">·</span>
+              <span id="heroLocAddress">Hauptstraße 16, 2371 Hinterbrühl</span>
+              <span class="hero-loc-card__sep">·</span>
+              <span id="heroLocHours">Täglich: 08:00 – 20:00 Uhr</span>
+              <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria"
+                target="_blank" rel="noopener" class="hero-loc-card__route" id="heroLocMapsUrl">
+                <span data-i18n="hero.directions">Route</span> ↗
+              </a>
+              <p class="hero-loc-card__desc" id="heroLocDesc" hidden></p>
             </div>
           </div>
 
-          <div class="hero__actions">
+          <div class="hero__actions hero__actions--centered">
             <a href="#lunchMenuBanner" class="btn btn--gold btn--lg" data-jump-lunch="true">
               <span data-i18n="hero.cta.lunch">🍽️ Mittagsmenü (Di–Fr)</span>
+            </a>
+            <a href="#reservierung" class="btn btn--white-pill btn--lg" data-i18n="hero.cta.reserve">
+              📅 Tisch reservieren
             </a>
             <a href="#speisekarte" class="btn btn--outline-light btn--lg">
               <span data-i18n="hero.cta.menu">Speisekarte</span>
             </a>
-            <a href="#reservierung" class="btn btn--outline-light btn--lg" data-i18n="hero.cta.reserve">
-              Tisch reservieren
-            </a>
           </div>
         </div>
 
-        <!-- Right Column: Clean Editorial Photo + Large-Print Live Mittagsmenü Showcase -->
-        <div class="hero__visual" data-reveal="fade-up" style="--delay: 0.12s">
-          <div class="hero-editorial-card">
-            <div class="hero-editorial-card__frame">
-              <img src="assets/images/brand/interior-hinterbruehl.jpg" alt="Café Weiss Salon &amp; Ambiente"
-                class="hero-editorial-card__img" id="heroMainImg" width="1920" height="1440" fetchpriority="high" />
-              <div class="hero-editorial-card__badge" id="heroImgCaption">
-                <span>✦ Salon &amp; Kulinarik · Hinterbrühl</span>
-              </div>
-              <img src="assets/images/brand/dish-salmon-dessert.jpg" alt="" id="heroSecondaryImg" width="1290" height="493" hidden />
-            </div>
-
-            <!-- Live Weekly Mittagsmenü Widget inside Hero Bento (Full Untruncated Dishes for Seniors) -->
-            <a href="#lunchMenuBanner" class="hero-live-lunch" id="heroLiveLunchCard" data-jump-lunch="true">
-              <div class="hero-live-lunch__left">
-                <span class="hero-live-lunch__pill">
-                  <span class="hero-live-lunch__dot"></span>
-                  <span id="heroLiveLunchPeriod">AKTUELLES MITTAGSMENÜ · DI–FR 11:00–15:00</span>
-                </span>
-                <strong class="hero-live-lunch__dish" id="heroLiveLunchDish">Schweinegeschnetzeltes · Ravioli in Beurre-blanc · Pasta mit Lachs</strong>
-              </div>
-              <div class="hero-live-lunch__right">
-                <span class="hero-live-lunch__price" id="heroLiveLunchPrice">ab € 10,90</span>
-                <span class="hero-live-lunch__cta" data-i18n="hero.lunch.cta">Zum Tagesmenü →</span>
-              </div>
-            </a>
-          </div>
+        <!-- Hidden DOM hooks preserved for dynamic image updates -->
+        <div class="hero__visual" hidden>
+          <img src="assets/images/brand/interior-hinterbruehl.jpg" alt="" id="heroMainImg" width="1920" height="1440" hidden />
+          <span id="heroImgCaption" hidden></span>
+          <img src="assets/images/brand/dish-salmon-dessert.jpg" alt="" id="heroSecondaryImg" width="1290" height="493" hidden />
+          <a href="#lunchMenuBanner" id="heroLiveLunchCard" hidden>
+            <span id="heroLiveLunchPeriod"></span>
+            <strong id="heroLiveLunchDish"></strong>
+            <span id="heroLiveLunchPrice"></span>
+          </a>
         </div>
       </div>
 
@@ -466,10 +416,9 @@
 
             <div class="loc-card__body">
               <div class="loc-card__kicker">2371 Hinterbrühl · Hauptstraße 16</div>
-              <h3 class="loc-card__title">Café Weiss Hinterbrühl – Restaurant &amp; Cafehouse</h3>
+              <h3 class="loc-card__title">Café Weiss Hinterbrühl</h3>
               <p class="loc-card__text">
-                Mehr Plätze, mehr Natur und ganztägige französisch-mediterrane Küche nahe der Seegrotte. Vom ausgiebigen
-                Frühstück über unser beliebtes Mittagsmenü (Di–Fr) bis zum romantischen Dinner am Abend.
+                Französisch-mediterrane Küche, Frühstück &amp; Mittagsmenü nahe der Seegrotte.
               </p>
 
               <ul class="loc-card__features">
@@ -478,45 +427,34 @@
                     stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>Frühstück, Brunch, Warme Küche, Pasta, Steaks &amp; Fisch</span>
+                  <span>Frühstück, Brunch &amp; Warme Küche</span>
                 </li>
                 <li>
                   <svg class="icon-xs" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>Dienstag – Freitag (11:00–15:00): 2-Gänge € 10,90 · 3-Gänge € 14,90</span>
+                  <span>Mittagsmenü Di–Fr (11–15 Uhr) ab € 10,90</span>
                 </li>
                 <li>
                   <svg class="icon-xs" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>Eleganter Kronleuchter-Salon für Hochzeiten, Taufen &amp; Feiern</span>
+                  <span>Täglich 08:00 – 20:00 Uhr · Hauptstraße 16</span>
                 </li>
               </ul>
-
-              <div class="loc-card__info-box">
-                <div class="loc-card__info-row">
-                  <strong>Öffnungszeiten:</strong>
-                  <span>Montag – Sonntag: 08:00 – 20:00 Uhr (Kein Ruhetag)</span>
-                </div>
-                <div class="loc-card__info-row">
-                  <strong>Adresse &amp; Tel:</strong>
-                  <span>Hauptstraße 16, 2371 Hinterbrühl · <a href="tel:+436609840707">+43 660 9840707</a></span>
-                </div>
-              </div>
 
               <div class="loc-card__actions">
                 <a href="#speisekarte" class="btn btn--primary" data-jump-menu="hinterbruehl">
                   <span data-i18n="locations.btn.menu">Menü öffnen</span>
                 </a>
                 <button type="button" class="btn btn--secondary" data-open-lightbox="hinterbruehl">
-                  Original-Karte (8 Seiten)
+                  Original-Karte (8 S.)
                 </button>
                 <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria"
                   target="_blank" rel="noopener" class="btn btn--ghost">
-                  <span data-i18n="locations.btn.route">Route planen</span>
+                  <span data-i18n="locations.btn.route">Route</span>
                 </a>
               </div>
             </div>
@@ -549,10 +487,9 @@
 
             <div class="loc-card__body">
               <div class="loc-card__kicker">2340 Mödling · Herzoggasse 6</div>
-              <h3 class="loc-card__title">Café Weiss Mödling – Französisches Kaffeehaus</h3>
+              <h3 class="loc-card__title">Café Weiss Mödling</h3>
               <p class="loc-card__text">
-                Mitten im historischen Zentrum von Mödling erwartet Sie unser charmantes französisches Kaffeehaus mit
-                100% Bio-Kaffee, Frühstückskreationen, hausgemachten Mehlspeisen und sonnigem Schanigarten.
+                Französisches Kaffeehaus im Gewölbe aus 1607 mit Sonnenterrasse am Rathaus.
               </p>
 
               <ul class="loc-card__features">
@@ -561,44 +498,33 @@
                     stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>Historisches Gewölbe aus dem Jahr 1607 (20 Sitzplätze)</span>
+                  <span>100% Bio-Kaffee, Frühstück &amp; Patisserie</span>
                 </li>
                 <li>
                   <svg class="icon-xs" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>Großzügige Sonnenterrasse mit Blick auf das Rathaus (40 Plätze)</span>
+                  <span>Gewölbe 1607 (20 Pl.) &amp; Rathaus-Terrasse (40 Pl.)</span>
                 </li>
                 <li>
                   <svg class="icon-xs" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>100% Bio-Produkte, Kuchenvitrine &amp; lokales TSCHÖAM’S Craft Bier</span>
+                  <span>Täglich 08:00 – 19:00 Uhr · Herzoggasse 6</span>
                 </li>
               </ul>
-
-              <div class="loc-card__info-box">
-                <div class="loc-card__info-row">
-                  <strong>Öffnungszeiten:</strong>
-                  <span>Täglich 08:00 – 19:00 Uhr (Ab 1. September bis 21:00 Uhr)</span>
-                </div>
-                <div class="loc-card__info-row">
-                  <strong>Adresse &amp; Tel:</strong>
-                  <span>Herzoggasse 6, 2340 Mödling · <a href="tel:+436609840707">+43 660 9840707</a></span>
-                </div>
-              </div>
 
               <div class="loc-card__actions">
                 <a href="#speisekarte" class="btn btn--primary" data-jump-menu="moedling">
                   <span data-i18n="locations.btn.menu">Menü öffnen</span>
                 </a>
                 <button type="button" class="btn btn--secondary" data-open-lightbox="moedling">
-                  Original-Karte (5 Seiten)
+                  Original-Karte (5 S.)
                 </button>
                 <a href="https://share.google/LVHGprsLfb5v46MXj" target="_blank" rel="noopener" class="btn btn--ghost">
-                  <span data-i18n="locations.btn.route">Route planen</span>
+                  <span data-i18n="locations.btn.route">Route</span>
                 </a>
               </div>
             </div>
@@ -979,11 +905,28 @@
       </div>
     </section>
 
-    <!-- ================= RESERVATION & EVENT INQUIRY SECTION ================= -->
-    <section class="section reserve-section has-culinary-pattern" id="reservierung">
-      <div class="ambient-orb ambient-orb--emerald-right" aria-hidden="true"></div>
-
+    <!-- ================= RESERVATION & EVENT INQUIRY SECTION (KOBENZL ACTION BAR + FORM) ================= -->
+    <section class="section reserve-section" id="reservierung">
       <div class="container">
+        <!-- Kobenzl-Style Big Bold 2-Column Action Strip -->
+        <div class="kobenzl-action-bar" data-reveal="fade-up">
+          <a href="#reservationForm" class="kobenzl-action-bar__item">
+            <svg class="kobenzl-action-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <span data-i18n="reserve.tab.table">Tisch reservieren</span>
+          </a>
+          <a href="tel:+436609840707" class="kobenzl-action-bar__item">
+            <svg class="kobenzl-action-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <span>0660 984 07 07</span>
+          </a>
+        </div>
+
         <div class="reserve-layout">
           <!-- Left Column: Form -->
           <div class="reserve-card" data-reveal="fade-up">
