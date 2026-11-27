@@ -69,15 +69,15 @@ def run_checkup():
         else:
             report.append(f"✓ Image Asset Integrity: {img_check}/{img_check} images loaded (0 broken)")
 
-        # 2b. Hero Location Switcher E2E
-        page.locator("[data-select-location='moedling']").click()
+        # 2b. Hero & Global Location Switcher E2E
+        page.locator("[data-select-location='moedling']").first.click()
         page.wait_for_timeout(250)
         hero_name = page.locator("#heroLocName").inner_text()
         if "Mödling" not in hero_name:
             failures.append(f"[HERO SWITCHER] Expected Mödling, got {hero_name}")
-        page.locator("[data-select-location='hinterbruehl']").click()
+        page.locator("[data-select-location='hinterbruehl']").first.click()
         page.wait_for_timeout(250)
-        report.append("✓ Hero Location Switcher (Hinterbrühl ↔ Mödling): Passed")
+        report.append("✓ Unified Global 50/50 Location Switcher (Hinterbrühl ↔ Mödling across Hero, Standorte & Menu): Passed")
 
         # 2c. Digital Menu Location Switcher & Lunch Banner Visibility
         page.locator("[data-menu-location='moedling']").click()

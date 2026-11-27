@@ -289,30 +289,72 @@
     renderMenuItems();
   }
 
-  // ================= HERO LOCATION SWITCHER =================
+  // ================= UNIFIED GLOBAL LOCATION SWITCHER (HERO + STANDORTE + MENU + RESERVATION) =================
+  function setGlobalLocation(locId, options) {
+    if (!locId || !DATA.locations[locId]) return;
+    const opts = options || {};
+    state.heroLocation = locId;
+    state.menuLocation = locId;
+
+    // 1. Sync all [data-select-location] segmented buttons (Hero + Standorte)
+    document.querySelectorAll("[data-select-location]").forEach((btn) => {
+      const active = btn.getAttribute("data-select-location") === locId;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-selected", String(active));
+    });
+
+    // 2. Sync all [data-location-card] cards in #standorte
+    document.querySelectorAll("[data-location-card]").forEach((card) => {
+      const isMatch = card.getAttribute("data-location-card") === locId;
+      card.classList.toggle("is-active-location", isMatch);
+    });
+
+    // 3. Sync all [data-menu-location] buttons in #speisekarte
+    document.querySelectorAll("[data-menu-location]").forEach((btn) => {
+      const isMatch = btn.getAttribute("data-menu-location") === locId;
+      btn.classList.toggle("active", isMatch);
+    });
+
+    // 4. Sync Hero Live Lunch Widget visibility (Hinterbrühl has Mittagsmenü)
+    const heroLunchWidget = document.getElementById("heroLiveLunchCard");
+    if (heroLunchWidget) {
+      heroLunchWidget.hidden = locId !== "hinterbruehl";
+    }
+
+    // 5. Sync Reservation form location select if present
+    const reserveSelect = document.getElementById("reserveLocation");
+    if (reserveSelect) {
+      reserveSelect.value = locId;
+    }
+
+    // 6. Re-render Hero Spotlight Card
+    const heroCard = document.getElementById("heroLocCard");
+    if (heroCard && opts.animateHero) {
+      heroCard.classList.add("is-switching");
+      setTimeout(() => {
+        renderHeroLocation();
+        heroCard.classList.remove("is-switching");
+      }, 150);
+    } else {
+      renderHeroLocation();
+    }
+
+    // 7. Re-render Digital Menu for selected location
+    const validCategories = getValidCategories(locId);
+    if (!validCategories.some((c) => c.id === state.menuCategory)) {
+      state.menuCategory = validCategories[0].id;
+    }
+    renderLunchBanner();
+    renderMenuCategories();
+    renderMenuItems();
+  }
+
   function initHeroLocationPicker() {
-    const tabs = document.querySelectorAll("[data-select-location]");
-    tabs.forEach((tab) => {
+    document.querySelectorAll("[data-select-location]").forEach((tab) => {
       tab.addEventListener("click", () => {
         const locId = tab.getAttribute("data-select-location");
-        if (!locId || !DATA.locations[locId] || locId === state.heroLocation) return;
-        state.heroLocation = locId;
-        tabs.forEach((btn) => {
-          const active = btn.getAttribute("data-select-location") === locId;
-          btn.classList.toggle("active", active);
-          btn.setAttribute("aria-selected", String(active));
-        });
-
-        const card = document.getElementById("heroLocCard");
-        if (card) {
-          card.classList.add("is-switching");
-          setTimeout(() => {
-            renderHeroLocation();
-            card.classList.remove("is-switching");
-          }, 180);
-        } else {
-          renderHeroLocation();
-        }
+        if (!locId || !DATA.locations[locId]) return;
+        setGlobalLocation(locId, { animateHero: true });
       });
     });
   }
@@ -418,21 +460,7 @@
   }
 
   function setMenuLocation(locId) {
-    if (!DATA.locations[locId]) return;
-    state.menuLocation = locId;
-
-    document.querySelectorAll("[data-menu-location]").forEach((btn) => {
-      btn.classList.toggle("active", btn.getAttribute("data-menu-location") === locId);
-    });
-
-    const validCategories = getValidCategories(locId);
-    if (!validCategories.some((c) => c.id === state.menuCategory)) {
-      state.menuCategory = validCategories[0].id;
-    }
-
-    renderLunchBanner();
-    renderMenuCategories();
-    renderMenuItems();
+    setGlobalLocation(locId, { animateHero: false });
   }
 
   function getValidCategories(locId) {

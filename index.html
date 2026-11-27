@@ -247,22 +247,26 @@
             unvergessliche Gastfreundschaft treffen.
           </p>
 
-          <!-- Interactive Glassmorphic Location Switcher Pill in Hero -->
+          <!-- Interactive Apple Tahoe 50/50 Segmented Location Switcher in Hero -->
           <div class="hero-loc-picker">
             <div class="hero-loc-picker__header">
-              <span class="hero-loc-picker__label" data-i18n="hero.switch.label">Standort wählen:</span>
-              <div class="hero-loc-tabs" role="tablist">
-                <button type="button" class="hero-loc-tab active" data-select-location="hinterbruehl" role="tab"
-                  aria-selected="true">
-                  <span class="hero-loc-tab__dot"></span>
-                  <span>Hinterbrühl</span>
-                  <span class="hero-loc-tab__tag">NEU</span>
+              <span class="hero-loc-picker__label" data-i18n="hero.switch.label">Standort wählen (2 Häuser):</span>
+              <div class="loc-segmented" role="tablist" aria-label="Standort wählen">
+                <button type="button" class="loc-seg-btn hero-loc-tab active" data-select-location="hinterbruehl" role="tab" aria-selected="true">
+                  <span class="loc-seg-btn__top">
+                    <span class="hero-loc-tab__dot"></span>
+                    <span class="loc-seg-btn__title">Hinterbrühl</span>
+                    <span class="hero-loc-tab__tag">NEU</span>
+                  </span>
+                  <span class="loc-seg-btn__sub" data-i18n="loc.tab.hb.sub">Restaurant &amp; Mittagsmenü</span>
                 </button>
-                <button type="button" class="hero-loc-tab" data-select-location="moedling" role="tab"
-                  aria-selected="false">
-                  <span class="hero-loc-tab__dot"></span>
-                  <span>Mödling</span>
-                  <span class="hero-loc-tab__tag">1607</span>
+                <button type="button" class="loc-seg-btn hero-loc-tab" data-select-location="moedling" role="tab" aria-selected="false">
+                  <span class="loc-seg-btn__top">
+                    <span class="hero-loc-tab__dot"></span>
+                    <span class="loc-seg-btn__title">Mödling</span>
+                    <span class="hero-loc-tab__tag">1607</span>
+                  </span>
+                  <span class="loc-seg-btn__sub" data-i18n="loc.tab.md.sub">Kaffeehaus &amp; Terrasse</span>
                 </button>
               </div>
             </div>
@@ -435,11 +439,33 @@
             Wählen Sie Ihr Lieblingshaus – vom neuen Restaurant &amp; Café nahe der Seegrotte Hinterbrühl bis zum
             charmanten Kaffeehaus aus 1607 im Herzen von Mödling.
           </p>
+
+          <!-- Clear 50/50 Location Tab Switcher for Standorte Section -->
+          <div class="standorte-tabs-wrap">
+            <div class="loc-segmented loc-segmented--section" role="tablist" aria-label="Haus auswählen">
+              <button type="button" class="loc-seg-btn active" data-select-location="hinterbruehl" role="tab" aria-selected="true">
+                <span class="loc-seg-btn__top">
+                  <span class="hero-loc-tab__dot"></span>
+                  <span class="loc-seg-btn__title">1. Hinterbrühl</span>
+                  <span class="hero-loc-tab__tag">NEU</span>
+                </span>
+                <span class="loc-seg-btn__sub">Hauptstraße 16 · Restaurant &amp; Mittagsmenü</span>
+              </button>
+              <button type="button" class="loc-seg-btn" data-select-location="moedling" role="tab" aria-selected="false">
+                <span class="loc-seg-btn__top">
+                  <span class="hero-loc-tab__dot"></span>
+                  <span class="loc-seg-btn__title">2. Mödling</span>
+                  <span class="hero-loc-tab__tag">1607</span>
+                </span>
+                <span class="loc-seg-btn__sub">Herzoggasse 6 · Kaffeehaus &amp; Terrasse</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="locations-grid">
           <!-- LOCATION 1: HINTERBRÜHL -->
-          <article class="loc-card" data-location-card="hinterbruehl" data-reveal="fade-up" style="--delay: 0.1s">
+          <article class="loc-card is-active-location" data-location-card="hinterbruehl" data-reveal="fade-up" style="--delay: 0.1s">
             <div class="loc-card__media">
               <img src="assets/images/brand/hero-hinterbruehl.jpg" alt="Café Weiss Hinterbrühl Restaurant &amp; Bar"
                 class="loc-card__img" id="cardImgHinterbruehl" width="1920" height="1440" loading="lazy" />

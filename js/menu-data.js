@@ -1148,7 +1148,9 @@ window.CAFE_WEISS_DATA = {
       "tab.lunch": "Mittag",
       "tab.menu": "Menü",
       "tab.reserve": "Tisch",
-      "tab.call": "Anruf"
+      "tab.call": "Anruf",
+      "loc.tab.hb.sub": "Restaurant & Mittagsmenü",
+      "loc.tab.md.sub": "Kaffeehaus & Terrasse"
     },
     en: {
       "nav.locations": "Our Cafés",
@@ -1293,7 +1295,9 @@ window.CAFE_WEISS_DATA = {
       "tab.lunch": "Lunch",
       "tab.menu": "Menu",
       "tab.reserve": "Reserve",
-      "tab.call": "Call"
+      "tab.call": "Call",
+      "loc.tab.hb.sub": "Restaurant & Lunch Menu",
+      "loc.tab.md.sub": "Coffeehouse & Terrace"
     }
   }
 };
