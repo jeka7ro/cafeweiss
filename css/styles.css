@@ -3991,7 +3991,7 @@ html.dark .events-section__veil {
 
   .lunch-price-box {
     min-width: 0;
-    padding: 0.5rem 0.75rem;
+    padding: 0.45rem 0.65rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -4003,11 +4003,13 @@ html.dark .events-section__veil {
   }
 
   .lunch-price-box__label {
-    font-size: 0.78rem;
+    font-size: 0.74rem;
+    white-space: nowrap;
   }
 
   .lunch-price-box__val {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
+    white-space: nowrap;
   }
 
   .lunch-days-grid {
