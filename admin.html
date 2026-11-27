@@ -1264,15 +1264,15 @@
 
       <form class="login-form" id="adminLoginForm">
         <div class="field">
-          <label class="field__label" for="adminUserInput">Benutzername / Username</label>
-          <input class="field__input" type="text" id="adminUserInput" name="username" autocomplete="username" placeholder="admin" required />
+          <label class="field__label" for="adminUserInput">E-Mail-Adresse / Email</label>
+          <input class="field__input" type="email" id="adminUserInput" name="email" autocomplete="email" placeholder="E-Mail eingeben…" required />
         </div>
         <div class="field">
           <label class="field__label" for="adminPassInput">Passwort / Password</label>
           <input class="field__input" type="password" id="adminPassInput" name="password" autocomplete="current-password" placeholder="••••••••" required />
         </div>
         <div class="login-error" id="adminLoginError" hidden>
-          Ungültiger Benutzername oder Passwort!
+          Ungültige E-Mail-Adresse oder Passwort!
         </div>
         <button type="submit" class="ui-btn-primary" id="adminLoginSubmitBtn" style="width:100%;justify-content:center;min-height:44px;">
           <span>🔒 Anmelden / Sign In</span>
@@ -1945,8 +1945,8 @@
         const loginForm = document.getElementById("adminLoginForm");
         const loginError = document.getElementById("adminLoginError");
         const logoutBtn = document.getElementById("adminLogoutBtn");
-        const VALID_USERS = ["admin", "cafeweiss", "cafeweiss.info@gmail.com"];
-        const VALID_PASSWORDS = ["weiss2026", "cafeweiss2026", "2020"];
+        const VALID_USERS = ["jeka7ro@gmail.com", "cafeweiss.info@gmail.com"];
+        const VALID_PASSWORDS = ["weiss2026!", "Weiss2026!"];
 
         function setAuthenticated(isAuth) {
           document.body.classList.toggle("is-locked", !isAuth);

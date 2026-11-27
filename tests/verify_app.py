@@ -173,8 +173,8 @@ def run_checkup():
         page.goto(f"{BASE_URL}/admin.html", wait_until="networkidle")
         if not page.locator("#adminLoginGate").is_visible():
             failures.append("[ADMIN LOGIN GATE] Expected login gate to be visible before authentication")
-        page.locator("#adminUserInput").fill("admin")
-        page.locator("#adminPassInput").fill("weiss2026")
+        page.locator("#adminUserInput").fill("jeka7ro@gmail.com")
+        page.locator("#adminPassInput").fill("weiss2026!")
         page.locator("#adminLoginSubmitBtn").click()
         if page.locator("#adminLoginGate").is_visible():
             failures.append("[ADMIN LOGIN GATE] Expected login gate to hide after valid login")
@@ -238,8 +238,8 @@ def run_checkup():
 
                 vp_page.goto(url, wait_until="networkidle")
                 if "admin.html" in url and vp_page.locator("#adminLoginGate").is_visible():
-                    vp_page.locator("#adminUserInput").fill("admin")
-                    vp_page.locator("#adminPassInput").fill("weiss2026")
+                    vp_page.locator("#adminUserInput").fill("jeka7ro@gmail.com")
+                    vp_page.locator("#adminPassInput").fill("weiss2026!")
                     vp_page.locator("#adminLoginSubmitBtn").click()
 
                 # Test mobile burger menu on small screens
