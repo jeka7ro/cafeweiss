@@ -23,6 +23,10 @@
 
   // ================= INITIALIZATION =================
   document.addEventListener("DOMContentLoaded", () => {
+    if (window.applyTenantTheme) {
+      window.applyTenantTheme("#7A4F28");
+    }
+    initThemeAppearance();
     initHeaderAndDrawer();
     initLiveOpeningStatus();
     initLanguageSwitcher();
@@ -39,6 +43,32 @@
     const yearEl = document.getElementById("currentYear");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   });
+
+  // ================= APPLE TAHOE LIGHT / DARK APPEARANCE =================
+  function initThemeAppearance() {
+    const toggleBtn = document.getElementById("siteThemeToggleBtn");
+    const sunIcon = document.getElementById("siteThemeIconSun");
+    const moonIcon = document.getElementById("siteThemeIconMoon");
+
+    function setDark(isDark) {
+      document.documentElement.classList.toggle("dark", isDark);
+      if (sunIcon && moonIcon) {
+        sunIcon.hidden = !isDark;
+        moonIcon.hidden = isDark;
+      }
+    }
+
+    const saved = localStorage.getItem("cafeweiss_site_theme");
+    setDark(saved === "dark");
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", () => {
+        const nextDark = !document.documentElement.classList.contains("dark");
+        localStorage.setItem("cafeweiss_site_theme", nextDark ? "dark" : "light");
+        setDark(nextDark);
+      });
+    }
+  }
 
   // ================= AMBIENT GOLDEN BOKEH CANVAS (SUBTLE & CALM) =================
   function initAmbientCanvas() {

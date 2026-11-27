@@ -129,16 +129,31 @@ def run_checkup():
         page.locator("#closeLightboxBtn").click()
         report.append("✓ Printed Menu Lightbox Gallery (8 Hinterbrühl pages + 5 Mödling pages): Passed")
 
-        # 2g. Apple HIG Tabular Numerals & Contrast Token Verification
+        # 2g. Apple HIG Tabular Numerals, Tahoe Multi-Tenant Engine & Dark Mode on Presentation Site (index.html)
         style_audit = page.evaluate("""() => {
+            const c1 = window.applyTenantTheme('#0F172A');
+            const c2 = window.applyTenantTheme('#FACC15');
+            const c3 = window.applyTenantTheme('#E11D48');
+            const cDefault = window.applyTenantTheme('#7A4F28');
             const priceEl = document.querySelector('.menu-item-card__price');
             const lunchPriceEl = document.querySelector('#lunchPrice2');
             const priceTabNums = priceEl ? getComputedStyle(priceEl).fontVariantNumeric : '';
             const lunchTabNums = lunchPriceEl ? getComputedStyle(lunchPriceEl).fontVariantNumeric : '';
+            const lightCardBg = getComputedStyle(document.querySelector('.menu-item-card')).backgroundColor;
+            document.getElementById('siteThemeToggleBtn').click();
+            const isDark = document.documentElement.classList.contains('dark');
+            const darkCardBg = getComputedStyle(document.querySelector('.menu-item-card')).backgroundColor;
+            const darkCanvasBg = getComputedStyle(document.body).backgroundColor;
+            document.getElementById('siteThemeToggleBtn').click();
             const rootStyles = getComputedStyle(document.documentElement);
             return {
+                c1, c2, c3, cDefault,
                 priceTabNums,
                 lunchTabNums,
+                lightCardBg,
+                isDark,
+                darkCardBg,
+                darkCanvasBg,
                 textMuted: rootStyles.getPropertyValue('--text-muted').trim(),
                 textSecondary: rootStyles.getPropertyValue('--text-secondary').trim(),
                 goldDark: rootStyles.getPropertyValue('--gold-dark').trim()
@@ -146,7 +161,13 @@ def run_checkup():
         }""")
         if "tabular-nums" not in style_audit["priceTabNums"]:
             failures.append(f"[TABULAR-NUMS] Missing on .menu-item-card__price: {style_audit['priceTabNums']}")
-        report.append(f"✓ Apple HIG Typography & Contrast Tokens (tabular-nums active, muted={style_audit['textMuted']} 7.1:1): Passed")
+        if style_audit["c1"]["fg"] != "#FFFFFF" or style_audit["c2"]["fg"] != "#111113" or style_audit["c3"]["fg"] != "#FFFFFF":
+            failures.append(f"[SITE TAHOE TENANT ENGINE] Unexpected foreground contrast on index.html: {style_audit}")
+        if style_audit["lightCardBg"] != "rgb(255, 255, 255)":
+            failures.append(f"[SITE TAHOE LIGHT SURFACE] Expected rgb(255, 255, 255), got {style_audit['lightCardBg']}")
+        if style_audit["darkCardBg"] != "rgb(28, 28, 30)" or style_audit["darkCanvasBg"] != "rgb(12, 12, 14)":
+            failures.append(f"[SITE TAHOE DARK SURFACE] Expected card rgb(28, 28, 30) & canvas rgb(12, 12, 14), got card={style_audit['darkCardBg']} canvas={style_audit['darkCanvasBg']}")
+        report.append(f"✓ Presentation Site Apple Tahoe Engine (3 extreme tenant colors + Light #FFFFFF / Dark #1C1C1E pure neutral surfaces + tabular-nums): Passed")
 
         # 2h. Admin Planner E2E (Add Week, Auto-Translate DE->EN, Save)
         page.goto(f"{BASE_URL}/admin.html", wait_until="networkidle")
