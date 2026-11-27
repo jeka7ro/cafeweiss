@@ -1,12 +1,5 @@
 {
   "version": 2,
-  "cleanUrls": false,
-  "rewrites": [
-    {
-      "source": "/api/lunch-schedules",
-      "destination": "/api/lunch-schedules.js"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
