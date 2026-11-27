@@ -4276,14 +4276,15 @@ html.dark .hero-loc-picker--compact {
   gap: 4.5rem;
 }
 
-.loc-card {
+.loc-card,
+.loc-card.is-active-location {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 3.5rem;
   align-items: center;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   border-radius: 0;
   max-width: 100%;
 }
@@ -4389,6 +4390,21 @@ html.dark .hero-loc-picker--compact {
 }
 
 @media (max-width: 600px) {
+  .loc-seg-btn {
+    min-height: 44px;
+    padding: 0.45rem 0.6rem;
+    align-items: center;
+  }
+
+  .loc-seg-btn__top {
+    justify-content: center;
+  }
+
+  .loc-seg-btn .hero-loc-tab__tag,
+  .loc-seg-btn__sub {
+    display: none !important;
+  }
+
   .hero--centered {
     min-height: auto;
     padding: 2.15rem 0 2.35rem;
