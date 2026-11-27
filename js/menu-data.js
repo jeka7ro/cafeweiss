@@ -130,7 +130,7 @@ window.CAFE_WEISS_DATA = {
     schedules: [
       {
         id: "week-2026-11-03",
-        validFrom: "2026-11-03",
+        validFrom: "2026-11-02",
         validTo: "2026-11-08",
         displayPeriod: "03.11.2026 – 06.11.2026",
         price2Course: "€ 10,90",
@@ -171,10 +171,52 @@ window.CAFE_WEISS_DATA = {
         ]
       },
       {
-        id: "week-2026-11-10",
-        validFrom: "2026-11-10",
-        validTo: "2026-11-15",
-        displayPeriod: "10.11.2026 – 13.11.2026",
+        id: "week-2026-11-23",
+        validFrom: "2026-11-23",
+        validTo: "2026-11-29",
+        displayPeriod: "24.11.2026 – 27.11.2026",
+        price2Course: "€ 10,90",
+        price3Course: "€ 14,90",
+        note: {
+          de: "Dienstag – Freitag · 11:00 – 15:00 Uhr · Auch vegetarisch erhältlich",
+          en: "Tuesday – Friday · 11:00 – 15:00 · Vegetarian option available daily"
+        },
+        days: [
+          {
+            dayKey: "tuesday",
+            day: { de: "Dienstag", en: "Tuesday" },
+            soup: { de: "Kürbiscremesuppe", en: "Creamy Pumpkin Soup" },
+            main: { de: "Schweinegeschnetzeltes nach Stroganoff-Art mit Kartoffeln", en: "Pork Stroganoff with Potatoes" },
+            dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
+          },
+          {
+            dayKey: "wednesday",
+            day: { de: "Mittwoch", en: "Wednesday" },
+            soup: { de: "Erbsensuppe", en: "Green Pea Soup" },
+            main: { de: "Ravioli in Beurre-blanc-Sauce", en: "Ravioli in French Beurre Blanc Sauce" },
+            dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
+          },
+          {
+            dayKey: "thursday",
+            day: { de: "Donnerstag", en: "Thursday" },
+            soup: { de: "Linsensuppe", en: "Hearty Lentil Soup" },
+            main: { de: "Schweinerippchen mit Kartoffelwedges", en: "Tender Pork Ribs with Potato Wedges" },
+            dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
+          },
+          {
+            dayKey: "friday",
+            day: { de: "Freitag", en: "Friday" },
+            soup: { de: "Griechischer Salat", en: "Fresh Greek Salad" },
+            main: { de: "Pasta mit Lachs", en: "Artisan Pasta with Salmon" },
+            dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
+          }
+        ]
+      },
+      {
+        id: "week-2026-11-30",
+        validFrom: "2026-11-30",
+        validTo: "2026-12-06",
+        displayPeriod: "01.12.2026 – 04.12.2026",
         price2Course: "€ 10,90",
         price3Course: "€ 14,90",
         note: {
@@ -213,10 +255,10 @@ window.CAFE_WEISS_DATA = {
         ]
       },
       {
-        id: "week-2026-11-17",
-        validFrom: "2026-11-17",
-        validTo: "2026-11-22",
-        displayPeriod: "17.11.2026 – 20.11.2026",
+        id: "week-2026-12-07",
+        validFrom: "2026-12-07",
+        validTo: "2026-12-13",
+        displayPeriod: "08.12.2026 – 11.12.2026",
         price2Course: "€ 10,90",
         price3Course: "€ 14,90",
         note: {

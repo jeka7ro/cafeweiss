@@ -1,8 +1,6 @@
 {
+  "updatedAt": "2026-11-27T12:35:00Z",
   "pin": "2020",
-  "updatedAt": "2026-11-03T13:56:01.953493",
-  "price2Course": "€ 10,90",
-  "price3Course": "€ 14,90",
   "schedules": [
     {
       "id": "week-2026-11-03",
@@ -11,302 +9,164 @@
       "displayPeriod": "03.11.2026 – 06.11.2026",
       "price2Course": "€ 10,90",
       "price3Course": "€ 14,90",
+      "note": {
+        "de": "Dienstag – Freitag · 11:00 – 15:00 Uhr · Auch vegetarisch erhältlich",
+        "en": "Tuesday – Friday · 11:00 – 15:00 · Vegetarian option available daily"
+      },
       "days": [
         {
-          "dayKey": "tue",
-          "day": {
-            "de": "Dienstag",
-            "en": "Tuesday"
-          },
-          "soup": {
-            "de": "Kürbiscremesuppe",
-            "en": "Creamy Pumpkin Soup"
-          },
-          "main": {
-            "de": "Schweinegeschnetzeltes nach Stroganoff-Art mit Kartoffeln",
-            "en": "Pork Stroganoff with Potatoes"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "tuesday",
+          "day": { "de": "Dienstag", "en": "Tuesday" },
+          "soup": { "de": "Kürbiscremesuppe", "en": "Creamy Pumpkin Soup" },
+          "main": { "de": "Schweinegeschnetzeltes nach Stroganoff-Art mit Kartoffeln", "en": "Pork Stroganoff with Potatoes" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "wed",
-          "day": {
-            "de": "Mittwoch",
-            "en": "Wednesday"
-          },
-          "soup": {
-            "de": "Erbsensuppe",
-            "en": "Green Pea Soup HUINEA"
-          },
-          "main": {
-            "de": "Ravioli in Beurre-blanc-Sauce",
-            "en": "Ravioli in French Beurre Blanc Sauce"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "wednesday",
+          "day": { "de": "Mittwoch", "en": "Wednesday" },
+          "soup": { "de": "Erbsensuppe", "en": "Green Pea Soup" },
+          "main": { "de": "Ravioli in Beurre-blanc-Sauce", "en": "Ravioli in French Beurre Blanc Sauce" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "thu",
-          "day": {
-            "de": "Donnerstag",
-            "en": "Thursday"
-          },
-          "soup": {
-            "de": "Linsensuppe",
-            "en": "Hearty Lentil Soup"
-          },
-          "main": {
-            "de": "Schweinerippchen mit Kartoffelwedges",
-            "en": "Tender Pork Ribs with Potato Wedges"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "thursday",
+          "day": { "de": "Donnerstag", "en": "Thursday" },
+          "soup": { "de": "Linsensuppe", "en": "Hearty Lentil Soup" },
+          "main": { "de": "Schweinerippchen mit Kartoffelwedges", "en": "Tender Pork Ribs with Potato Wedges" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "fri",
-          "day": {
-            "de": "Freitag",
-            "en": "Friday"
-          },
-          "soup": {
-            "de": "Griechischer Salat",
-            "en": "Fresh Greek Salad"
-          },
-          "main": {
-            "de": "Pasta mit Lachs",
-            "en": "Artisan Pasta with Salmon"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "friday",
+          "day": { "de": "Freitag", "en": "Friday" },
+          "soup": { "de": "Griechischer Salat", "en": "Fresh Greek Salad" },
+          "main": { "de": "Pasta mit Lachs", "en": "Artisan Pasta with Salmon" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         }
       ]
     },
     {
-      "id": "week-2026-11-10",
-      "validFrom": "2026-11-09",
-      "validTo": "2026-11-15",
-      "displayPeriod": "10.11.2026 – 13.11.2026",
+      "id": "week-2026-11-23",
+      "validFrom": "2026-11-23",
+      "validTo": "2026-11-29",
+      "displayPeriod": "24.11.2026 – 27.11.2026",
       "price2Course": "€ 10,90",
       "price3Course": "€ 14,90",
+      "note": {
+        "de": "Dienstag – Freitag · 11:00 – 15:00 Uhr · Auch vegetarisch erhältlich",
+        "en": "Tuesday – Friday · 11:00 – 15:00 · Vegetarian option available daily"
+      },
       "days": [
         {
-          "dayKey": "tue",
-          "day": {
-            "de": "Dienstag",
-            "en": "Tuesday"
-          },
-          "soup": {
-            "de": "Französische Zwiebelsuppe",
-            "en": "French Onion Soup"
-          },
-          "main": {
-            "de": "Coq au Vin mit Butterspätzle",
-            "en": "Classic Coq au Vin with Butter Spätzle"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "tuesday",
+          "day": { "de": "Dienstag", "en": "Tuesday" },
+          "soup": { "de": "Kürbiscremesuppe", "en": "Creamy Pumpkin Soup" },
+          "main": { "de": "Schweinegeschnetzeltes nach Stroganoff-Art mit Kartoffeln", "en": "Pork Stroganoff with Potatoes" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "wed",
-          "day": {
-            "de": "Mittwoch",
-            "en": "Wednesday"
-          },
-          "soup": {
-            "de": "Tomatencremesuppe mit Basilikum",
-            "en": "Creamy Tomato & Basil Soup"
-          },
-          "main": {
-            "de": "Trüffel-gnocchi in Parmesansauce",
-            "en": "Truffle Potato Gnocchi in Parmesan Cream"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "wednesday",
+          "day": { "de": "Mittwoch", "en": "Wednesday" },
+          "soup": { "de": "Erbsensuppe", "en": "Green Pea Soup" },
+          "main": { "de": "Ravioli in Beurre-blanc-Sauce", "en": "Ravioli in French Beurre Blanc Sauce" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "thu",
-          "day": {
-            "de": "Donnerstag",
-            "en": "Thursday"
-          },
-          "soup": {
-            "de": "Rindsuppe mit Frittaten",
-            "en": "Viennese Beef Broth with Herb Pancake Strips"
-          },
-          "main": {
-            "de": "Gegrilltes Hühnerfilet mit Rosmarinkartoffeln",
-            "en": "Grilled Chicken Breast with Rosemary Potatoes"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "thursday",
+          "day": { "de": "Donnerstag", "en": "Thursday" },
+          "soup": { "de": "Linsensuppe", "en": "Hearty Lentil Soup" },
+          "main": { "de": "Schweinerippchen mit Kartoffelwedges", "en": "Tender Pork Ribs with Potato Wedges" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "fri",
-          "day": {
-            "de": "Freitag",
-            "en": "Friday"
-          },
-          "soup": {
-            "de": "Mediterraner Blattsalat",
-            "en": "Mediterranean Leaf Salad"
-          },
-          "main": {
-            "de": "Gebratenes Zanderfilet auf Kräuter-Risotto",
-            "en": "Pan-Seared Pike-Perch Fillet on Herb Risotto"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "friday",
+          "day": { "de": "Freitag", "en": "Friday" },
+          "soup": { "de": "Griechischer Salat", "en": "Fresh Greek Salad" },
+          "main": { "de": "Pasta mit Lachs", "en": "Artisan Pasta with Salmon" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         }
       ]
     },
     {
-      "id": "week-2026-11-17",
-      "validFrom": "2026-11-16",
-      "validTo": "2026-11-22",
-      "displayPeriod": "17.11.2026 – 20.11.2026",
+      "id": "week-2026-11-30",
+      "validFrom": "2026-11-30",
+      "validTo": "2026-12-06",
+      "displayPeriod": "01.12.2026 – 04.12.2026",
       "price2Course": "€ 10,90",
       "price3Course": "€ 14,90",
+      "note": {
+        "de": "Dienstag – Freitag · 11:00 – 15:00 Uhr · Auch vegetarisch erhältlich",
+        "en": "Tuesday – Friday · 11:00 – 15:00 · Vegetarian option available daily"
+      },
       "days": [
         {
-          "dayKey": "tue",
-          "day": {
-            "de": "Dienstag",
-            "en": "Tuesday"
-          },
-          "soup": {
-            "de": "Karotten-Ingwer-Cremesuppe",
-            "en": "Carrot & Fresh Ginger Cream Soup"
-          },
-          "main": {
-            "de": "Rindergulasch mit Serviettenknödel",
-            "en": "Viennese Beef Goulash with Bread Dumplings"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "tuesday",
+          "day": { "de": "Dienstag", "en": "Tuesday" },
+          "soup": { "de": "Französische Zwiebelsuppe mit Käsecroutons", "en": "French Onion Soup with Cheese Croutons" },
+          "main": { "de": "Hühnerbrust in Kräuter-Rahmsauce mit Butterreis", "en": "Chicken Breast in Herb Cream Sauce with Butter Rice" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "wed",
-          "day": {
-            "de": "Mittwoch",
-            "en": "Wednesday"
-          },
-          "soup": {
-            "de": "Waldpilzcremesuppe",
-            "en": "Wild Mushroom Cream Soup"
-          },
-          "main": {
-            "de": "Penne mit Grillgemüse & Büffelmozzarella",
-            "en": "Penne with Grilled Vegetables & Buffalo Mozzarella"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "wednesday",
+          "day": { "de": "Mittwoch", "en": "Wednesday" },
+          "soup": { "de": "Karotten-Ingwer-Cremesuppe", "en": "Carrot & Ginger Cream Soup" },
+          "main": { "de": "Hausgemachte Spinat-Ricotta-Tortellini in Salbeibutter", "en": "Homemade Spinach & Ricotta Tortellini in Sage Butter" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "thu",
-          "day": {
-            "de": "Donnerstag",
-            "en": "Thursday"
-          },
-          "soup": {
-            "de": "Knoblauchcremesuppe mit Croutons",
-            "en": "Creamy Garlic Soup with Croutons"
-          },
-          "main": {
-            "de": "Schweinsmedaillons in Pfefferrahmsauce mit Kroketten",
-            "en": "Pork Medallions in Pepper Cream Sauce with Croquettes"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "thursday",
+          "day": { "de": "Donnerstag", "en": "Thursday" },
+          "soup": { "de": "Klare Rindsuppe mit Frittaten", "en": "Clear Beef Broth with Sliced Pancakes" },
+          "main": { "de": "Rosa gebratene Entenbrust mit Rotkraut & Kroketten", "en": "Roast Duck Breast with Red Cabbage & Croquettes" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         },
         {
-          "dayKey": "fri",
-          "day": {
-            "de": "Freitag",
-            "en": "Friday"
-          },
-          "soup": {
-            "de": "Caesar Salad mit Parmesan",
-            "en": "Caesar Salad with Aged Parmesan"
-          },
-          "main": {
-            "de": "Lachsfilet vom Grill mit Petersilienkartoffeln",
-            "en": "Grilled Salmon Fillet with Parsley Potatoes"
-          },
-          "dessert": {
-            "de": "Dessert des Tages",
-            "en": "Dessert of the Day"
-          },
-          "note": {
-            "de": "Auch vegetarisch erhältlich",
-            "en": "Vegetarian option available"
-          }
+          "dayKey": "friday",
+          "day": { "de": "Freitag", "en": "Friday" },
+          "soup": { "de": "Mediterraner Blattsalat mit Hausdressing", "en": "Mediterranean Green Salad with House Dressing" },
+          "main": { "de": "Gebratenes Zanderfilet auf Petersilienkartoffeln", "en": "Pan-Seared Pike-Perch Fillet on Parsley Potatoes" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
+        }
+      ]
+    },
+    {
+      "id": "week-2026-12-07",
+      "validFrom": "2026-12-07",
+      "validTo": "2026-12-13",
+      "displayPeriod": "08.12.2026 – 11.12.2026",
+      "price2Course": "€ 10,90",
+      "price3Course": "€ 14,90",
+      "note": {
+        "de": "Dienstag – Freitag · 11:00 – 15:00 Uhr · Auch vegetarisch erhältlich",
+        "en": "Tuesday – Friday · 11:00 – 15:00 · Vegetarian option available daily"
+      },
+      "days": [
+        {
+          "dayKey": "tuesday",
+          "day": { "de": "Dienstag", "en": "Tuesday" },
+          "soup": { "de": "Süßkartoffel-Cremesuppe", "en": "Sweet Potato Cream Soup" },
+          "main": { "de": "Boeuf Bourguignon mit cremigem Kartoffelpüree", "en": "Boeuf Bourguignon with Creamy Mashed Potatoes" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
+        },
+        {
+          "dayKey": "wednesday",
+          "day": { "de": "Mittwoch", "en": "Wednesday" },
+          "soup": { "de": "Brokkolicremesuppe mit gerösteten Mandeln", "en": "Cream of Broccoli Soup with Toasted Almonds" },
+          "main": { "de": "Trüffel-Tagliatelle mit gehobeltem Grana Padano", "en": "Truffle Tagliatelle with Shaved Grana Padano" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
+        },
+        {
+          "dayKey": "thursday",
+          "day": { "de": "Donnerstag", "en": "Thursday" },
+          "soup": { "de": "Tomatencremesuppe mit frischem Basilikum", "en": "Creamy Tomato Soup with Fresh Basil" },
+          "main": { "de": "Wiener Schnitzel vom Kalb mit Erdäpfel-Vogerlsalat", "en": "Viennese Veal Schnitzel with Potato & Lamb's Lettuce Salad" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
+        },
+        {
+          "dayKey": "friday",
+          "day": { "de": "Freitag", "en": "Friday" },
+          "soup": { "de": "Französischer Ziegenkäse-Salat", "en": "French Goat Cheese Salad" },
+          "main": { "de": "Gegrilltes Lachsfilet à la Provençale mit Kräuterreis", "en": "Grilled Salmon Fillet à la Provençale with Herb Rice" },
+          "dessert": { "de": "Dessert des Tages", "en": "Dessert of the Day" }
         }
       ]
     }
