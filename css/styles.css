@@ -3942,11 +3942,7 @@ html.dark .events-section__veil {
   }
 
   .lunch-banner__badges {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
+    margin-bottom: 0.45rem;
   }
 
   .lunch-banner__header {
@@ -4043,9 +4039,19 @@ html.dark .events-section__veil {
     padding: 0.65rem 1.2rem;
   }
 
+  .menu-filters {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+    gap: 0.4rem;
+  }
+
   .filter-chip {
-    font-size: 0.94rem;
+    flex: 1 1 auto;
+    font-size: 0.88rem;
     min-height: 44px;
+    padding: 0.45rem 0.65rem;
+    text-align: center;
   }
 
   .menu-item-card {
@@ -4129,17 +4135,17 @@ html:not(.dark) .chalet-section {
   background: #FFFFFF;
 }
 
-/* 2. Centered Full-Screen Kobenzl-Style Hero with Apple Tahoe Liquid Glass Pill Switcher */
+/* 2. Centered Full-Screen Hero with 4-Card Hub Grid (2x2 on Desktop & Mobile) */
 .hero--centered {
   min-height: calc(100vh - 76px);
-  padding: 4rem 0 4.5rem;
+  padding: 2.25rem 0 2.75rem;
   text-align: center;
 }
 
 .hero--centered .hero__backdrop-veil {
   background: radial-gradient(
     circle at 50% 45%,
-    rgba(16, 14, 12, 0.44) 0%,
+    rgba(16, 14, 12, 0.42) 0%,
     rgba(12, 10, 8, 0.72) 100%
   );
 }
@@ -4154,7 +4160,8 @@ html:not(.dark) .chalet-section {
 }
 
 .hero__content--centered {
-  max-width: 760px;
+  width: 100%;
+  max-width: 920px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -4162,74 +4169,123 @@ html:not(.dark) .chalet-section {
 }
 
 .hero--centered .hero__title {
-  font-size: clamp(2.65rem, 5.2vw, 4.6rem);
+  font-size: clamp(2.25rem, 4.4vw, 3.65rem);
   font-weight: 600;
-  line-height: 1.08;
+  line-height: 1.06;
   letter-spacing: -0.01em;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
   color: #FFFFFF;
   text-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
 }
 
 .hero--centered .hero__title em {
-  display: block;
-  font-style: normal;
+  font-style: italic;
   color: #F4E0C6;
 }
 
-.hero--centered .hero__subtitle {
-  display: block !important;
-  font-size: 1.08rem;
-  color: rgba(255, 255, 255, 0.92);
-  margin: 0 auto 1.4rem;
-  max-width: 52ch;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
-}
-
-.hero-loc-picker--compact {
+/* 4-Card 2x2 Hub Grid (Top: Hinterbrühl & Mödling · Bottom: Chalet Weiß & Change It For Me) */
+.hero-hub-grid {
   width: 100%;
-  max-width: 620px;
-  padding: 0.55rem;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(24px) saturate(1.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  border: 0.5px solid rgba(255, 255, 255, 0.55);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
   margin-bottom: 1.35rem;
 }
 
-html.dark .hero-loc-picker--compact {
-  background: rgba(28, 28, 30, 0.9);
+.hero-hub-card {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ui-label);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  padding: 1.45rem 1.35rem 1.3rem;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  min-width: 0;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+html.dark .hero-hub-card {
+  background: rgba(28, 28, 30, 0.94);
   border-color: rgba(255, 255, 255, 0.14);
 }
 
-.hero-loc-card--inline {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.55rem;
-  padding: 0.55rem 0.75rem 0.25rem;
-  font-size: 0.88rem;
-  color: var(--ui-label-secondary);
+.hero-hub-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.36);
 }
 
-.hero-loc-card--inline .hero-loc-card__name {
-  font-family: var(--font-sans);
-  font-size: 0.92rem;
+.hero-hub-card.active {
+  border: 2px solid var(--tenant-accent);
+}
+
+.hero-hub-card--project {
+  padding: 1.15rem 1.25rem 1.1rem;
+  background: rgba(255, 255, 255, 0.91);
+}
+
+html.dark .hero-hub-card--project {
+  background: rgba(24, 24, 26, 0.9);
+}
+
+.hero-hub-card__kicker {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 0.35rem;
+}
+
+.hero-hub-card__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 2.3vw, 2.05rem);
   font-weight: 700;
+  line-height: 1.12;
   color: var(--ui-label);
+  margin: 0 0 0.45rem;
 }
 
-.hero-loc-card__sep {
-  opacity: 0.45;
+.hero-hub-card--project .hero-hub-card__title {
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
 }
 
-.hero-loc-card--inline .hero-loc-card__route {
-  min-height: 30px;
-  padding: 0.18rem 0.65rem;
-  font-size: 0.8rem;
+.hero-hub-card__title em {
+  font-style: normal;
+  color: var(--gold-dark);
+}
+
+.hero-hub-card__desc {
+  font-size: 0.9rem;
+  line-height: 1.42;
+  color: var(--ui-label-secondary);
+  margin: 0 auto 0.9rem;
+  max-width: 34ch;
+}
+
+.hero-hub-card--project .hero-hub-card__desc {
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.hero-hub-card__actions {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-hub-card__btn {
+  min-height: 44px;
+  min-width: 136px;
+  padding: 0.55rem 1.35rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 999px;
 }
 
 .hero__actions--centered {
@@ -4252,6 +4308,17 @@ html.dark .hero-loc-picker--compact {
   background: #F5F5F7;
   color: var(--gold-dark);
   transform: translateY(-2px);
+}
+
+/* Eliminate duplicate buttons & repeated date/hours badges in Hero & Lunch Banner */
+.hero__actions--centered,
+.lunch-scheduler-bar,
+.lunch-banner__badges [data-i18n="lunch.badge"] {
+  display: none !important;
+}
+
+.lunch-banner__badges {
+  margin-bottom: 0.4rem;
 }
 
 /* 3. Kobenzl Two-Tone Stacked Editorial Headings */
@@ -4369,6 +4436,50 @@ html.dark .hero-loc-picker--compact {
 }
 
 @media (max-width: 860px) {
+  /* Never hide content with opacity:0 scroll-reveal on mobile — prevents blank white gaps before threshold */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero__subtitle,
+  .hero--centered .hero__subtitle,
+  .hero__scroll-cue,
+  #philosophie,
+  #karriere {
+    display: none !important;
+  }
+
+  /* On Mobile, reorder sections so Mittagsmenü & Speisekarte (#speisekarte) come FIRST right below the Hero! */
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero {
+    order: 0;
+  }
+
+  #speisekarte {
+    order: 1;
+  }
+
+  #standorte {
+    order: 2;
+  }
+
+  #reservierung {
+    order: 3;
+  }
+
+  #veranstaltungen {
+    order: 4;
+  }
+
+  #chalet {
+    order: 5;
+  }
+
   .locations-grid {
     gap: 2.5rem;
   }
@@ -4405,26 +4516,347 @@ html.dark .hero-loc-picker--compact {
     display: none !important;
   }
 
+  /* Full-Screen Edge-to-Edge Printed Menu Lightbox on Mobile (Zero wasted margins for Seniors!) */
+  .lightbox {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  .lightbox__container {
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+  }
+
+  .lightbox__header {
+    flex-wrap: nowrap !important;
+    padding: 0.45rem 0.65rem !important;
+    gap: 0.4rem !important;
+    min-height: 54px;
+  }
+
+  .lightbox__loc-tabs {
+    flex-wrap: nowrap !important;
+    gap: 0.3rem !important;
+    min-width: 0;
+  }
+
+  .lightbox__loc-btn {
+    min-height: 40px !important;
+    padding: 0.35rem 0.65rem !important;
+    font-size: 0.82rem !important;
+    white-space: nowrap;
+  }
+
+  .lightbox__counter {
+    font-size: 0.85rem !important;
+    font-weight: 700;
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
+  .lightbox__close {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    flex-shrink: 0;
+  }
+
+  .lightbox__stage {
+    padding: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    background: #FFFFFF !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lightbox__stage.is-zoomed-stage {
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+  }
+
+  .lightbox__img-wrap {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    overflow: hidden;
+  }
+
+  .lightbox__stage.is-zoomed-stage .lightbox__img-wrap {
+    width: 180% !important;
+    overflow: visible;
+  }
+
+  .lightbox__img-wrap img {
+    width: 116% !important;
+    max-width: none !important;
+    flex-shrink: 0;
+    height: auto !important;
+    max-height: none !important;
+    display: block !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transition: width 0.2s ease;
+  }
+
+  .lightbox__img-wrap img.is-zoomed {
+    width: 100% !important;
+  }
+
+  .lightbox__nav {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 4.8rem !important;
+    transform: none !important;
+    width: 48px !important;
+    height: 48px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55) !important;
+    z-index: 20;
+  }
+
+  .lightbox__nav--prev {
+    left: 0.65rem !important;
+  }
+
+  .lightbox__nav--next {
+    right: 0.65rem !important;
+  }
+
+  .lightbox__thumbs {
+    padding: 0.45rem 0.5rem !important;
+    gap: 0.4rem !important;
+    justify-content: flex-start !important;
+  }
+
+  .lightbox-thumb {
+    width: 44px !important;
+    height: 56px !important;
+  }
+
+  /* First Screen on Mobile: Airy Full-Viewport "Choose Café / Project" Hero */
   .hero--centered {
-    min-height: auto;
-    padding: 2.15rem 0 2.35rem;
+    min-height: calc(100svh - 62px);
+    padding: 2rem 0 calc(5.25rem + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    align-items: center;
+  }
+
+  .hero--centered .eyebrow-badge {
+    display: inline-flex !important;
+    font-size: 0.68rem;
+    padding: 0.35rem 0.85rem;
+    margin-bottom: 0.85rem;
   }
 
   .hero--centered .hero__title {
-    font-size: clamp(2.15rem, 8.2vw, 2.75rem);
+    font-size: clamp(1.95rem, 7.2vw, 2.35rem);
+    margin-bottom: 1.35rem;
   }
 
-  .hero--centered .hero__subtitle {
-    font-size: 0.94rem;
-    margin-bottom: 1rem;
+  /* Airy 2x2 4-Card Grid on Mobile with comfortable breathing room */
+  .hero-hub-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 0;
   }
 
-  .hero-loc-card--inline {
+  .hero-hub-card,
+  .hero-hub-card--restaurant,
+  .hero-hub-card--project {
+    grid-column: auto;
+    padding: 1.2rem 0.85rem 1.05rem;
+    border-radius: 18px;
+  }
+
+  .hero-hub-card__kicker,
+  .hero-hub-card--project .hero-hub-card__kicker {
+    display: inline-block !important;
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.35rem;
+  }
+
+  .hero-hub-card__title,
+  .hero-hub-card--restaurant .hero-hub-card__title,
+  .hero-hub-card--project .hero-hub-card__title {
+    font-size: clamp(1.24rem, 4.8vw, 1.42rem);
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-hub-card__desc,
+  .hero-hub-card--restaurant .hero-hub-card__desc,
+  .hero-hub-card--project .hero-hub-card__desc {
     font-size: 0.82rem;
-    gap: 0.25rem 0.45rem;
+    font-weight: 500;
+    color: var(--ui-label-secondary);
+    line-height: 1.35;
+    margin-bottom: 0.85rem;
+    white-space: normal;
+    overflow: visible;
   }
 
+  .hero-hub-card__btn,
+  .hero-hub-card--restaurant .hero-hub-card__btn,
+  .hero-hub-card--project .hero-hub-card__btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.88rem;
+  }
+
+  /* Second Screen ("După ce alegi cafeneaua"): Airy, well-spaced Menu & Mittagsmenü */
+  .menu-section {
+    padding-top: 2.75rem !important;
+    padding-bottom: 2.75rem !important;
+  }
+
+  .menu-section > .container > .section-header {
+    display: block !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .menu-LocationBar {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-bottom: 1.35rem !important;
+  }
+
+  .menu-loc-switch {
+    padding: 0.25rem !important;
+    gap: 0.3rem !important;
+  }
+
+  .menu-loc-btn {
+    min-height: 46px !important;
+    padding: 0.5rem 0.65rem !important;
+  }
+
+  .menu-loc-btn__title {
+    font-size: 1.06rem !important;
+  }
+
+  .menu-gallery-trigger {
+    width: 100% !important;
+    min-height: 46px !important;
+    padding: 0.55rem 1rem !important;
+    font-size: 0.92rem !important;
+  }
+
+  .menu-gallery-trigger span {
+    display: inline;
+  }
+
+  .menu-gallery-trigger::after {
+    content: none;
+  }
+
+  /* Airy, well-spaced Lunch Banner on Mobile */
+  .lunch-banner {
+    padding: 1.35rem 1.15rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .lunch-banner__header {
+    gap: 0.9rem !important;
+    margin-bottom: 1.1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .lunch-banner__header > div:first-child {
+    display: block;
+    width: 100%;
+  }
+
+  .lunch-banner__badges {
+    margin-bottom: 0.55rem !important;
+  }
+
+  .lunch-period-pill {
+    font-size: 0.82rem !important;
+    padding: 0.25rem 0.7rem !important;
+  }
+
+  .lunch-banner__title {
+    font-size: 1.6rem !important;
+    margin: 0 0 0.35rem !important;
+  }
+
+  .lunch-banner__subtitle {
+    font-size: 0.94rem !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+  }
+
+  .lunch-banner__prices {
+    gap: 0.65rem !important;
+  }
+
+  .lunch-price-box {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: 0.75rem 0.85rem !important;
+    border-radius: 14px !important;
+    gap: 0.2rem !important;
+  }
+
+  .lunch-price-box__label {
+    font-size: 0.88rem !important;
+    margin: 0 !important;
+  }
+
+  .lunch-price-box__val {
+    font-size: 1.35rem !important;
+    margin: 0 !important;
+  }
+
+  .lunch-days-grid {
+    gap: 0.85rem !important;
+  }
+
+  .lunch-day-card {
+    padding: 1.15rem 1.15rem !important;
+  }
+
+  /* Hide duplicate Hero bottom buttons on mobile because the 2 Restaurant cards & bottom bar already provide them */
   .hero__actions--centered {
+    display: none !important;
+  }
+
+  /* Make all 6 Menu Categories visible at once in a 2-column grid on mobile (no hidden horizontal scroll!) */
+  .menu-categories {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+    overflow: visible !important;
+    margin-bottom: 1.15rem;
+  }
+
+  .menu-cat-tab {
+    width: 100%;
+    min-height: 46px;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.95rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

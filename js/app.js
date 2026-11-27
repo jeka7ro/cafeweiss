@@ -296,11 +296,16 @@
     state.heroLocation = locId;
     state.menuLocation = locId;
 
-    // 1. Sync all [data-select-location] segmented buttons (Hero + Standorte)
+    // 1. Sync all [data-select-location] buttons & [data-hub-card] cards (Hero + Standorte)
     document.querySelectorAll("[data-select-location]").forEach((btn) => {
       const active = btn.getAttribute("data-select-location") === locId;
       btn.classList.toggle("active", active);
       btn.setAttribute("aria-selected", String(active));
+    });
+
+    document.querySelectorAll("[data-hub-card]").forEach((card) => {
+      const active = card.getAttribute("data-hub-card") === locId;
+      card.classList.toggle("active", active);
     });
 
     // 2. Sync all [data-location-card] cards in #standorte
@@ -355,6 +360,24 @@
         const locId = tab.getAttribute("data-select-location");
         if (!locId || !DATA.locations[locId]) return;
         setGlobalLocation(locId, { animateHero: true });
+        const scrollTargetId = tab.getAttribute("data-scroll-to");
+        if (scrollTargetId) {
+          const targetEl = document.getElementById(scrollTargetId);
+          if (targetEl) {
+            document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-revealed"));
+            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-hub-card]").forEach((card) => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("button, a")) return;
+        const locId = card.getAttribute("data-hub-card");
+        if (locId && DATA.locations[locId]) {
+          setGlobalLocation(locId, { animateHero: true });
+        }
       });
     });
   }
@@ -813,6 +836,15 @@
 
     if (closeBtn) {
       closeBtn.addEventListener("click", () => dialog.close());
+    }
+
+    const lightboxImg = document.getElementById("lightboxImage");
+    if (lightboxImg) {
+      lightboxImg.addEventListener("click", () => {
+        const isZoomed = lightboxImg.classList.toggle("is-zoomed");
+        const stageEl = lightboxImg.closest(".lightbox__stage");
+        if (stageEl) stageEl.classList.toggle("is-zoomed-stage", isZoomed);
+      });
     }
 
     dialog.addEventListener("click", (e) => {

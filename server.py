@@ -156,7 +156,7 @@ class ReusableTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    with ReusableTCPServer(("127.0.0.1", PORT), CafeWeissHandler) as httpd:
-        print(f"Serving Café Weiss + Admin API on http://127.0.0.1:{PORT}")
+    with ReusableTCPServer(("0.0.0.0", PORT), CafeWeissHandler) as httpd:
+        print(f"Serving Café Weiss + Admin API on http://0.0.0.0:{PORT} (LAN: http://192.168.2.57:{PORT})")
         httpd.serve_forever()
 

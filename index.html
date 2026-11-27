@@ -239,45 +239,81 @@
             Willkommen im <em>Café Weiss</em>
           </h1>
 
-          <p class="hero__subtitle" data-i18n="hero.subtitle">
-            Hinterbrühl &amp; Mödling · 100% Bio-Kaffee, französische Küche &amp; Patisserie
-          </p>
+          <!-- 4-CARD HUB GRID (2x2 on Desktop & Mobile: 2 Restaurants + Chalet Weiß & Change It For Me) -->
+          <div class="hero-hub-grid" role="region" aria-label="Unsere Standorte &amp; Projekte">
+            <!-- CARD 1: HINTERBRÜHL -->
+            <article class="hero-hub-card hero-hub-card--restaurant active" data-hub-card="hinterbruehl">
+              <span class="hero-hub-card__kicker" data-i18n="hub.hb.kicker">RESTAURANT &amp; CAFÉ</span>
+              <h2 class="hero-hub-card__title" data-i18n-html="hub.hb.title">
+                Café Weiss<br /><em>Hinterbrühl</em>
+              </h2>
+              <p class="hero-hub-card__desc" data-i18n="hub.hb.desc">
+                Hauptstraße 16 · Seegrotte
+              </p>
+              <div class="hero-hub-card__actions">
+                <button type="button" class="btn btn--gold hero-hub-card__btn" data-select-location="hinterbruehl" data-scroll-to="speisekarte">
+                  <span data-i18n="hub.btn.open">Aufrufen</span>
+                </button>
+              </div>
+            </article>
 
-          <!-- Sleek Apple Tahoe Liquid Glass 50/50 Location Pill Switcher -->
-          <div class="hero-loc-picker hero-loc-picker--compact">
-            <div class="loc-segmented" role="tablist" aria-label="Standort wählen">
-              <button type="button" class="loc-seg-btn hero-loc-tab active" data-select-location="hinterbruehl" role="tab" aria-selected="true">
-                <span class="loc-seg-btn__top">
-                  <span class="hero-loc-tab__dot"></span>
-                  <span class="loc-seg-btn__title">Hinterbrühl</span>
-                  <span class="hero-loc-tab__tag">NEU</span>
-                </span>
-                <span class="loc-seg-btn__sub" data-i18n="loc.tab.hb.sub">Restaurant &amp; Mittagsmenü</span>
-              </button>
-              <button type="button" class="loc-seg-btn hero-loc-tab" data-select-location="moedling" role="tab" aria-selected="false">
-                <span class="loc-seg-btn__top">
-                  <span class="hero-loc-tab__dot"></span>
-                  <span class="loc-seg-btn__title">Mödling</span>
-                  <span class="hero-loc-tab__tag">1607</span>
-                </span>
-                <span class="loc-seg-btn__sub" data-i18n="loc.tab.md.sub">Kaffeehaus &amp; Terrasse</span>
-              </button>
-            </div>
+            <!-- CARD 2: MÖDLING -->
+            <article class="hero-hub-card hero-hub-card--restaurant" data-hub-card="moedling">
+              <span class="hero-hub-card__kicker" data-i18n="hub.md.kicker">KAFFEEHAUS · 1607</span>
+              <h2 class="hero-hub-card__title" data-i18n-html="hub.md.title">
+                Café Weiss<br /><em>Mödling</em>
+              </h2>
+              <p class="hero-hub-card__desc" data-i18n="hub.md.desc">
+                Herzoggasse 6 · Zentrum
+              </p>
+              <div class="hero-hub-card__actions">
+                <button type="button" class="btn btn--gold hero-hub-card__btn" data-select-location="moedling" data-scroll-to="speisekarte">
+                  <span data-i18n="hub.btn.open">Aufrufen</span>
+                </button>
+              </div>
+            </article>
 
-            <!-- Compact 1-Line Active Location Bar -->
-            <div class="hero-loc-card hero-loc-card--inline" id="heroLocCard">
-              <span class="hero-loc-card__badge" id="heroLocBadge" hidden>Restaurant &amp; Café</span>
-              <strong class="hero-loc-card__name" id="heroLocName">Café Weiss Hinterbrühl</strong>
-              <span class="hero-loc-card__sep">·</span>
-              <span id="heroLocAddress">Hauptstraße 16, 2371 Hinterbrühl</span>
-              <span class="hero-loc-card__sep">·</span>
-              <span id="heroLocHours">Täglich: 08:00 – 20:00 Uhr</span>
-              <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria"
-                target="_blank" rel="noopener" class="hero-loc-card__route" id="heroLocMapsUrl">
-                <span data-i18n="hero.directions">Route</span> ↗
-              </a>
-              <p class="hero-loc-card__desc" id="heroLocDesc" hidden></p>
-            </div>
+            <!-- CARD 3: CHALET WEISS -->
+            <article class="hero-hub-card hero-hub-card--project">
+              <span class="hero-hub-card__kicker" data-i18n="hub.chalet.kicker">URLAUB &amp; AUTO</span>
+              <h2 class="hero-hub-card__title" data-i18n-html="hub.chalet.title">
+                Chalet<br /><em>Weiß</em>
+              </h2>
+              <p class="hero-hub-card__desc" data-i18n="hub.chalet.desc">
+                Alpen-Chalet &amp; Mietwagen
+              </p>
+              <div class="hero-hub-card__actions">
+                <a href="https://chaletweiss.at" target="_blank" rel="noopener" class="btn btn--gold hero-hub-card__btn">
+                  <span data-i18n="hub.btn.open">Aufrufen</span> ↗
+                </a>
+              </div>
+            </article>
+
+            <!-- CARD 4: CHANGE IT FOR ME (SWAPIT) -->
+            <article class="hero-hub-card hero-hub-card--project">
+              <span class="hero-hub-card__kicker" data-i18n="hub.swapit.kicker">PARTNER-PROJEKT</span>
+              <h2 class="hero-hub-card__title" data-i18n-html="hub.swapit.title">
+                Change It<br /><em>For Me</em>
+              </h2>
+              <p class="hero-hub-card__desc" data-i18n="hub.swapit.desc">
+                SwapIt · Smart tauschen
+              </p>
+              <div class="hero-hub-card__actions">
+                <a href="https://swapit-chi.vercel.app/start" target="_blank" rel="noopener" class="btn btn--gold hero-hub-card__btn">
+                  <span data-i18n="hub.btn.open">Aufrufen</span> ↗
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Hidden state container preserved for location sync -->
+          <div class="hero-loc-card" id="heroLocCard" hidden>
+            <span id="heroLocBadge"></span>
+            <strong id="heroLocName">Café Weiss Hinterbrühl</strong>
+            <span id="heroLocAddress">Hauptstraße 16, 2371 Hinterbrühl</span>
+            <span id="heroLocHours">Täglich: 08:00 – 20:00 Uhr</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Hauptstra%C3%9Fe+16,+2371+Hinterbr%C3%BChl,+Austria" id="heroLocMapsUrl">Route</a>
+            <p id="heroLocDesc"></p>
           </div>
 
           <div class="hero__actions hero__actions--centered">
@@ -1224,10 +1260,10 @@
       <div class="lightbox__header">
         <div class="lightbox__loc-tabs">
           <button type="button" class="lightbox__loc-btn active" data-lightbox-loc="hinterbruehl">
-            Hinterbrühl (8 Seiten)
+            Hinterbrühl
           </button>
           <button type="button" class="lightbox__loc-btn" data-lightbox-loc="moedling">
-            Mödling (5 Seiten)
+            Mödling
           </button>
         </div>
 
