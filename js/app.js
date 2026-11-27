@@ -660,6 +660,21 @@
       });
     });
 
+    // Clicking any [data-jump-lunch] or #lunchMenuBanner link automatically ensures Hinterbrühl is selected
+    document.querySelectorAll('[data-jump-lunch], a[href="#lunchMenuBanner"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        if (state.menuLocation !== "hinterbruehl") {
+          setGlobalLocation("hinterbruehl", { animateHero: false });
+        }
+        const target = document.getElementById("lunchMenuBanner");
+        if (target) {
+          e.preventDefault();
+          document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-revealed"));
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
     if (!("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver(
       (entries) => {
