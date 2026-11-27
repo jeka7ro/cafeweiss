@@ -570,6 +570,15 @@
         <button type="button" class="ui-lang-btn" data-set-uilang="en">EN</button>
       </div>
 
+      <button type="button" class="btn btn--outline-light" id="exportJsonBtn" title="JSON-Backup herunterladen">
+        📥 <span data-ui="btn.export">Backup (.json)</span>
+      </button>
+
+      <label class="btn btn--outline-light" for="importJsonInput" title="JSON-Backup importieren" style="margin:0;">
+        📤 <span data-ui="btn.import">Importieren</span>
+        <input type="file" id="importJsonInput" accept="application/json,.json" hidden />
+      </label>
+
       <button type="button" class="btn btn--outline-light" id="printMenuBtn">
         🖨️ <span data-ui="btn.print">A4 Drucken / PDF</span>
       </button>
@@ -697,13 +706,18 @@
     </div>
   </div>
 
+  <script src="js/lunch-scheduler.js"></script>
   <script>
     (function () {
       "use strict";
 
+      const SCHEDULER = window.CafeWeissLunchScheduler;
+
       const UI_STRINGS = {
         de: {
           "header.badge": "Mittagsmenü-Verwaltung & Automatische Wochenplanung",
+          "btn.export": "Backup (.json)",
+          "btn.import": "Importieren",
           "btn.print": "A4 Drucken / PDF",
           "btn.back": "Zur Live-Webseite",
           "sim.title": "Automatische Zeitsteuerung:",
@@ -736,6 +750,8 @@
         },
         en: {
           "header.badge": "Weekly Lunch Menu Admin & Auto-Scheduler",
+          "btn.export": "Backup (.json)",
+          "btn.import": "Import",
           "btn.print": "Print A4 / PDF",
           "btn.back": "View Live Website",
           "sim.title": "Automatic Date Scheduling:",
@@ -772,71 +788,41 @@
       let uiLang = savedAdminLang === "en" ? "en" : "de";
       let store = { schedules: [] };
       let currentWeekId = null;
+      let hasUnsavedChanges = false;
 
       function ut(key) {
         return (UI_STRINGS[uiLang] && UI_STRINGS[uiLang][key]) || UI_STRINGS.de[key] || key;
       }
 
       function getTodayIso() {
-        const d = new Date();
-        const yyyy = d.getFullYear();
-        const mm = String(d.getMonth() + 1).padStart(2, "0");
-        const dd = String(d.getDate()).padStart(2, "0");
-        return `${yyyy}-${mm}-${dd}`;
+        return SCHEDULER.getViennaDateISO();
       }
 
       function addDaysIso(isoDate, days) {
-        const d = new Date(isoDate + "T12:00:00");
-        d.setDate(d.getDate() + days);
-        const yyyy = d.getFullYear();
-        const mm = String(d.getMonth() + 1).padStart(2, "0");
-        const dd = String(d.getDate()).padStart(2, "0");
-        return `${yyyy}-${mm}-${dd}`;
+        return SCHEDULER.addDaysISO(isoDate, days);
       }
 
       function formatDeDate(isoDate) {
-        if (!isoDate) return "";
-        const [y, m, d] = isoDate.split("-");
-        return `${d}.${m}.${y}`;
+        return SCHEDULER.formatDeDate(isoDate);
       }
 
       function computeDisplayPeriod(mondayIso) {
-        const tue = addDaysIso(mondayIso, 1);
-        const fri = addDaysIso(mondayIso, 4);
-        return `${formatDeDate(tue)} – ${formatDeDate(fri)}`;
+        return SCHEDULER.computeDisplayPeriod(mondayIso);
       }
 
       function getWeekStatus(week) {
-        const today = getTodayIso();
-        if (today >= week.validFrom && today <= week.validTo) return "active";
-        if (week.validFrom > today) return "scheduled";
-        return "past";
+        return SCHEDULER.getWeekStatus(week, getTodayIso());
       }
 
       async function loadSchedules() {
-        try {
-          const res = await fetch("api/lunch-schedules?t=" + Date.now(), { cache: "no-store" });
-          if (res.ok) {
-            store = await res.json();
-          } else {
-            const fallbackRes = await fetch("data/lunch-schedules.json?t=" + Date.now(), { cache: "no-store" });
-            store = await fallbackRes.json();
-          }
-        } catch (err) {
-          const local = localStorage.getItem("cafeweiss_lunch_schedules");
-          if (local) store = JSON.parse(local);
-        }
-
-        if (!store.schedules || !store.schedules.length) {
-          store.schedules = [];
-        }
-
+        store = await SCHEDULER.loadStore();
         const activeWeek = store.schedules.find((w) => getWeekStatus(w) === "active") || store.schedules[0];
         if (activeWeek) currentWeekId = activeWeek.id;
 
         const simInput = document.getElementById("simDateInput");
         if (simInput) simInput.value = getTodayIso();
 
+        hasUnsavedChanges = false;
         renderAll();
       }
 
@@ -1040,46 +1026,23 @@
       }
 
       function translateDishDeToEn(textDe) {
-        if (!textDe) return "";
-        const map = [
-          [/Dessert des Tages/gi, "Dessert of the Day"],
-          [/Kürbiscremesuppe/gi, "Creamy Pumpkin Soup"],
-          [/Erbsensuppe/gi, "Green Pea Soup"],
-          [/Linsensuppe/gi, "Hearty Lentil Soup"],
-          [/Griechischer Salat/gi, "Fresh Greek Salad"],
-          [/Französische Zwiebelsuppe/gi, "French Onion Soup"],
-          [/Tomatencremesuppe/gi, "Creamy Tomato Soup"],
-          [/Rindsuppe mit Frittaten/gi, "Viennese Beef Broth with Pancake Strips"],
-          [/Knoblauchcremesuppe/gi, "Creamy Garlic Soup"],
-          [/Waldpilzcremesuppe/gi, "Wild Mushroom Cream Soup"],
-          [/Karotten-Ingwer-Cremesuppe/gi, "Carrot & Ginger Cream Soup"],
-          [/Schweinegeschnetzeltes nach Stroganoff-Art/gi, "Pork Stroganoff"],
-          [/Schweinerippchen/gi, "Tender Pork Ribs"],
-          [/Kartoffelwedges/gi, "Potato Wedges"],
-          [/mit Kartoffeln/gi, "with Potatoes"],
-          [/Rosmarinkartoffeln/gi, "Rosemary Potatoes"],
-          [/Petersilienkartoffeln/gi, "Parsley Potatoes"],
-          [/Pasta mit Lachs/gi, "Artisan Pasta with Salmon"],
-          [/Ravioli in Beurre-blanc-Sauce/gi, "Ravioli in French Beurre Blanc Sauce"],
-          [/Lachsfilet/gi, "Salmon Fillet"],
-          [/Zanderfilet/gi, "Pike-Perch Fillet"],
-          [/Hühnerfilet/gi, "Chicken Breast Fillet"],
-          [/Schweinsmedaillons/gi, "Pork Medallions"],
-          [/Rindergulasch/gi, "Viennese Beef Goulash"],
-          [/Serviettenknödel/gi, "Bread Dumplings"],
-          [/mit Basilikum/gi, "with Fresh Basil"],
-          [/mit/gi, "with"],
-          [/und/gi, "and"]
-        ];
-        let result = textDe;
-        map.forEach(([regex, repl]) => {
-          result = result.replace(regex, repl);
-        });
-        return result;
+        return SCHEDULER.translateDishDeToEn(textDe);
       }
 
       document.addEventListener("DOMContentLoaded", () => {
         loadSchedules();
+
+        // Warn before navigating away with unsaved changes (Vercel web-design-guidelines)
+        window.addEventListener("beforeunload", (e) => {
+          if (hasUnsavedChanges) {
+            e.preventDefault();
+            e.returnValue = "";
+          }
+        });
+
+        document.querySelector(".editor-panel").addEventListener("input", () => {
+          hasUnsavedChanges = true;
+        });
 
         document.querySelectorAll("[data-set-uilang]").forEach((btn) => {
           btn.addEventListener("click", () => {
@@ -1097,6 +1060,7 @@
             document.getElementById("validToInput").value = addDaysIso(vf, 6);
             document.getElementById("displayPeriodInput").value = computeDisplayPeriod(vf);
             syncCurrentEditorToMemory();
+            hasUnsavedChanges = true;
             renderSidebar();
             renderPrintSheet();
           }
@@ -1112,58 +1076,15 @@
             card.querySelector(".day-dessert-en").value = translateDishDeToEn(dDe);
           });
           syncCurrentEditorToMemory();
+          hasUnsavedChanges = true;
         });
 
         document.getElementById("addNewWeekBtn").addEventListener("click", () => {
           syncCurrentEditorToMemory();
-          const lastWeek = store.schedules[store.schedules.length - 1];
-          const nextMonday = lastWeek && lastWeek.validFrom
-            ? addDaysIso(lastWeek.validFrom, 7)
-            : getTodayIso();
-          const nextSunday = addDaysIso(nextMonday, 6);
-          const newId = "week-" + nextMonday + "-" + Math.floor(Math.random() * 1000);
-
-          const newWeek = {
-            id: newId,
-            validFrom: nextMonday,
-            validTo: nextSunday,
-            displayPeriod: computeDisplayPeriod(nextMonday),
-            price2Course: "€ 10,90",
-            price3Course: "€ 14,90",
-            days: [
-              {
-                dayKey: "tue",
-                day: { de: "Dienstag", en: "Tuesday" },
-                soup: { de: "Tagessuppe", en: "Soup of the Day" },
-                main: { de: "Hauptspeise am Dienstag", en: "Tuesday Main Course" },
-                dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
-              },
-              {
-                dayKey: "wed",
-                day: { de: "Mittwoch", en: "Wednesday" },
-                soup: { de: "Tagessuppe", en: "Soup of the Day" },
-                main: { de: "Hauptspeise am Mittwoch", en: "Wednesday Main Course" },
-                dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
-              },
-              {
-                dayKey: "thu",
-                day: { de: "Donnerstag", en: "Thursday" },
-                soup: { de: "Tagessuppe", en: "Soup of the Day" },
-                main: { de: "Hauptspeise am Donnerstag", en: "Thursday Main Course" },
-                dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
-              },
-              {
-                dayKey: "fri",
-                day: { de: "Freitag", en: "Friday" },
-                soup: { de: "Frischer Salat", en: "Fresh Salad" },
-                main: { de: "Fisch- oder Pastagericht am Freitag", en: "Friday Fish or Pasta Dish" },
-                dessert: { de: "Dessert des Tages", en: "Dessert of the Day" }
-              }
-            ]
-          };
-
+          const newWeek = SCHEDULER.createNextWeekSchedule(store.schedules);
           store.schedules.push(newWeek);
-          currentWeekId = newId;
+          currentWeekId = newWeek.id;
+          hasUnsavedChanges = true;
           renderAll();
         });
 
@@ -1171,20 +1092,10 @@
           syncCurrentEditorToMemory();
           const cur = getCurrentWeekObj();
           if (!cur) return;
-
-          const lastWeek = store.schedules[store.schedules.length - 1];
-          const nextMonday = lastWeek && lastWeek.validFrom
-            ? addDaysIso(lastWeek.validFrom, 7)
-            : addDaysIso(cur.validFrom, 7);
-          const nextSunday = addDaysIso(nextMonday, 6);
-          const clone = JSON.parse(JSON.stringify(cur));
-          clone.id = "week-" + nextMonday + "-" + Math.floor(Math.random() * 1000);
-          clone.validFrom = nextMonday;
-          clone.validTo = nextSunday;
-          clone.displayPeriod = computeDisplayPeriod(nextMonday);
-
+          const clone = SCHEDULER.createNextWeekSchedule(store.schedules, cur);
           store.schedules.push(clone);
           currentWeekId = clone.id;
+          hasUnsavedChanges = true;
           renderAll();
         });
 
@@ -1198,25 +1109,17 @@
           }
           store.schedules = store.schedules.filter((w) => w.id !== currentWeekId);
           currentWeekId = store.schedules[0].id;
+          hasUnsavedChanges = true;
           renderAll();
         });
 
         document.getElementById("saveAllBtn").addEventListener("click", async () => {
           syncCurrentEditorToMemory();
+          const result = await SCHEDULER.saveStore(store);
+          store = result.store;
+          hasUnsavedChanges = false;
           renderSidebar();
           renderPrintSheet();
-
-          localStorage.setItem("cafeweiss_lunch_schedules", JSON.stringify(store));
-
-          try {
-            await fetch("api/lunch-schedules", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(store)
-            });
-          } catch (e) {
-            // Saved in localStorage fallback
-          }
 
           const toast = document.getElementById("saveToast");
           if (toast) {
@@ -1227,6 +1130,42 @@
           }
         });
 
+        // Export JSON Backup
+        document.getElementById("exportJsonBtn").addEventListener("click", () => {
+          syncCurrentEditorToMemory();
+          const blob = new Blob([JSON.stringify(store, null, 2)], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `cafeweiss-mittagsmenue-${getTodayIso()}.json`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+        });
+
+        // Import JSON Backup
+        document.getElementById("importJsonInput").addEventListener("change", (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = async () => {
+            try {
+              const parsed = JSON.parse(String(reader.result));
+              if (parsed && Array.isArray(parsed.schedules) && parsed.schedules.length > 0) {
+                const saved = await SCHEDULER.saveStore(parsed);
+                store = saved.store;
+                currentWeekId = store.schedules[0].id;
+                hasUnsavedChanges = false;
+                renderAll();
+              }
+            } catch (err) {
+              alert("Ungültige JSON-Datei / Invalid JSON file");
+            }
+          };
+          reader.readAsText(file);
+        });
+
         document.getElementById("printMenuBtn").addEventListener("click", () => {
           syncCurrentEditorToMemory();
           renderPrintSheet();
@@ -1235,14 +1174,9 @@
 
         document.getElementById("openSimulatedSiteBtn").addEventListener("click", async () => {
           syncCurrentEditorToMemory();
-          localStorage.setItem("cafeweiss_lunch_schedules", JSON.stringify(store));
-          try {
-            await fetch("api/lunch-schedules", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(store)
-            });
-          } catch (e) {}
+          const result = await SCHEDULER.saveStore(store);
+          store = result.store;
+          hasUnsavedChanges = false;
 
           const simDate = document.getElementById("simDateInput").value || getTodayIso();
           window.open(`index.html?previewDate=${simDate}#speisekarte`, "_blank");

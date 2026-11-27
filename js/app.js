@@ -393,49 +393,20 @@
   }
 
   // ================= AUTOMATIC WEEKLY LUNCH MENU SCHEDULER =================
+  const SCHEDULER = window.CafeWeissLunchScheduler;
+
   function getTargetViennaDateISO() {
-    const params = new URLSearchParams(window.location.search);
-    const previewDate = params.get("previewDate");
-    if (previewDate && /^\d{4}-\d{2}-\d{2}$/.test(previewDate)) {
-      return previewDate;
-    }
-    try {
-      const parts = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "Europe/Vienna",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-      }).formatToParts(new Date());
-      const y = parts.find((p) => p.type === "year").value;
-      const m = parts.find((p) => p.type === "month").value;
-      const d = parts.find((p) => p.type === "day").value;
-      return `${y}-${m}-${d}`;
-    } catch (e) {
-      return new Date().toISOString().slice(0, 10);
-    }
+    return SCHEDULER ? SCHEDULER.getViennaDateISO() : new Date().toISOString().slice(0, 10);
   }
 
   function resolveAutoActiveSchedule(schedules, dateISO) {
-    if (!Array.isArray(schedules) || schedules.length === 0) return null;
-    const sorted = [...schedules].sort((a, b) => (a.validFrom || "").localeCompare(b.validFrom || ""));
-
-    // 1. Exact match where validFrom <= dateISO <= validTo
-    const activeNow = sorted.find((s) => s.validFrom <= dateISO && dateISO <= s.validTo);
-    if (activeNow) return activeNow;
-
-    // 2. Next upcoming scheduled week (e.g. on Saturday/Sunday before Tuesday starts)
-    const upcoming = sorted.find((s) => s.validFrom >= dateISO);
-    if (upcoming) return upcoming;
-
-    // 3. Fallback to most recent scheduled week
-    return sorted[sorted.length - 1];
+    if (SCHEDULER) return SCHEDULER.resolveActiveSchedule(schedules, dateISO);
+    return Array.isArray(schedules) && schedules.length > 0 ? schedules[0] : null;
   }
 
   function applyLoadedSchedules(schedulesList) {
     if (!Array.isArray(schedulesList) || schedulesList.length === 0) return;
-    state.lunchSchedules = schedulesList.sort((a, b) =>
-      (a.validFrom || "").localeCompare(b.validFrom || "")
-    );
+    state.lunchSchedules = SCHEDULER ? SCHEDULER.sortSchedules(schedulesList) : schedulesList;
     state.targetDateISO = getTargetViennaDateISO();
     const autoWeek = resolveAutoActiveSchedule(state.lunchSchedules, state.targetDateISO);
     if (autoWeek) {
@@ -464,38 +435,14 @@
       document.body.appendChild(bar);
     }
 
-    // 1. Initialize immediately with embedded fallback or localStorage cache
-    try {
-      const cached = localStorage.getItem("cafeweiss_lunch_schedules");
-      if (cached) {
-        const parsed = JSON.parse(cached);
-        if (parsed && Array.isArray(parsed.schedules) && parsed.schedules.length > 0) {
-          applyLoadedSchedules(parsed.schedules);
-        }
-      }
-    } catch (e) {
-      // Ignore storage parse error
-    }
-
-    if (!state.selectedLunchWeekId && state.lunchSchedules.length > 0) {
+    if (state.lunchSchedules.length > 0) {
       applyLoadedSchedules(state.lunchSchedules);
     }
 
-    // 2. Fetch live JSON schedule from server API or data/lunch-schedules.json
-    const endpoints = ["api/lunch-schedules", "api/lunch-schedules.php", "data/lunch-schedules.json"];
-    for (const url of endpoints) {
-      try {
-        const res = await fetch(`${url}?t=${Date.now()}`, { cache: "no-store" });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && Array.isArray(data.schedules) && data.schedules.length > 0) {
-            localStorage.setItem("cafeweiss_lunch_schedules", JSON.stringify(data));
-            applyLoadedSchedules(data.schedules);
-            break;
-          }
-        }
-      } catch (e) {
-        // Continue to next fallback endpoint
+    if (SCHEDULER) {
+      const store = await SCHEDULER.loadStore(state.lunchSchedules);
+      if (store && Array.isArray(store.schedules) && store.schedules.length > 0) {
+        applyLoadedSchedules(store.schedules);
       }
     }
   }
