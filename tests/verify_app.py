@@ -169,8 +169,15 @@ def run_checkup():
             failures.append(f"[SITE TAHOE DARK SURFACE] Expected card rgb(28, 28, 30) & canvas rgb(12, 12, 14), got card={style_audit['darkCardBg']} canvas={style_audit['darkCanvasBg']}")
         report.append(f"✓ Presentation Site Apple Tahoe Engine (3 extreme tenant colors + Light #FFFFFF / Dark #1C1C1E pure neutral surfaces + tabular-nums): Passed")
 
-        # 2h. Admin Planner E2E (Add Week, Auto-Translate DE->EN, Save)
+        # 2h. Admin Planner E2E (Login Gate + Add Week, Auto-Translate DE->EN, Save)
         page.goto(f"{BASE_URL}/admin.html", wait_until="networkidle")
+        if not page.locator("#adminLoginGate").is_visible():
+            failures.append("[ADMIN LOGIN GATE] Expected login gate to be visible before authentication")
+        page.locator("#adminUserInput").fill("admin")
+        page.locator("#adminPassInput").fill("weiss2026")
+        page.locator("#adminLoginSubmitBtn").click()
+        if page.locator("#adminLoginGate").is_visible():
+            failures.append("[ADMIN LOGIN GATE] Expected login gate to hide after valid login")
         initial_weeks = page.locator(".week-item").count()
         page.locator("#addNewWeekBtn").click()
         after_add_weeks = page.locator(".week-item").count()
@@ -230,6 +237,10 @@ def run_checkup():
                 vp_page.on("console", lambda msg: vp_errors.append(msg.text) if msg.type == "error" else None)
 
                 vp_page.goto(url, wait_until="networkidle")
+                if "admin.html" in url and vp_page.locator("#adminLoginGate").is_visible():
+                    vp_page.locator("#adminUserInput").fill("admin")
+                    vp_page.locator("#adminPassInput").fill("weiss2026")
+                    vp_page.locator("#adminLoginSubmitBtn").click()
 
                 # Test mobile burger menu on small screens
                 if "admin.html" not in url and w <= 860:
