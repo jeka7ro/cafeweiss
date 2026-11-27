@@ -160,7 +160,19 @@ def run_checkup():
         translated_val = page.locator(".day-soup-en").first.input_value()
         if "Creamy Pumpkin Soup" not in translated_val:
             failures.append(f"[ADMIN AUTO-TRANSLATE] Expected 'Creamy Pumpkin Soup', got '{translated_val}'")
-        report.append("✓ Admin Planner E2E (+Add Scheduled Week & DE->EN Auto-Translator): Passed")
+
+        clipped_inputs = page.evaluate("""() => {
+            const res = [];
+            for (const inp of document.querySelectorAll('input[type="text"]')) {
+                if (inp.scrollWidth > inp.clientWidth + 2) {
+                    res.push(`${inp.id}: scrollW=${inp.scrollWidth} > clientW=${inp.clientWidth}`);
+                }
+            }
+            return res;
+        }""")
+        if clipped_inputs:
+            failures.append(f"[ADMIN CLIPPED INPUTS] {clipped_inputs}")
+        report.append("✓ Admin Planner E2E (+Add Scheduled Week, DE->EN Auto-Translator, 0 clipped inputs): Passed")
         ctx.close()
 
         # 3. Multi-Viewport x Bilingual x Touch Targets Audit (320px -> 1440px)

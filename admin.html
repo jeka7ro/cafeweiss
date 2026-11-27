@@ -3,123 +3,204 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#161210" />
+  <meta name="theme-color" content="#F5F2EB" />
   <title>Café Weiss | Mittagsmenü-Verwaltung &amp; Wochenplaner</title>
   <link rel="icon" type="image/png" href="assets/images/brand/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    /* ==========================================================================
+       Café Weiss — Apple HIG macOS / iPadOS Split-View Admin & Week Planner
+       Principles:
+       - Single Unified Liquid Glass Toolbar (Primary 'Save' action always visible)
+       - True Split-View Sidebar + Grouped Inset Form Canvas
+       - Full-Width Bilingual Input Rows (Zero truncated dish names!)
+       - Aligned Form Baselines & Lining Tabular Numerals (lnum + tnum)
+       - Crisp Vector Icons (SF-Symbols style, zero emoji clutter)
+       ========================================================================== */
     :root {
-      --bg-main: #F7F3EC;
-      --bg-panel: #FFFFFF;
-      --bg-dark: #161210;
-      --bg-emerald: #17332B;
-      --text-main: #1E1916;
-      --text-muted: #5C4E43;
-      --gold: #C89666;
-      --gold-dark: #7A4F28;
-      --border: rgba(200, 150, 102, 0.32);
-      --green: #1B6E47;
+      --bg-canvas: #F4F0E8;
+      --bg-sidebar: #ECE6DB;
+      --bg-card: #FFFFFF;
+      --bg-group: #F9F6F0;
+      --bg-dark: #181411;
+
+      --text-primary: #1C1714;
+      --text-secondary: #4A3F37;
+      --text-muted: #65574C;
+
+      --accent: #7A4F28;
+      --accent-hover: #633F1F;
+      --accent-light: #C89666;
+      --accent-soft: rgba(122, 79, 40, 0.1);
+
+      --green: #186A43;
+      --green-bg: #E3F5EC;
       --blue: #1D4ED8;
+      --blue-bg: #E6EFFD;
       --danger: #B91C1C;
-      --radius: 14px;
+      --danger-bg: #FEECEC;
+
+      --border-hairline: rgba(28, 23, 20, 0.11);
+      --border-warm: rgba(122, 79, 40, 0.24);
+
+      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Plus Jakarta Sans', sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-pill: 999px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-text-size-adjust: 100%; font-size: 16px; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-main);
-      color: var(--text-main);
+      font-family: var(--font-sans);
+      background: var(--bg-canvas);
+      color: var(--text-primary);
       min-height: 100vh;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      font-variant-numeric: lining-nums tabular-nums;
+      font-feature-settings: "lnum" 1, "tnum" 1;
+      overflow-x: hidden;
     }
 
     a, button, input {
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+      font-family: inherit;
+      font-variant-numeric: lining-nums tabular-nums;
+      font-feature-settings: "lnum" 1, "tnum" 1;
     }
 
     a:focus-visible,
     button:focus-visible,
     input:focus-visible {
-      outline: 2px solid var(--gold);
+      outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
 
-    /* Top Header — Functional Layer (Apple Liquid Glass) */
-    .admin-header {
-      background: rgba(22, 18, 16, 0.86);
+    .icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ================= SINGLE UNIFIED APPLE LIQUID GLASS TOOLBAR ================= */
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(244, 240, 232, 0.82);
       backdrop-filter: blur(28px) saturate(1.45);
       -webkit-backdrop-filter: blur(28px) saturate(1.45);
-      color: #fff;
-      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid var(--border-hairline);
+      box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.55);
+      padding: 0.6rem 1.5rem;
+    }
+
+    .toolbar__inner {
+      max-width: 1440px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      border-bottom: 1.5px solid rgba(200, 150, 102, 0.45);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      position: sticky;
-      top: 0;
-      z-index: 50;
       flex-wrap: wrap;
     }
-    .admin-header__left {
+
+    .toolbar__brand {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
+      gap: 0.9rem;
       min-width: 0;
     }
-    .admin-header__logo {
-      height: 38px;
+
+    .toolbar__logo-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+
+    .toolbar__logo {
+      height: 34px;
       width: auto;
       display: block;
     }
-    .admin-header__badge {
-      background: rgba(200, 150, 102, 0.2);
-      border: 1px solid var(--gold);
-      color: #F0D9C0;
-      padding: 0.3rem 0.8rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
-    .admin-header__right {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-    }
-    .ui-lang-switch {
-      display: inline-flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 999px;
-      padding: 2px;
-    }
-    .ui-lang-btn {
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.78);
-      min-width: 44px;
-      min-height: 40px;
-      padding: 0.35rem 0.75rem;
-      font-size: 0.78rem;
-      font-weight: 700;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background-color 0.2s ease, color 0.2s ease;
-    }
-    .ui-lang-btn.active {
-      background: #8B5D33;
-      color: #fff;
+
+    .toolbar__divider {
+      width: 1px;
+      height: 22px;
+      background: var(--border-hairline);
     }
 
+    .toolbar__title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .toolbar__app-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .toolbar__app-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .toolbar__controls {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    /* Apple Segmented Control for Language (DE | EN) */
+    .segmented {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(28, 23, 20, 0.07);
+      padding: 3px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(28, 23, 20, 0.06);
+    }
+
+    .segmented__btn {
+      min-width: 44px;
+      min-height: 38px;
+      padding: 0.3rem 0.7rem;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .segmented__btn.active {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Apple HIG Buttons (44px minimum hit target) */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -127,314 +208,504 @@
       gap: 0.45rem;
       min-height: 44px;
       min-width: 44px;
-      padding: 0.65rem 1.2rem;
-      border-radius: 999px;
-      font-size: 0.88rem;
+      padding: 0.52rem 0.95rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
       font-weight: 600;
-      border: none;
+      border: 1px solid transparent;
       cursor: pointer;
       text-decoration: none;
-      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      white-space: nowrap;
+      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
     }
-    .btn:active { transform: scale(0.98); }
-    .btn--gold {
-      background: linear-gradient(135deg, #8B5D33 0%, #6A4420 100%);
-      color: #fff;
-      box-shadow: 0 6px 18px rgba(106, 68, 32, 0.3);
-    }
-    .btn--gold:hover { transform: translateY(-1px); }
-    .btn--green {
-      background: var(--green);
-      color: #fff;
-      box-shadow: 0 6px 18px rgba(27, 110, 71, 0.25);
-    }
-    .btn--green:hover { background: #145738; transform: translateY(-1px); }
-    .btn--outline-light {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.24);
-    }
-    .btn--outline-light:hover { background: rgba(255,255,255,0.16); }
-    .btn--secondary {
-      background: #EFE7DC;
-      color: var(--text-main);
-      border: 1px solid var(--border);
-    }
-    .btn--secondary:hover { background: #E5D8C6; }
-    .btn--danger {
-      background: rgba(185, 28, 28, 0.08);
-      color: var(--danger);
-      border: 1px solid rgba(185, 28, 28, 0.28);
-    }
-    .btn--danger:hover { background: var(--danger); color: #fff; }
 
-    /* Simulator Bar */
-    .sim-bar {
-      background: var(--bg-emerald);
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      font-size: 0.86rem;
+    .btn:active {
+      transform: scale(0.98);
     }
-    .sim-bar__controls {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-    }
-    .sim-bar input[type="date"] {
-      min-height: 44px;
-      padding: 0.45rem 0.75rem;
-      border-radius: 8px;
-      border: 1px solid var(--gold);
+
+    /* Standard Subtle Toolbar Button */
+    .btn--toolbar {
       background: #FFFFFF;
-      color: var(--text-main);
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: inherit;
-      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      border-color: var(--border-hairline);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
-    /* Main Layout */
-    .admin-layout {
-      max-width: 1380px;
-      margin: 1.75rem auto;
-      padding: 0 1.5rem 3rem;
+    .btn--toolbar:hover {
+      background: var(--bg-group);
+      border-color: rgba(28, 23, 20, 0.22);
+    }
+
+    /* Prominent Primary Action (Apple HIG: 1 prominent button per view) */
+    .btn--primary {
+      background: var(--green);
+      color: #FFFFFF;
+      border-color: rgba(0, 0, 0, 0.1);
+      padding: 0.52rem 1.2rem;
+      box-shadow: 0 2px 6px rgba(24, 106, 67, 0.25);
+    }
+
+    .btn--primary:hover {
+      background: #135837;
+    }
+
+    .btn--accent {
+      background: var(--accent);
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(122, 79, 40, 0.22);
+    }
+
+    .btn--accent:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn--danger {
+      background: transparent;
+      color: var(--danger);
+      border-color: rgba(185, 28, 28, 0.25);
+    }
+
+    .btn--danger:hover {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+    }
+
+    /* ================= APPLE SPLIT-VIEW WORKSPACE ================= */
+    .workspace {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1.25rem 1.35rem;
       display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 1.75rem;
+      grid-template-columns: 326px minmax(0, 1fr);
+      gap: 1.25rem;
       align-items: start;
     }
-    .admin-layout > * {
+
+    /* ================= LEFT SIDEBAR (SCHEDULED WEEKS + SIMULATOR) ================= */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky;
+      top: 76px;
       min-width: 0;
     }
 
-    /* Sidebar: Weeks List */
-    .weeks-sidebar {
-      background: var(--bg-panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.35rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      position: sticky;
-      top: 88px;
-      min-width: 0;
+    .sidebar-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
+      box-shadow: 0 4px 16px rgba(28, 23, 20, 0.04);
     }
-    .weeks-sidebar__header {
+
+    .sidebar-panel__header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
+      padding: 0 0.2rem;
     }
-    .weeks-sidebar__title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
+
+    .sidebar-panel__title {
+      font-size: 0.82rem;
       font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.01em;
     }
+
+    .sidebar-panel__count {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg-group);
+      padding: 0.12rem 0.5rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-hairline);
+    }
+
     .weeks-list {
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
-      margin-bottom: 1.15rem;
-      max-height: 60vh;
+      gap: 0.5rem;
+      margin-bottom: 0.9rem;
+      max-height: 52vh;
       overflow-y: auto;
       overscroll-behavior: contain;
     }
+
     .week-item {
+      width: 100%;
       text-align: left;
-      min-height: 48px;
-      padding: 0.9rem 1rem;
-      border-radius: 10px;
-      border: 1.5px solid rgba(30,25,22,0.12);
-      background: #FAF7F2;
+      min-height: 64px;
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-hairline);
+      background: var(--bg-group);
       cursor: pointer;
-      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
-      font-variant-numeric: tabular-nums;
+      gap: 0.28rem;
+      transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
     }
+
     .week-item:hover {
-      border-color: var(--gold);
+      background: #F2ECE1;
+      border-color: var(--border-warm);
     }
+
     .week-item.active {
-      background: #1E1916;
-      color: #fff;
-      border-color: var(--gold);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      background: var(--bg-dark);
+      color: #FFFFFF;
+      border-color: var(--bg-dark);
+      box-shadow: 0 6px 16px rgba(24, 20, 17, 0.16);
     }
-    .week-item__top {
+
+    .week-item__row1 {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .week-item__period {
+      font-weight: 700;
+      font-size: 0.83rem;
+      white-space: nowrap;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.67rem;
+      font-weight: 700;
+      padding: 0.14rem 0.45rem;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .status-badge__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-badge--active {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+    .status-badge--active .status-badge__dot {
+      background: #16A34A;
+    }
+
+    .status-badge--scheduled {
+      background: var(--blue-bg);
+      color: var(--blue);
+    }
+    .status-badge--scheduled .status-badge__dot {
+      background: var(--blue);
+    }
+
+    .status-badge--past {
+      background: rgba(28, 23, 20, 0.08);
+      color: var(--text-secondary);
+    }
+    .status-badge--past .status-badge__dot {
+      background: var(--text-muted);
+    }
+
+    .week-item.active .status-badge--past {
+      background: rgba(255, 255, 255, 0.16);
+      color: #E5E0D8;
+    }
+
+    .week-item__preview {
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .week-item.active .week-item__preview {
+      color: rgba(255, 255, 255, 0.74);
+    }
+
+    /* Compact Date Simulator Card in Sidebar */
+    .sim-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.15rem;
+      box-shadow: 0 4px 16px rgba(28, 23, 20, 0.04);
+    }
+
+    .sim-card__title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .sim-card__desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 0.75rem;
+    }
+
+    .sim-card__row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .sim-card__input {
+      flex: 1;
+      min-width: 0;
+      min-height: 44px;
+      padding: 0.45rem 0.65rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-hairline);
+      background: var(--bg-group);
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    /* ================= RIGHT DETAIL PANE (EDITOR INSPECTOR) ================= */
+    .inspector {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.6rem;
+      box-shadow: 0 6px 24px rgba(28, 23, 20, 0.05);
+      min-width: 0;
+    }
+
+    .inspector__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.35rem;
+      border-bottom: 1px solid var(--border-hairline);
+      flex-wrap: wrap;
+    }
+
+    .inspector__title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .inspector__title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.45rem, 2vw, 1.75rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.15;
+      font-variant-numeric: lining-nums tabular-nums;
+      font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+
+    .inspector__actions {
+      display: flex;
+      align-items: center;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    .week-item__period {
-      font-weight: 700;
-      font-size: 0.94rem;
-    }
-    .status-pill {
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 0.18rem 0.55rem;
-      border-radius: 999px;
-    }
-    .status-pill--active {
-      background: #DCFCE7;
-      color: #15803D;
-    }
-    .status-pill--scheduled {
-      background: #DBEAFE;
-      color: #1D4ED8;
-    }
-    .status-pill--past {
-      background: #E5E7EB;
-      color: #4B5563;
-    }
-    .week-item__sub {
-      font-size: 0.78rem;
-      opacity: 0.82;
+
+    /* Save Status Toast Banner */
+    .save-toast {
+      margin-bottom: 1.25rem;
+      padding: 0.75rem 1.1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      font-weight: 600;
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(24, 106, 67, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    /* Main Editor Panel */
-    .editor-panel {
-      background: var(--bg-panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.06);
-      min-width: 0;
+    .save-toast[hidden] {
+      display: none !important;
     }
-    .editor-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      padding-bottom: 1.35rem;
+
+    /* ================= SCHEDULE SETTINGS BAR (PERFECTLY ALIGNED BASELINE) ================= */
+    .settings-group {
+      background: var(--bg-group);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.25rem;
       margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-    .editor-top__title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.6rem, 3vw, 2rem);
-      font-weight: 700;
-      line-height: 1.15;
-      font-variant-numeric: tabular-nums;
-    }
-    .editor-top__actions {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.45fr 0.75fr 0.75fr;
+      gap: 0.9rem;
+      align-items: end;
     }
 
-    /* Period & Prices Box */
-    .schedule-settings {
-      background: #FAF6F0;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin-bottom: 1.75rem;
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 1rem;
-    }
     .field {
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
       min-width: 0;
     }
-    .field label {
-      font-size: 0.76rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
+
+    .field__label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    /* iOS Safari Rule: font-size: 1rem (16px) & min-height: 44px */
-    .field input {
+
+    /* iOS Safari & Apple HIG Input: font-size 16px (1rem), min-height 44px */
+    .field__input {
       width: 100%;
       min-height: 44px;
-      padding: 0.62rem 0.8rem;
-      border-radius: 8px;
-      border: 1px solid rgba(30, 25, 22, 0.22);
-      background: #fff;
+      padding: 0.55rem 0.8rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(28, 23, 20, 0.16);
+      background: #FFFFFF;
+      color: var(--text-primary);
       font-size: 1rem;
       font-weight: 600;
-      font-family: inherit;
-      font-variant-numeric: tabular-nums;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .field input:focus {
-      border-color: var(--gold-dark);
-      box-shadow: 0 0 0 3px rgba(200,150,102,0.22);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
-    /* 4 Days Editor Grid */
-    .days-editor-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 1.75rem;
+    .field__input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(122, 79, 40, 0.16);
     }
-    .day-editor-card {
-      background: #FAF7F2;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      min-width: 0;
-    }
-    .day-editor-card__header {
+
+    /* ================= FULL-WIDTH APPLE GROUPED DAY CARDS (ZERO TRUNCATION!) ================= */
+    .days-stack {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.9rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid rgba(200,150,102,0.2);
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .day-editor-card__title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: var(--gold-dark);
-    }
-    .lang-cols {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-    .lang-cols:last-child {
-      margin-bottom: 0;
+      flex-direction: column;
+      gap: 1rem;
     }
 
-    .editor-footer {
+    .day-card {
+      background: var(--bg-group);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .day-card__header {
+      background: rgba(28, 23, 20, 0.035);
+      padding: 0.7rem 1.2rem;
+      border-bottom: 1px solid var(--border-hairline);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+    }
+
+    .day-card__title {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .day-card__hours {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .day-card__body {
+      padding: 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    /* Course Row: Course Label on Left (96px) + Full-Width DE (1.45fr) and EN (0.94fr) Inputs */
+    .course-row {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1.45fr) minmax(0, 0.94fr);
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .course-row__label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .lang-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .lang-input-wrap__tag {
+      position: absolute;
+      left: 0.55rem;
+      font-size: 0.66rem;
+      font-weight: 700;
+      padding: 0.12rem 0.36rem;
+      border-radius: 5px;
+      background: var(--bg-sidebar);
+      color: var(--text-secondary);
+      pointer-events: none;
+      letter-spacing: 0.03em;
+    }
+
+    .lang-input-wrap__tag--en {
+      background: rgba(29, 78, 216, 0.1);
+      color: #1E40AF;
+    }
+
+    .lang-input-wrap input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.52rem 0.7rem 0.52rem 2.4rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(28, 23, 20, 0.15);
+      background: #FFFFFF;
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-weight: 500;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .lang-input-wrap input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(122, 79, 40, 0.16);
+    }
+
+    /* Bottom Bar inside Inspector */
+    .inspector__footer {
+      margin-top: 1.5rem;
       padding-top: 1.25rem;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
       flex-wrap: wrap;
     }
-    .save-toast {
-      padding: 0.65rem 1.1rem;
-      border-radius: 8px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      background: #DCFCE7;
-      color: #15803D;
-      border: 1px solid #86EFAC;
+
+    .inspector__hint {
+      font-size: 0.82rem;
+      color: var(--text-muted);
     }
 
     /* Printable A4 Sheet (Hidden on screen, visible when printing) */
@@ -530,156 +801,216 @@
     }
 
     @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-      .admin-header {
-        background: #161210 !important;
+      .toolbar {
+        background: #F4F0E8 !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
+        border-bottom: 2px solid #1C1714 !important;
       }
     }
 
-    @media (max-width: 1024px) {
-      .admin-layout { grid-template-columns: 1fr; }
-      .weeks-sidebar { position: static; }
-      .schedule-settings { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .days-editor-grid { grid-template-columns: 1fr; }
+    @media (max-width: 1120px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: static;
+      }
+      .settings-group {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
-    @media (max-width: 640px) {
-      .admin-header, .sim-bar { padding: 0.75rem 1rem; }
-      .admin-layout { padding: 0 1rem 2.5rem; margin: 1rem auto; }
-      .editor-panel { padding: 1.25rem; }
-      .schedule-settings, .lang-cols { grid-template-columns: 1fr; }
-      .editor-top__actions .btn { flex: 1 1 100%; }
+    @media (max-width: 780px) {
+      .course-row {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+      }
+      .inspector {
+        padding: 1.25rem;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .toolbar {
+        padding: 0.6rem 1rem;
+      }
+      .workspace {
+        padding: 1rem;
+      }
+      .settings-group {
+        grid-template-columns: 1fr;
+      }
+      .toolbar__divider,
+      .toolbar__title-group {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ================= HEADER ================= -->
-  <header class="admin-header">
-    <div class="admin-header__left">
-      <a href="index.html">
-        <img src="assets/images/brand/logo-light.png?v=2" alt="Café Weiss" class="admin-header__logo" width="133" height="38" />
-      </a>
-      <span class="admin-header__badge" data-ui="header.badge">Mittagsmenü-Verwaltung &amp; Automatische Wochenplanung</span>
-    </div>
-
-    <div class="admin-header__right">
-      <div class="ui-lang-switch" role="group" aria-label="Sprache wählen / Choose Language">
-        <button type="button" class="ui-lang-btn active" data-set-uilang="de">DE</button>
-        <button type="button" class="ui-lang-btn" data-set-uilang="en">EN</button>
+  <!-- ================= SINGLE UNIFIED APPLE LIQUID GLASS TOOLBAR ================= -->
+  <header class="toolbar">
+    <div class="toolbar__inner">
+      <div class="toolbar__brand">
+        <a href="index.html" class="toolbar__logo-link" aria-label="Café Weiss Startseite">
+          <img src="assets/images/brand/logo-dark.png?v=2" alt="Café Weiss" class="toolbar__logo" width="119" height="34" />
+        </a>
+        <span class="toolbar__divider" aria-hidden="true"></span>
+        <div class="toolbar__title-group">
+          <span class="toolbar__app-name" data-ui="header.badge">Mittagsmenü-Planer</span>
+          <span class="toolbar__app-sub" data-ui="header.sub">Hinterbrühl · Automatische Wochensteuerung</span>
+        </div>
       </div>
 
-      <button type="button" class="btn btn--outline-light" id="exportJsonBtn" title="JSON-Backup herunterladen">
-        📥 <span data-ui="btn.export">Backup (.json)</span>
-      </button>
+      <div class="toolbar__controls">
+        <!-- Segmented Language Control -->
+        <div class="segmented" role="group" aria-label="Sprache wählen / Choose Language">
+          <button type="button" class="segmented__btn active" data-set-uilang="de">DE</button>
+          <button type="button" class="segmented__btn" data-set-uilang="en">EN</button>
+        </div>
 
-      <label class="btn btn--outline-light" for="importJsonInput" title="JSON-Backup importieren" style="margin:0;">
-        📤 <span data-ui="btn.import">Importieren</span>
-        <input type="file" id="importJsonInput" accept="application/json,.json" hidden />
-      </label>
+        <button type="button" class="btn btn--toolbar" id="exportJsonBtn" title="JSON-Backup herunterladen">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-ui="btn.export">Backup</span>
+        </button>
 
-      <button type="button" class="btn btn--outline-light" id="printMenuBtn">
-        🖨️ <span data-ui="btn.print">A4 Drucken / PDF</span>
-      </button>
+        <label class="btn btn--toolbar" for="importJsonInput" title="JSON-Backup importieren">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span data-ui="btn.import">Import</span>
+          <input type="file" id="importJsonInput" accept="application/json,.json" hidden />
+        </label>
 
-      <a href="index.html#speisekarte" class="btn btn--gold">
-        ← <span data-ui="btn.back">Zur Live-Webseite</span>
-      </a>
+        <button type="button" class="btn btn--toolbar" id="printMenuBtn">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span data-ui="btn.print">A4 Drucken</span>
+        </button>
+
+        <a href="index.html#speisekarte" class="btn btn--toolbar">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span data-ui="btn.back">Live-Webseite</span>
+        </a>
+
+        <!-- Single Prominent Primary Action in Toolbar -->
+        <button type="button" class="btn btn--primary" id="toolbarSaveBtn">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span data-ui="btn.save">Änderungen speichern</span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- ================= TIME-TRAVEL SIMULATOR BAR ================= -->
-  <div class="sim-bar">
-    <div>
-      ✨ <strong data-ui="sim.title">Automatische Zeitsteuerung:</strong>
-      <span data-ui="sim.desc">Die Webseite erkennt automatisch das aktuelle Datum und zeigt das passende Wochenmenü an. Sie können Wochen im Voraus planen!</span>
-    </div>
-    <div class="sim-bar__controls">
-      <label for="simDateInput" data-ui="sim.label">Vorschau der Webseite am Datum:</label>
-      <input type="date" id="simDateInput" name="simDate" />
-      <button type="button" class="btn btn--gold" id="openSimulatedSiteBtn">
-        🔍 <span data-ui="sim.btn">Vorschau öffnen</span>
-      </button>
-    </div>
-  </div>
+  <!-- ================= MAIN SPLIT-VIEW WORKSPACE ================= -->
+  <main class="workspace">
+    <!-- Left Sidebar: Scheduled Weeks + Date Simulator -->
+    <aside class="sidebar">
+      <div class="sidebar-panel">
+        <div class="sidebar-panel__header">
+          <h2 class="sidebar-panel__title" data-ui="sidebar.title">Geplante Wochen</h2>
+          <span class="sidebar-panel__count" id="weeksCountBadge">4</span>
+        </div>
 
-  <!-- ================= MAIN ADMIN WORKSPACE ================= -->
-  <main class="admin-layout">
-    <!-- Left Sidebar: Scheduled Weeks -->
-    <aside class="weeks-sidebar">
-      <div class="weeks-sidebar__header">
-        <h2 class="weeks-sidebar__title" data-ui="sidebar.title">Geplante Wochen</h2>
+        <div class="weeks-list" id="weeksList" role="tablist">
+          <!-- Populated dynamically -->
+        </div>
+
+        <button type="button" class="btn btn--accent" id="addNewWeekBtn" style="width: 100%;">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span data-ui="sidebar.add">Neue Woche im Voraus planen</span>
+        </button>
       </div>
 
-      <div class="weeks-list" id="weeksList">
-        <!-- Populated dynamically -->
+      <!-- Compact Date Simulator Card -->
+      <div class="sim-card">
+        <div class="sim-card__title">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span data-ui="sim.title">Datum-Vorschau testen</span>
+        </div>
+        <p class="sim-card__desc" data-ui="sim.desc">
+          Die Webseite schaltet das Menü automatisch nach Datum um. Testen Sie hier einen beliebigen Tag:
+        </p>
+        <div class="sim-card__row">
+          <input type="date" id="simDateInput" name="simDate" class="sim-card__input" aria-label="Vorschau-Datum" />
+          <button type="button" class="btn btn--toolbar" id="openSimulatedSiteBtn">
+            <span data-ui="sim.btn">Testen</span>
+          </button>
+        </div>
       </div>
-
-      <button type="button" class="btn btn--gold" id="addNewWeekBtn" style="width: 100%; justify-content: center;">
-        ➕ <span data-ui="sidebar.add">Neue Woche im Voraus planen</span>
-      </button>
     </aside>
 
-    <!-- Right Panel: Active Week Editor -->
-    <section class="editor-panel">
-      <div class="editor-top">
-        <div>
-          <span id="editorStatusBadge" class="status-pill status-pill--active">JETZT AKTIV</span>
-          <h1 class="editor-top__title" id="editorHeading">Mittagsmenü: 03.11.2026 – 06.11.2026</h1>
+    <!-- Right Inspector Panel: Active Week Editor -->
+    <section class="inspector">
+      <div id="saveToast" class="save-toast" role="status" aria-live="polite" hidden>
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+        <span data-ui="toast.saved">Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.</span>
+      </div>
+
+      <div class="inspector__header">
+        <div class="inspector__title-wrap">
+          <h1 class="inspector__title" id="editorHeading">Mittagsmenü: 24.11.2026 – 27.11.2026</h1>
+          <span id="editorStatusBadge" class="status-badge status-badge--active">
+            <span class="status-badge__dot"></span>
+            <span>Jetzt aktiv</span>
+          </span>
         </div>
-        <div class="editor-top__actions">
-          <button type="button" class="btn btn--secondary" id="autoTranslateBtn" title="Gerichte automatisch von Deutsch auf Englisch übersetzen">
-            ✨ <span data-ui="btn.autotranslate">Auto-Übersetzen DE → EN</span>
+
+        <div class="inspector__actions">
+          <button type="button" class="btn btn--toolbar" id="autoTranslateBtn" title="Gerichte automatisch von Deutsch auf Englisch übersetzen">
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+            <span data-ui="btn.autotranslate">DE → EN übersetzen</span>
           </button>
-          <button type="button" class="btn btn--secondary" id="duplicateWeekBtn">
-            📋 <span data-ui="btn.duplicate">Für nächste Woche duplizieren</span>
+
+          <button type="button" class="btn btn--toolbar" id="duplicateWeekBtn">
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span data-ui="btn.duplicate">Woche duplizieren</span>
           </button>
+
           <button type="button" class="btn btn--danger" id="deleteWeekBtn">
-            🗑️ <span data-ui="btn.delete">Löschen</span>
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span data-ui="btn.delete">Löschen</span>
           </button>
         </div>
       </div>
 
-      <!-- Date Range & Prices -->
-      <div class="schedule-settings">
+      <!-- Date Range & Prices (Aligned Single-Line Labels & Full Period Width) -->
+      <div class="settings-group">
         <div class="field">
-          <label for="validFromInput" data-ui="field.from">Automatisch aktiv ab (Mo)</label>
-          <input type="date" id="validFromInput" name="validFrom" />
+          <label class="field__label" for="validFromInput" data-ui="field.from">Aktiv ab (Montag)</label>
+          <input class="field__input" type="date" id="validFromInput" name="validFrom" />
         </div>
         <div class="field">
-          <label for="validToInput" data-ui="field.to">Aktiv bis (So)</label>
-          <input type="date" id="validToInput" name="validTo" />
+          <label class="field__label" for="validToInput" data-ui="field.to">Aktiv bis (Sonntag)</label>
+          <input class="field__input" type="date" id="validToInput" name="validTo" />
         </div>
         <div class="field">
-          <label for="displayPeriodInput" data-ui="field.display">Angezeigter Zeitraum (Di–Fr)</label>
-          <input type="text" id="displayPeriodInput" name="displayPeriod" placeholder="03.11.2026 – 06.11.2026…" />
+          <label class="field__label" for="displayPeriodInput" data-ui="field.display">Zeitraum auf Karte (Di–Fr)</label>
+          <input class="field__input" type="text" id="displayPeriodInput" name="displayPeriod" placeholder="24.11.2026 – 27.11.2026…" />
         </div>
         <div class="field">
-          <label for="price2Input" data-ui="field.p2">Preis 2-Gänge-Menü</label>
-          <input type="text" id="price2Input" name="price2Course" value="€ 10,90" />
+          <label class="field__label" for="price2Input" data-ui="field.p2">2-Gänge-Preis</label>
+          <input class="field__input" type="text" id="price2Input" name="price2Course" value="€ 10,90" />
         </div>
         <div class="field">
-          <label for="price3Input" data-ui="field.p3">Preis 3-Gänge-Menü</label>
-          <input type="text" id="price3Input" name="price3Course" value="€ 14,90" />
+          <label class="field__label" for="price3Input" data-ui="field.p3">3-Gänge-Preis</label>
+          <input class="field__input" type="text" id="price3Input" name="price3Course" value="€ 14,90" />
         </div>
       </div>
 
-      <!-- 4 Days Grid (Tuesday - Friday) -->
-      <div class="days-editor-grid" id="daysEditorGrid">
+      <!-- 4 Full-Width Day Cards (Tuesday - Friday) -->
+      <div class="days-stack" id="daysEditorGrid">
         <!-- Populated dynamically -->
       </div>
 
-      <!-- Footer Save Bar -->
-      <div class="editor-footer">
-        <div>
-          <span id="saveToast" class="save-toast" role="status" aria-live="polite" data-ui="toast.saved" hidden>✓ Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.</span>
-        </div>
-        <div style="display: flex; gap: 0.75rem;">
-          <button type="button" class="btn btn--green" id="saveAllBtn" style="padding: 0.85rem 2rem; font-size: 0.96rem;">
-            💾 <span data-ui="btn.save">Speichern &amp; Zeitplan aktivieren</span>
-          </button>
-        </div>
+      <!-- Bottom Save Bar -->
+      <div class="inspector__footer">
+        <span class="inspector__hint" data-ui="footer.hint">
+          Tipp: Sie können Gerichte auf Deutsch eingeben und mit „DE → EN übersetzen“ automatisch ins Englische übertragen.
+        </span>
+        <button type="button" class="btn btn--primary" id="saveAllBtn">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span data-ui="btn.save">Änderungen speichern</span>
+        </button>
       </div>
     </section>
   </main>
@@ -689,7 +1020,7 @@
     <img src="assets/images/brand/logo-dark.png?v=2" alt="Café Weiss" class="print-sheet__logo" width="266" height="76" />
     <div class="print-sheet__sub">RESTAURANT &amp; CAFÉ</div>
     <h2 class="print-sheet__title">MITTAGSMENÜ</h2>
-    <div class="print-sheet__dates" id="printDates">03.11.2026 - 06.11.2026</div>
+    <div class="print-sheet__dates" id="printDates">24.11.2026 - 27.11.2026</div>
     <div class="print-sheet__hours">Dienstag-Freitag · 11:00-15:00</div>
     <div id="printDaysContainer"></div>
     <div class="print-prices">
@@ -715,72 +1046,68 @@
 
       const UI_STRINGS = {
         de: {
-          "header.badge": "Mittagsmenü-Verwaltung & Automatische Wochenplanung",
-          "btn.export": "Backup (.json)",
-          "btn.import": "Importieren",
-          "btn.print": "A4 Drucken / PDF",
-          "btn.back": "Zur Live-Webseite",
-          "sim.title": "Automatische Zeitsteuerung:",
-          "sim.desc": "Die Webseite erkennt automatisch das aktuelle Datum und zeigt das passende Wochenmenü an. Sie können Wochen im Voraus planen!",
-          "sim.label": "Vorschau der Webseite am Datum:",
-          "sim.btn": "Vorschau öffnen",
+          "header.badge": "Mittagsmenü-Planer",
+          "header.sub": "Hinterbrühl · Automatische Wochensteuerung",
+          "btn.export": "Backup",
+          "btn.import": "Import",
+          "btn.print": "A4 Drucken",
+          "btn.back": "Live-Webseite",
+          "sim.title": "Datum-Vorschau testen",
+          "sim.desc": "Die Webseite schaltet das Menü automatisch nach Datum um. Testen Sie hier einen beliebigen Tag:",
+          "sim.btn": "Testen",
           "sidebar.title": "Geplante Wochen",
           "sidebar.add": "Neue Woche im Voraus planen",
-          "btn.autotranslate": "Auto-Übersetzen DE → EN",
-          "btn.duplicate": "Für nächste Woche duplizieren",
+          "btn.autotranslate": "DE → EN übersetzen",
+          "btn.duplicate": "Woche duplizieren",
           "btn.delete": "Löschen",
-          "field.from": "Automatisch aktiv ab (Mo)",
-          "field.to": "Aktiv bis (So)",
-          "field.display": "Angezeigter Zeitraum (Di–Fr)",
-          "field.p2": "Preis 2-Gänge-Menü",
-          "field.p3": "Preis 3-Gänge-Menü",
-          "btn.save": "Speichern & Zeitplan aktivieren",
-          "toast.saved": "✓ Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.",
+          "field.from": "Aktiv ab (Montag)",
+          "field.to": "Aktiv bis (Sonntag)",
+          "field.display": "Zeitraum auf Karte (Di–Fr)",
+          "field.p2": "2-Gänge-Preis",
+          "field.p3": "3-Gänge-Preis",
+          "btn.save": "Änderungen speichern",
+          "footer.hint": "Tipp: Sie können Gerichte auf Deutsch eingeben und mit „DE → EN übersetzen“ automatisch ins Englische übertragen.",
+          "toast.saved": "Erfolgreich gespeichert! Änderungen sind auf der Webseite aktiv.",
           "alert.minOne": "Es muss mindestens eine geplante Woche vorhanden sein!",
           "confirm.delete": "Möchten Sie diese geplante Woche wirklich löschen?",
-          "status.active": "JETZT AKTIV",
-          "status.scheduled": "GEPLANT",
-          "status.past": "ARCHIVIERT",
-          "lbl.soup.de": "Suppe / Vorspeise (Deutsch)",
-          "lbl.soup.en": "Suppe / Vorspeise (Englisch)",
-          "lbl.main.de": "Hauptspeise (Deutsch)",
-          "lbl.main.en": "Hauptspeise (Englisch)",
-          "lbl.dessert.de": "Dessert (Deutsch)",
-          "lbl.dessert.en": "Dessert (Englisch)"
+          "status.active": "Jetzt aktiv",
+          "status.scheduled": "Geplant",
+          "status.past": "Archiviert",
+          "course.soup": "Suppe / Vorspeise",
+          "course.main": "Hauptspeise",
+          "course.dessert": "Dessert"
         },
         en: {
-          "header.badge": "Weekly Lunch Menu Admin & Auto-Scheduler",
-          "btn.export": "Backup (.json)",
+          "header.badge": "Lunch Menu Planner",
+          "header.sub": "Hinterbrühl · Automatic Week Scheduler",
+          "btn.export": "Backup",
           "btn.import": "Import",
-          "btn.print": "Print A4 / PDF",
-          "btn.back": "View Live Website",
-          "sim.title": "Automatic Date Scheduling:",
-          "sim.desc": "The website automatically detects today's date and displays the matching weekly menu. Schedule weeks in advance effortlessly!",
-          "sim.label": "Preview website on date:",
-          "sim.btn": "Preview on Site",
+          "btn.print": "Print A4",
+          "btn.back": "Live Website",
+          "sim.title": "Test Date Preview",
+          "sim.desc": "The website switches the active menu automatically by date. Preview any future date here:",
+          "sim.btn": "Preview",
           "sidebar.title": "Scheduled Weeks",
           "sidebar.add": "Schedule New Week",
-          "btn.autotranslate": "Auto-Translate DE → EN",
-          "btn.duplicate": "Duplicate to Next Week",
+          "btn.autotranslate": "Translate DE → EN",
+          "btn.duplicate": "Duplicate Week",
           "btn.delete": "Delete",
-          "field.from": "Auto-Active From (Mon)",
+          "field.from": "Active From (Mon)",
           "field.to": "Active Until (Sun)",
           "field.display": "Displayed Period (Tue–Fri)",
           "field.p2": "2-Course Price",
           "field.p3": "3-Course Price",
-          "btn.save": "Save & Activate Schedule",
-          "toast.saved": "✓ Saved successfully! Changes are now live on the website.",
+          "btn.save": "Save Changes",
+          "footer.hint": "Tip: Enter dishes in German and click “Translate DE → EN” to fill in English translations automatically.",
+          "toast.saved": "Saved successfully! Changes are now live on the website.",
           "alert.minOne": "At least one scheduled week must remain!",
           "confirm.delete": "Are you sure you want to delete this scheduled week?",
-          "status.active": "ACTIVE NOW",
-          "status.scheduled": "SCHEDULED",
-          "status.past": "PAST",
-          "lbl.soup.de": "Soup / Starter (German)",
-          "lbl.soup.en": "Soup / Starter (English)",
-          "lbl.main.de": "Main Course (German)",
-          "lbl.main.en": "Main Course (English)",
-          "lbl.dessert.de": "Dessert (German)",
-          "lbl.dessert.en": "Dessert (English)"
+          "status.active": "Active Now",
+          "status.scheduled": "Scheduled",
+          "status.past": "Archived",
+          "course.soup": "Soup / Starter",
+          "course.main": "Main Course",
+          "course.dessert": "Dessert"
         }
       };
 
@@ -842,20 +1169,22 @@
 
       function renderSidebar() {
         const listEl = document.getElementById("weeksList");
+        const countEl = document.getElementById("weeksCountBadge");
         if (!listEl) return;
 
         store.schedules.sort((a, b) => (a.validFrom || "").localeCompare(b.validFrom || ""));
+        if (countEl) countEl.textContent = String(store.schedules.length);
 
         listEl.innerHTML = store.schedules
           .map((w) => {
             const st = getWeekStatus(w);
-            const pillClass =
+            const badgeClass =
               st === "active"
-                ? "status-pill--active"
+                ? "status-badge--active"
                 : st === "scheduled"
-                ? "status-pill--scheduled"
-                : "status-pill--past";
-            const pillLabel =
+                ? "status-badge--scheduled"
+                : "status-badge--past";
+            const badgeLabel =
               st === "active"
                 ? ut("status.active")
                 : st === "scheduled"
@@ -864,13 +1193,15 @@
 
             const firstDish = w.days && w.days[0] ? w.days[0].main.de : "";
             return `
-              <button type="button" class="week-item ${w.id === currentWeekId ? "active" : ""}" data-select-week="${w.id}">
-                <div class="week-item__top">
+              <button type="button" class="week-item ${w.id === currentWeekId ? "active" : ""}" data-select-week="${w.id}" role="tab" aria-selected="${w.id === currentWeekId}">
+                <div class="week-item__row1">
                   <span class="week-item__period">${w.displayPeriod}</span>
-                  <span class="status-pill ${pillClass}">${pillLabel}</span>
+                  <span class="status-badge ${badgeClass}">
+                    <span class="status-badge__dot"></span>
+                    <span>${badgeLabel}</span>
+                  </span>
                 </div>
-                <div class="week-item__sub">Auto: ${formatDeDate(w.validFrom)} – ${formatDeDate(w.validTo)}</div>
-                <div class="week-item__sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Di: ${firstDish}</div>
+                <div class="week-item__preview">Di: ${firstDish}</div>
               </button>
             `;
           })
@@ -896,23 +1227,27 @@
         const st = getWeekStatus(week);
         const badge = document.getElementById("editorStatusBadge");
         if (badge) {
-          badge.className =
-            "status-pill " +
-            (st === "active"
-              ? "status-pill--active"
+          const badgeClass =
+            st === "active"
+              ? "status-badge--active"
               : st === "scheduled"
-              ? "status-pill--scheduled"
-              : "status-pill--past");
-          badge.textContent =
+              ? "status-badge--scheduled"
+              : "status-badge--past";
+          const badgeLabel =
             st === "active"
               ? ut("status.active")
               : st === "scheduled"
               ? ut("status.scheduled")
               : ut("status.past");
+          badge.className = `status-badge ${badgeClass}`;
+          badge.innerHTML = `<span class="status-badge__dot"></span><span>${badgeLabel}</span>`;
         }
 
         const heading = document.getElementById("editorHeading");
-        if (heading) heading.textContent = `Mittagsmenü: ${week.displayPeriod}`;
+        if (heading) {
+          const prefix = uiLang === "en" ? "Lunch Menu" : "Mittagsmenü";
+          heading.textContent = `${prefix}: ${week.displayPeriod}`;
+        }
 
         document.getElementById("validFromInput").value = week.validFrom || "";
         document.getElementById("validToInput").value = week.validTo || "";
@@ -926,42 +1261,47 @@
         grid.innerHTML = (week.days || [])
           .map(
             (d, idx) => `
-            <div class="day-editor-card" data-day-index="${idx}">
-              <div class="day-editor-card__header">
-                <span class="day-editor-card__title">${d.day.de} / ${d.day.en}</span>
-                <span style="font-size: 0.78rem; color: var(--text-muted); font-variant-numeric: tabular-nums;">11:00 – 15:00</span>
+            <div class="day-card day-editor-card" data-day-index="${idx}">
+              <div class="day-card__header">
+                <span class="day-card__title">${d.day.de} · ${d.day.en}</span>
+                <span class="day-card__hours">11:00 – 15:00 Uhr</span>
               </div>
 
-              <div class="lang-cols">
-                <div class="field">
-                  <label for="soup-de-${idx}">${ut("lbl.soup.de")}</label>
-                  <input type="text" id="soup-de-${idx}" name="soup_de_${idx}" class="day-soup-de" value="${(d.soup.de || "").replace(/"/g, "&quot;")}" />
+              <div class="day-card__body">
+                <div class="course-row">
+                  <label class="course-row__label" for="soup-de-${idx}">${ut("course.soup")}</label>
+                  <div class="lang-input-wrap">
+                    <span class="lang-input-wrap__tag">DE</span>
+                    <input type="text" id="soup-de-${idx}" name="soup_de_${idx}" class="day-soup-de" aria-label="${d.day.de} ${ut("course.soup")} DE" value="${(d.soup.de || "").replace(/"/g, "&quot;")}" />
+                  </div>
+                  <div class="lang-input-wrap">
+                    <span class="lang-input-wrap__tag lang-input-wrap__tag--en">EN</span>
+                    <input type="text" id="soup-en-${idx}" name="soup_en_${idx}" class="day-soup-en" aria-label="${d.day.en} ${ut("course.soup")} EN" value="${(d.soup.en || "").replace(/"/g, "&quot;")}" />
+                  </div>
                 </div>
-                <div class="field">
-                  <label for="soup-en-${idx}">${ut("lbl.soup.en")}</label>
-                  <input type="text" id="soup-en-${idx}" name="soup_en_${idx}" class="day-soup-en" value="${(d.soup.en || "").replace(/"/g, "&quot;")}" />
-                </div>
-              </div>
 
-              <div class="lang-cols">
-                <div class="field">
-                  <label for="main-de-${idx}">${ut("lbl.main.de")}</label>
-                  <input type="text" id="main-de-${idx}" name="main_de_${idx}" class="day-main-de" value="${(d.main.de || "").replace(/"/g, "&quot;")}" />
+                <div class="course-row">
+                  <label class="course-row__label" for="main-de-${idx}">${ut("course.main")}</label>
+                  <div class="lang-input-wrap">
+                    <span class="lang-input-wrap__tag">DE</span>
+                    <input type="text" id="main-de-${idx}" name="main_de_${idx}" class="day-main-de" aria-label="${d.day.de} ${ut("course.main")} DE" value="${(d.main.de || "").replace(/"/g, "&quot;")}" />
+                  </div>
+                  <div class="lang-input-wrap">
+                    <span class="lang-input-wrap__tag lang-input-wrap__tag--en">EN</span>
+                    <input type="text" id="main-en-${idx}" name="main_en_${idx}" class="day-main-en" aria-label="${d.day.en} ${ut("course.main")} EN" value="${(d.main.en || "").replace(/"/g, "&quot;")}" />
+                  </div>
                 </div>
-                <div class="field">
-                  <label for="main-en-${idx}">${ut("lbl.main.en")}</label>
-                  <input type="text" id="main-en-${idx}" name="main_en_${idx}" class="day-main-en" value="${(d.main.en || "").replace(/"/g, "&quot;")}" />
-                </div>
-              </div>
 
-              <div class="lang-cols">
-                <div class="field">
-                  <label for="dessert-de-${idx}">${ut("lbl.dessert.de")}</label>
-                  <input type="text" id="dessert-de-${idx}" name="dessert_de_${idx}" class="day-dessert-de" value="${(d.dessert.de || "").replace(/"/g, "&quot;")}" />
-                </div>
-                <div class="field">
-                  <label for="dessert-en-${idx}">${ut("lbl.dessert.en")}</label>
-                  <input type="text" id="dessert-en-${idx}" name="dessert_en_${idx}" class="day-dessert-en" value="${(d.dessert.en || "").replace(/"/g, "&quot;")}" />
+                <div class="course-row">
+                  <label class="course-row__label" for="dessert-de-${idx}">${ut("course.dessert")}</label>
+                  <div class="lang-input-wrap">
+                    <span class="lang-input-wrap__tag">DE</span>
+                    <input type="text" id="dessert-de-${idx}" name="dessert_de_${idx}" class="day-dessert-de" aria-label="${d.day.de} ${ut("course.dessert")} DE" value="${(d.dessert.de || "").replace(/"/g, "&quot;")}" />
+                  </div>
+                  <div class="lang-input-wrap">
+                    <span class="lang-input-wrap__tag lang-input-wrap__tag--en">EN</span>
+                    <input type="text" id="dessert-en-${idx}" name="dessert_en_${idx}" class="day-dessert-en" aria-label="${d.day.en} ${ut("course.dessert")} EN" value="${(d.dessert.en || "").replace(/"/g, "&quot;")}" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1025,14 +1365,26 @@
         }
       }
 
-      function translateDishDeToEn(textDe) {
-        return SCHEDULER.translateDishDeToEn(textDe);
+      async function handleSaveAll() {
+        syncCurrentEditorToMemory();
+        const result = await SCHEDULER.saveStore(store);
+        store = result.store;
+        hasUnsavedChanges = false;
+        renderSidebar();
+        renderPrintSheet();
+
+        const toast = document.getElementById("saveToast");
+        if (toast) {
+          toast.hidden = false;
+          setTimeout(() => {
+            toast.hidden = true;
+          }, 4000);
+        }
       }
 
       document.addEventListener("DOMContentLoaded", () => {
         loadSchedules();
 
-        // Warn before navigating away with unsaved changes (Vercel web-design-guidelines)
         window.addEventListener("beforeunload", (e) => {
           if (hasUnsavedChanges) {
             e.preventDefault();
@@ -1040,7 +1392,7 @@
           }
         });
 
-        document.querySelector(".editor-panel").addEventListener("input", () => {
+        document.querySelector(".inspector").addEventListener("input", () => {
           hasUnsavedChanges = true;
         });
 
@@ -1071,9 +1423,9 @@
             const sDe = card.querySelector(".day-soup-de").value;
             const mDe = card.querySelector(".day-main-de").value;
             const dDe = card.querySelector(".day-dessert-de").value;
-            card.querySelector(".day-soup-en").value = translateDishDeToEn(sDe);
-            card.querySelector(".day-main-en").value = translateDishDeToEn(mDe);
-            card.querySelector(".day-dessert-en").value = translateDishDeToEn(dDe);
+            card.querySelector(".day-soup-en").value = SCHEDULER.translateDishDeToEn(sDe);
+            card.querySelector(".day-main-en").value = SCHEDULER.translateDishDeToEn(mDe);
+            card.querySelector(".day-dessert-en").value = SCHEDULER.translateDishDeToEn(dDe);
           });
           syncCurrentEditorToMemory();
           hasUnsavedChanges = true;
@@ -1113,24 +1465,9 @@
           renderAll();
         });
 
-        document.getElementById("saveAllBtn").addEventListener("click", async () => {
-          syncCurrentEditorToMemory();
-          const result = await SCHEDULER.saveStore(store);
-          store = result.store;
-          hasUnsavedChanges = false;
-          renderSidebar();
-          renderPrintSheet();
+        document.getElementById("saveAllBtn").addEventListener("click", handleSaveAll);
+        document.getElementById("toolbarSaveBtn").addEventListener("click", handleSaveAll);
 
-          const toast = document.getElementById("saveToast");
-          if (toast) {
-            toast.hidden = false;
-            setTimeout(() => {
-              toast.hidden = true;
-            }, 4000);
-          }
-        });
-
-        // Export JSON Backup
         document.getElementById("exportJsonBtn").addEventListener("click", () => {
           syncCurrentEditorToMemory();
           const blob = new Blob([JSON.stringify(store, null, 2)], { type: "application/json" });
@@ -1144,7 +1481,6 @@
           URL.revokeObjectURL(url);
         });
 
-        // Import JSON Backup
         document.getElementById("importJsonInput").addEventListener("change", (e) => {
           const file = e.target.files && e.target.files[0];
           if (!file) return;

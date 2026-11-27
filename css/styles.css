@@ -72,6 +72,8 @@ body {
   color: var(--text-primary);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
   overflow-x: hidden;
   position: relative;
 }
@@ -145,9 +147,11 @@ textarea:focus-visible,
   outline-offset: 2px;
 }
 
-h1, h2, h3, h4, .section-title, .hero__title {
+h1, h2, h3, h4, .section-title, .hero__title, .menu-item-card__name, .menu-item-card__price, .lunch-price-box__val, .story-stat__num {
   text-wrap: balance;
   overflow-wrap: break-word;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 
 p {
@@ -1970,11 +1974,9 @@ ul {
 /* Category Tabs */
 .menu-categories {
   display: flex;
-  gap: 0.6rem;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.55rem;
   margin-bottom: 1.5rem;
-  scrollbar-width: thin;
 }
 
 .menu-cat-tab {
