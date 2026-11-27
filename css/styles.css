@@ -3832,12 +3832,22 @@ html.dark .events-section__veil {
     padding: 0.55rem 0.65rem;
   }
 
+  .loc-seg-btn .hero-loc-tab__tag {
+    display: none;
+  }
+
   .loc-seg-btn__title {
-    font-size: 1.02rem;
+    font-size: 1.05rem;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
   }
 
   .loc-seg-btn__sub {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
   }
 
   .lunch-banner,
